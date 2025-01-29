@@ -1,15 +1,25 @@
-import express, {Request, Response} from "express";
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import helmet from "helmet";
+import router from "./routes/upload.route";
 
+// Load environment variables
+dotenv.config();
+
+// Initialize express
 const app = express();
+
+// Define the port
 const PORT = process.env.PORT || 3000;
 
-
+// Default middlewares
 app.use(express.json());
+app.use(helmet());
+app.use(cors({origin: '*'}));
 
-// Sample route
-app.get("/", (req : Request, res: Response) => {
-  res.send("Hello, Express with TypeScripssst");
-});
+// Routes
+app.use('/api', router)
 
 // Start the server
 app.listen(PORT, () => {
