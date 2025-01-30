@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import router from "./routes/upload.route";
+import { send } from "process";
 
 // Load environment variables
 dotenv.config();
