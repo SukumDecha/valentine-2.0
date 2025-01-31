@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import router from "./routes/upload.route";
-import { send } from "process";
+import { connectToDB } from "./database/database";
 
 // Load environment variables
 dotenv.config();
@@ -13,6 +13,9 @@ const app = express();
 
 // Define the port
 const PORT = process.env.PORT || 8080;
+
+// Connect to the database
+connectToDB();
 
 // Default middlewares
 app.use(express.json());
