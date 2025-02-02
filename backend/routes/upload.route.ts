@@ -1,12 +1,11 @@
-// src/routes/upload.routes.ts
-import express from "express";
+import {Router} from "express";
 import { uploadFiles, getUploadedFiles, mockupData } from "../controllers/upload.controller";
 import { handleFileUpload } from "../middleware/upload.middleware";
 
-const router = express.Router();
+const router = Router();
 
-router.post("/uploads",handleFileUpload, uploadFiles);
-router.get("/uploads",getUploadedFiles)
-router.post("/uploads/mockup",mockupData)
+router.post("/",handleFileUpload, uploadFiles);
+router.get("/",getUploadedFiles)
+router.post("/mockup",mockupData)
 
 export default router;
