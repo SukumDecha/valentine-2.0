@@ -3,7 +3,6 @@
 # dependencies
 /backend/node_modules
 /client/node_modules
-
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -28,9 +27,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
-# local env files
+# all env files
+.env
 .env*.local
+/client/.env
+/client/.env.*
+/backend/.env
+/backend/.env.*
 
 # vercel
 .vercel

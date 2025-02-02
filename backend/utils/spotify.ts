@@ -38,7 +38,7 @@ export const getSpotifyToken = async (): Promise<string | undefined> => {
 
     const data: SpotifyAccessToken = response.data;
     accessToken = data.access_token;
-    tokenExpiryTime = Math.floor(Date.now() / 1000) + data.expires_in;
+    tokenExpiryTime = Math.floor(Date.now() / 1000) + data.expires_in - 30;
     return accessToken;
   } catch (error: any) {
     console.error("Error fetching token:", error.response?.data || error.message);
