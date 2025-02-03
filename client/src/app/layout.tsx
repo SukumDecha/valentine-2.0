@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import "@/styles/index.css"
-
+import "@/styles/index.scss"
 
 export const metadata: Metadata = {
   title: "Valentine 2.0",
@@ -15,7 +14,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased`}
       >
         {children}
       </body>
