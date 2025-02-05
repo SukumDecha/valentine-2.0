@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import axios from "axios";
+import { Track } from '../../shared/types';
 dotenv.config();
 
 export interface SpotifyAccessToken {
@@ -7,6 +8,7 @@ export interface SpotifyAccessToken {
   token_type: string;
   expires_in: number;
 }
+
 
 let accessToken: string | null = null;
 let tokenExpiryTime: number = 0;
@@ -44,3 +46,11 @@ export const getSpotifyToken = async (): Promise<string | undefined> => {
     console.error("Error fetching token:", error.response?.data || error.message);
   }
 };
+
+export const getTrackList = (trackResponse : any[]): Track[] => {
+  return trackResponse.map((track) => ({
+    trackId: track.id,
+    trackName: track.name,
+    artistName: track.artists.map((artist: any) => artist.name).join(", "),
+  }))
+}

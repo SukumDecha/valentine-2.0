@@ -1,26 +1,32 @@
 import api from "./api";
+import { Track } from '@/shared/types';
 
-
-interface TrackResponse {
+interface SearchTrackResponse {
     success: boolean;
     message?: string;
-    trackId?: string;
+    tracks?: Track[];
 }
 
-export const getTrackId = async (): Promise<TrackResponse> => {
-    try {
-        const response = await api.get<{ id: string }>('/songs/track');
 
+export const searchTrack = async (query: string): Promise<SearchTrackResponse> => {
+    console.log('Query:', query)
+    try {
+        const response = await api.get(`/songs/search`, {
+            params: {
+                q: query
+            }
+        });
         if (response.status === 200) {
+            console.log(response.data)
             return {
                 success: true,
-                message: 'Track fetched successfully',
-                trackId: response.data.id as string
+                message: 'Tracks fetched successfully',
+                tracks: response.data as Track[]
             }
         }
         return {
             success: false,
-            message: 'Failed to get track'
+            message: 'Failed to get tracks'
         }
     } catch (error:any) {
         console.error('Upload Error:', error);

@@ -1,10 +1,9 @@
 import { Router } from "express";
-import { getTrack } from "../controllers/song.controller";
-import { check } from "../controllers/song.controller";
+import { check, searchTrack } from "../controllers/song.controller";
 
 const router = Router();
 
-router.get("/track", getTrack);
+router.get("/search", searchTrack);
 router.get("/check", check)
 
 export default router;
