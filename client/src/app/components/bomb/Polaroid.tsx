@@ -1,10 +1,18 @@
-import Image from "next/image";
+import UserImages from "./UserImages";
+
+const images: string[] = [
+  '/b1.jpg',
+  '/b2.jpg',
+  '/b3.jpg',
+  '/b4.jpg',
+  '/b5.jpg',
+]
 
 const PolaroidPhoto = ({ imageSrc }: { imageSrc: string }) => {
   return (
-    <div className="relative flex flex-col items-center w-60 bg-white p-4 rounded-lg shadow-lg border">
+    <div className="flex flex-col items-center rounded-lg shadow-lg h-full max-w-5xl w-full">
       {/* Polaroid Camera Frame */}
-      <div className="relative flex flex-col items-center w-full">
+      <div className="flex flex-col items-center w-full">
         {/* Camera Top */}
         <div className="w-full bg-gray-900 p-4 rounded-t-lg">
           <div className="relative">
@@ -22,22 +30,8 @@ const PolaroidPhoto = ({ imageSrc }: { imageSrc: string }) => {
             </div>
           </div>
         </div>
-
-        {/* Polaroid Photo */}
-        <div className="w-full bg-gray-200 p-2">
-          <div className="relative w-full h-40 bg-white shadow-md border">
-            <Image
-              src={imageSrc}
-              alt="Polaroid Picture"
-              layout="fill"
-              objectFit="cover"
-              className="rounded"
-            />
-          </div>
-        </div>
-
-        {/* Label */}
-        <p className="mt-2 text-sm font-semibold text-gray-700">POLAROID PHOTO</p>
+        {/* Polaroid Photo User Images */}
+        <UserImages imageSrcs={images} />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client"
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { uploadFiles } from '../../services/upload.service';
+import { uploadFiles } from '@/services/upload.service';
 
 interface UploadStatus {
     isUploading: boolean;
