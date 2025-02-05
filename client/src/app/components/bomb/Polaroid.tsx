@@ -1,16 +1,9 @@
 import UserImages from "./UserImages";
 
-const images: string[] = [
-  '/b1.jpg',
-  '/b2.jpg',
-  '/b3.jpg',
-  '/b4.jpg',
-  '/b5.jpg',
-]
 
-const PolaroidPhoto = ({ imageSrc }: { imageSrc: string }) => {
+const PolaroidPhoto = ({ imageSrc }: { imageSrc: string[] }) => {
   return (
-    <div className="flex flex-col items-center rounded-lg shadow-lg h-full max-w-5xl w-full">
+    <div className="flex flex-col items-center rounded-lg shadow-lg h-full max-w-5xl w-full mb-10">
       {/* Polaroid Camera Frame */}
       <div className="flex flex-col items-center w-full">
         {/* Camera Top */}
@@ -31,7 +24,7 @@ const PolaroidPhoto = ({ imageSrc }: { imageSrc: string }) => {
           </div>
         </div>
         {/* Polaroid Photo User Images */}
-        <UserImages imageSrcs={images} />
+        <UserImages imageSrcs={imageSrc} />
       </div>
     </div>
   );

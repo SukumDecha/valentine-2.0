@@ -4,7 +4,7 @@ import { check } from "../controllers/song.controller";
 
 const router = Router();
 
-router.get("/track/:id", getTrack);
+router.get("/track", getTrack);
 router.get("/check", check)
 
 export default router;

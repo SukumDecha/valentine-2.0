@@ -3,7 +3,7 @@ import React from 'react';
 import { Spotify } from 'react-spotify-embed';
 
 interface SpotifyEmbedProps {
-    trackId: string;
+    trackId: string | '';
 }
 
 const SpotifyEmbed = ({ trackId }: SpotifyEmbedProps) => {

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getSpotifyToken } from "../utils/spotify";
 import axios from "axios";
+import trackList from '../track/tracks'
 
 export const check = async (req: Request, res: Response): Promise<void> => {
     const token = await getSpotifyToken();
@@ -12,7 +13,7 @@ export const check = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const getTrack = async (req: Request, res: Response): Promise<void> => {
-    const trackId = req.params.id;
+    const trackId = trackList[Math.floor(Math.random() * trackList.length)];
     const token = await getSpotifyToken();
 
     if (!token) {
@@ -21,6 +22,7 @@ export const getTrack = async (req: Request, res: Response): Promise<void> => {
     }
 
     try {
+
         const response = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, {
             headers: { Authorization: `Bearer ${token}` },
         });
