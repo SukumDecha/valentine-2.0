@@ -12,4 +12,11 @@ export const mockupData = async (req: Request, res: Response) : Promise<void> =>
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
+
+}
+
+export const getRequestParamSlugFromClient = (req: Request, res: Response) : void => {
+    const slug = req.params.slug;
+    console.log("Get request param slug from client: ", slug);
+    res.status(200).json({ slug });
 }
