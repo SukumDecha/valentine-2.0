@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import uploadRouter from "./routes/upload.route";
 import songRouter from "./routes/song.route";
-import urlRouter from "./routes/url.route"
+import imageRouter from "./routes/image.route";
 import { connectToDB } from "./database/database";
 
 dotenv.config();
@@ -19,7 +19,7 @@ app.use(helmet());
 app.use(cors({origin: '*'}));
 app.use('/api/uploads', uploadRouter);
 app.use('/api/songs', songRouter);
-app.use('/api/url', urlRouter);
+app.use('/api/images', imageRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);

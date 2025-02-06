@@ -3,4 +3,5 @@ export interface UserModel {
     images?: string[];
     activate?: boolean;
     template?: string;
+    trackId?: string;
 }

@@ -1,8 +1,7 @@
-// src/middleware/upload.middleware.ts
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import express from "express";
+import {Request, Response, NextFunction} from "express";
 
 // Create dir if not exists
 const uploadsDir = path.join(process.cwd(), "uploads");
@@ -12,17 +11,27 @@ if (!fs.existsSync(uploadsDir)) {
 
 // Configure storage
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function (req : Request, file, cb) {
         cb(null, uploadsDir);
     },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    filename: function (req : Request, file, cb) {
+        // Get the slug from request parameters
+        const slug = req.params.slug || 'slug_default';
+        const template = req.params.template || 'template_default';
+        
+        // Get the current count of files to append to filename
+        const files = req.files as Express.Multer.File[];
+        const fileCount =files.length;
+        
+        // Create filename with slug and counter
+        const filename = `${slug}-image-${fileCount}${path.extname(file.originalname)}`;
+        
+        cb(null, filename);
     }
 });
 
 // File filter to validate uploads
-const fileFilter = (req: express.Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
         return cb(new Error('Only image files are allowed!'));
     }
@@ -39,10 +48,10 @@ const upload = multer({
 });
 
 // Export middleware handler
-export const handleFileUpload = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const handleFileUpload = (req: Request, res: Response, next: NextFunction) => {
     const uploadMiddleware = upload.array("images", 10);
     
-    uploadMiddleware(req, res, (err) => {
+    uploadMiddleware(req, res, (err : any) => {
         if (err instanceof multer.MulterError) {
             return res.status(400).json({
                 message: 'Upload error',

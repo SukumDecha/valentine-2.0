@@ -9,7 +9,6 @@ interface SearchTrackResponse {
 
 
 export const searchTrack = async (query: string): Promise<SearchTrackResponse> => {
-    console.log('Query:', query)
     try {
         const response = await api.get(`/songs/search`, {
             params: {

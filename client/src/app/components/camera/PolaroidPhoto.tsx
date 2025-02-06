@@ -1,7 +1,17 @@
-import UserImages from "./UserImages";
+"use client"
+import UserImage from "./UserImage";
+import { useEffect } from 'react';
 
-
-const PolaroidPhoto = ({ imageSrc }: { imageSrc: string[] }) => {
+const PolaroidPhoto = ({ imageSrc }: { imageSrc: string[]}) => {
+  useEffect(() => {
+    return () => {
+        imageSrc.forEach(url => {
+            if (url.startsWith('blob:')) {
+                URL.revokeObjectURL(url);
+            }
+        });
+    };
+}, [imageSrc]);
   return (
     <div className="flex flex-col items-center rounded-lg shadow-lg h-full max-w-5xl w-full mb-10">
       {/* Polaroid Camera Frame */}
@@ -24,7 +34,7 @@ const PolaroidPhoto = ({ imageSrc }: { imageSrc: string[] }) => {
           </div>
         </div>
         {/* Polaroid Photo User Images */}
-        <UserImages imageSrcs={imageSrc} />
+        <UserImage imageSrcs={imageSrc} />
       </div>
     </div>
   );

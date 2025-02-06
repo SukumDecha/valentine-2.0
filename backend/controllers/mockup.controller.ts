@@ -14,9 +14,3 @@ export const mockupData = async (req: Request, res: Response) : Promise<void> =>
     }
 
 }
-
-export const getRequestParamSlugFromClient = (req: Request, res: Response) : void => {
-    const slug = req.params.slug;
-    console.log("Get request param slug from client: ", slug);
-    res.status(200).json({ slug });
-}

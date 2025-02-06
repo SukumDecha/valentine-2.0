@@ -1,8 +1,8 @@
-// components/song/SearchSong.tsx
+"use client"
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { searchTrack } from '@/services/song.service';
-import SpotifyEmbed from '../bomb/SpotifyEmbed';
+import SpotifyEmbed from './SpotifyEmbed';
 import { Track } from '@/shared/types';
 
 

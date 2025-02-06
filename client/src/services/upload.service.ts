@@ -7,7 +7,7 @@ interface UploadImagesResponse {
     files?: string[];
 }
 
-export const uploadFiles = async (files: File[]): Promise<UploadImagesResponse> => {
+export const uploadFiles = async (slug :string, files: File[]): Promise<UploadImagesResponse> => {
     // Validate input
     if (!files || files.length === 0) {
         throw new Error('No files provided for upload');
@@ -19,19 +19,19 @@ export const uploadFiles = async (files: File[]): Promise<UploadImagesResponse> 
     });
 
     try {
-        const response = await api.post<UploadImagesResponse>("/uploads", formData, {
+        const response = await api.post<UploadImagesResponse>(`/uploads/${slug}`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             },
-            // timeout: 30000, // 30 seconds
+            timeout: 30000,
             // progress for ensuring upload progress 100% or not
-            // onUploadProgress: (progressEvent) => {
-            //     if (progressEvent.total) {
-            //         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            //         console.log(`Upload Progress: ${percentCompleted}%`);
-            //     }
-            // }
-        });
+            onUploadProgress: (progressEvent) => {
+                if (progressEvent.total) {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    console.log(`Upload Progress: ${percentCompleted}%`);
+                }
+            }
+        },);
 
         if (response.status === 200 && response.data.success) {
             return {

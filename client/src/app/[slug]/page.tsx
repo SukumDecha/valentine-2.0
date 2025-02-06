@@ -1,6 +1,7 @@
-"use client"
-import PolaroidPhoto from '../components/bomb/Polaroid'
-import SearchSong from '../components/bomb/SearchSong'
+import PolaroidPhoto from '../components/camera/PolaroidPhoto';
+import SearchSong from '../components/song/SearchSong'
+import UploadImage from '../components/upload-image/ImageUpload';
+import { useImages } from '@/hooks/use-images';
 
 const images: string[] = [
   '/b1.jpg',
@@ -10,7 +11,14 @@ const images: string[] = [
   '/b5.jpg',
 ];
 
-const CameraPage = () => {
+interface PageProps {
+  params: {
+      slug: string
+  }
+}
+
+const CameraPage = ({ params }: PageProps) => {
+  const url_slug = params.slug;
   return (
     <section className='bg-gradient-to-r from-red-500 to-pink-600'>
       <div className='flex flex-col items-center p-4 gap-10 h-auto text-white max-w-3xl mx-auto'>
@@ -20,8 +28,8 @@ const CameraPage = () => {
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi voluptatum quo, praesentium ducimus doloribus voluptates aliquid. Expedita, quia? Eveniet dolorum sed error blanditiis commodi quia nesciunt eligendi praesentium soluta tempora.
           </p>
         </div>
-
         <SearchSong />
+        <UploadImage url_slug={url_slug} />
         <PolaroidPhoto imageSrc={images} />
       </div>
     </section>
