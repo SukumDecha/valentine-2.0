@@ -9,8 +9,8 @@ interface IProps {
 }
 const BenzoNavgiate = ({ imageUrl, url, title }: IProps) => {
   return (
-    <a className='flex flex-col items-center justify-center gap-4' href={url}>
-      <div className="-img w-12 h-12 relative bg-pink-200 rounded-full flex items-center justify-center">
+    <a className='flex flex-col items-center justify-center gap-4 group' href={url}>
+      <div className="-img w-12 h-12 relative bg-pink-200 rounded-full flex items-center justify-center group-hover:translate-y-[-4px] transition-all duration-500">
         <Image
           src={imageUrl}
           layout='fill'

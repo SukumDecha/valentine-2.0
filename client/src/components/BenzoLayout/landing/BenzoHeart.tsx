@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react';
 import confetti from 'canvas-confetti';
+import BlurText from '@/components/Shared/libraries/BlurText';
 
 const createConfetti = () => {
     const emojiShape = confetti.shapeFromText({ text: '❤️', scalar: 3 });
@@ -37,13 +40,21 @@ const BenzoHeart = ({ title, isClicked, handleClick }: IProps) => {
                 className={`-heart ${isClicked ? 'clicked' : ''}`}
                 onClick={doClick}
             >
-                <p
+                <div
                     className="-title"
                     style={{ opacity: isClicked ? 1 : 0, display: isClicked ? 'block' : 'none' }}
                 >
                     <br />
-                    {title}
-                </p>
+
+                    <BlurText
+                        text={title}
+                        className='text-center justify-center'
+                        delay={150}
+                        animateBy="words"
+                        direction="top"
+                    />
+
+                </div>
                 <p className="-instructions">(Click me!)</p>
             </div>
         </div>

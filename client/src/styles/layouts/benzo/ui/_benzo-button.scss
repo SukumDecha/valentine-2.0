@@ -11,17 +11,22 @@
     -webkit-user-select: none;
     touch-action: manipulation;
 
+    &.-disabled {
+      cursor: not-allowed;
+      filter: grayscale(100%) !important;
+    }
+
     &:hover {
       filter: brightness(110%);
 
       .benzo-button.-front {
         transform: translateY(-6px);
-        transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
       }
 
       .benzo-button.-shadow {
         transform: translateY(4px);
-        transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
       }
     }
 
@@ -51,14 +56,14 @@
     border-radius: 1em;
     will-change: transform;
     transform: translateY(0.125em);
-    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
 
     &.-primary {
       background: hsl(345deg 100% 30%);
     }
 
     &.-secondary {
-      background: hsl(340deg 100% 50%);
+      background: hsl(340deg 80% 60%);
     }
   }
 
@@ -70,7 +75,6 @@
     height: 100%;
     border-radius: 1em;
 
-    // Match edge color based on button type
     &.-primary {
       background: linear-gradient(to left,
           hsl(345deg 100% 35%) 0%,
@@ -81,10 +85,10 @@
 
     &.-secondary {
       background: linear-gradient(to left,
-          hsl(340deg 100% 70%) 0%,
-          hsl(340deg 100% 85%) 8%,
-          hsl(340deg 100% 85%) 92%,
-          hsl(340deg 100% 70%) 100%);
+          hsl(340deg 80% 65%) 0%,
+          hsl(340deg 80% 75%) 8%,
+          hsl(340deg 80% 75%) 92%,
+          hsl(340deg 80% 65%) 100%);
     }
   }
 
@@ -93,17 +97,18 @@
     position: relative;
     padding: 4px 8px;
     border-radius: 1em;
-    color: white;
     will-change: transform;
     transform: translateY(-0.25em);
-    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
   }
 
   &.-primary {
     background: hsl(345deg 100% 47%);
+    color: white;
   }
 
   &.-secondary {
-    background: hsl(340deg 100% 85%);
+    background: hsl(340deg 80% 80%);
+    color: hsl(340deg 80% 25%);
   }
 }
