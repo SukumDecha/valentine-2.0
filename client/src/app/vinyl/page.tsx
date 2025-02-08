@@ -1,8 +1,8 @@
 'use client'
 
-import InfiniteRotate from '@/components/InfiniteRotate'
-import Stack from '@/components/Stack'
-import Vinyl from '@/components/Vinyl'
+import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
+import Stack from '@/components/Vinyl/Stack'
+import Vinyl from '@/components/Vinyl/Vinyl'
 
 const Page = () => {
   return (
