@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import {Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 
 // Create dir if not exists
 const uploadsDir = path.join(process.cwd(), "uploads");
@@ -11,20 +11,17 @@ if (!fs.existsSync(uploadsDir)) {
 
 // Configure storage
 const storage = multer.diskStorage({
-    destination: function (req : Request, file, cb) {
+    destination: function (req: Request, file, cb) {
         cb(null, uploadsDir);
     },
-    filename: function (req : Request, file, cb) {
-        // Get the slug from request parameters
+    filename: function (req: Request, file, cb) {
         const slug = req.params.slug || 'slug_default';
-        const template = req.params.template || 'template_default';
         
-        // Get the current count of files to append to filename
-        const files = req.files as Express.Multer.File[];
-        const fileCount =files.length;
+        // Get the current timestamp to ensure unique filenames
+        const timestamp = Date.now();
         
-        // Create filename with slug and counter
-        const filename = `${slug}-image-${fileCount}${path.extname(file.originalname)}`;
+        // Create filename with slug and timestamp
+        const filename = `${slug}-${timestamp}${path.extname(file.originalname)}`;
         
         cb(null, filename);
     }
@@ -39,7 +36,7 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilt
 };
 
 // Create multer middleware instance
-const upload = multer({ 
+const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
@@ -49,9 +46,10 @@ const upload = multer({
 
 // Export middleware handler
 export const handleFileUpload = (req: Request, res: Response, next: NextFunction) => {
+    // Allow both 'file' and 'images' field names
     const uploadMiddleware = upload.array("images", 10);
     
-    uploadMiddleware(req, res, (err : any) => {
+    uploadMiddleware(req, res, (err: any) => {
         if (err instanceof multer.MulterError) {
             return res.status(400).json({
                 message: 'Upload error',

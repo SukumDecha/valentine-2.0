@@ -1,7 +1,3 @@
-"use client"
-import React from 'react';
-import { Spotify } from 'react-spotify-embed';
-
 interface SpotifyEmbedProps {
     trackId: string | '';
 }
@@ -9,7 +5,15 @@ interface SpotifyEmbedProps {
 const SpotifyEmbed = ({ trackId }: SpotifyEmbedProps) => {
     return (
         <div className='w-full mt-5'>
-            <Spotify height={200} link={`https://open.spotify.com/track/${trackId}`} className='w-full flex items-center py-4 px-3  bg-gradient-to-r from-pink-500 to-red-600' />
+            <iframe
+                style={{ borderRadius: "12px" }}
+                src={`https://open.spotify.com/embed/track/${trackId}?utm_source=generator&autoplay=1`}
+                width="100%"
+                height="352"
+                allowFullScreen
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+            ></iframe>
         </div>
     );
 };

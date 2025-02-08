@@ -1,7 +1,5 @@
-import PolaroidPhoto from '../components/camera/PolaroidPhoto';
 import SearchSong from '../components/song/SearchSong'
 import UploadImage from '../components/upload-image/ImageUpload';
-import { useImages } from '@/hooks/use-images';
 
 const images: string[] = [
   '/b1.jpg',
@@ -30,7 +28,6 @@ const CameraPage = ({ params }: PageProps) => {
         </div>
         <SearchSong />
         <UploadImage url_slug={url_slug} />
-        <PolaroidPhoto imageSrc={images} />
       </div>
     </section>
   );
