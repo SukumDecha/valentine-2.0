@@ -1,0 +1,23 @@
+:root {
+    --valentine-primary: #ff69b4;
+    --valentine-secondary: #ff1493;
+    --valentine-accent: #ff6347;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+.ant-radio-wrapper:hover .ant-radio-inner {
+    border-color: var(--valentine-secondary) !important;
+}
+
+.ant-radio-checked .ant-radio-inner {
+    border-color: var(--valentine-primary) !important;
+    background-color: var(--valentine-primary) !important;
+}
+
+.ant-radio-checked .ant-radio-inner::after {
+    background-color: white !important;
+}

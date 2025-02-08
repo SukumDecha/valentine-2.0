@@ -9,17 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-spring/web": "^9.7.5",
     "@tabler/icons-react": "^3.29.0",
     "antd": "^5.23.3",
+    "canvas-confetti": "^1.9.3",
     "framer-motion": "^12.0.6",
+    "gsap": "^3.12.7",
     "next": "14.2.23",
     "react": "^18",
     "react-dom": "^18",
+    "sass": "^1.83.4",
     "scss": "^0.2.4",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.1.6",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

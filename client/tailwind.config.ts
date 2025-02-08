@@ -8,6 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'benzo-landing': "url('/images/benzo/backgrounds/landing.jpeg')",
+        'benzo-memories': "url('/images/benzo/backgrounds/memories.jpg')",
+        'benzo-message': "url('/images/benzo/backgrounds/message.jpg')",
+        'benzo-selector': "url('/images/benzo/backgrounds/landing.jpg')",
+        'benzo-time-together': "url('/images/benzo/backgrounds/time-to-gether.jpg')",
+        'benzo-quiz': "url('/images/benzo/backgrounds/quiz.jpeg')",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
