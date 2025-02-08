@@ -30,8 +30,7 @@ export async function uploadFileToMinio(filePath: string, objectName: string): P
         } catch (unlinkError) {
             // If file doesn't exist, it might have been deleted by another upload
             console.log(`Note: File ${filePath} already deleted or doesn't exist`);
-        }
-        
+        } 
         return url;
     } catch (error) {
         console.error("Error uploading file:", error);

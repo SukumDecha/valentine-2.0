@@ -1,3 +1,4 @@
+import UserImage from '../components/show-image/UserImage';
 import SearchSong from '../components/song/SearchSong'
 import UploadImage from '../components/upload-image/ImageUpload';
 
@@ -28,6 +29,7 @@ const CameraPage = ({ params }: PageProps) => {
         </div>
         <SearchSong />
         <UploadImage url_slug={url_slug} />
+        <UserImage slug={url_slug} />
       </div>
     </section>
   );
