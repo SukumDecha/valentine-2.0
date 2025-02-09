@@ -13,7 +13,7 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
         const fileUrls: string[] = [];
         for (const file of req.files) {
             try {
-                const objectName = `${req.params.slug}/${path.basename(file.filename)}`;
+                const objectName = `${req.params.uuid}/${path.basename(file.filename)}`;
                 const url = await uploadFileToMinio(file.path, objectName);
                 fileUrls.push(url);
             } catch (error) {
@@ -31,7 +31,7 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
 
         const db = getDB().collection('users');
         const addImages = await db.updateOne(
-            { uuid: req.params.slug },
+            { uuid: req.params.uuid },
             { $set: { images: fileUrls } }
         );
 

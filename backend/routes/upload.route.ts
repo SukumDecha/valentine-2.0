@@ -4,6 +4,6 @@ import { handleFileUpload } from "../middleware/upload.middleware";
 
 const router = Router();
 
-router.post("/:slug",handleFileUpload, uploadFiles);
+router.post("/:uuid",handleFileUpload, uploadFiles);
 
 export default router;

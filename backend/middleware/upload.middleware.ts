@@ -15,13 +15,13 @@ const storage = multer.diskStorage({
         cb(null, uploadsDir);
     },
     filename: function (req: Request, file, cb) {
-        const slug = req.params.slug || 'slug_default';
+        const uuid = req.params.uuid || 'uuid_default';
         
         // Get the current timestamp to ensure unique filenames
         const timestamp = Date.now();
         
-        // Create filename with slug and timestamp
-        const filename = `${slug}-${timestamp}${path.extname(file.originalname)}`;
+        // Create filename with uuid and timestamp
+        const filename = `${uuid}-${timestamp}${path.extname(file.originalname)}`;
         
         cb(null, filename);
     }

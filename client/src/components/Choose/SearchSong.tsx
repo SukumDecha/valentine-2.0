@@ -1,43 +1,29 @@
 "use client"
 import { Search } from 'lucide-react';
-import { useState } from 'react';
-import { searchTrack } from '@/services/song.service';
-import SpotifyEmbed from './SpotifyEmbed';
+import SpotifyEmbed from '@/components/Choose/SpotifyEmbed';
 import { Track } from '@/shared/types';
+import { useTrackSearch, useTrackSelection } from '@/hooks/useTrack';
 
+const SearchSong = ({ uuid_slug }: { uuid_slug: string }) => {
+    const {
+        selectedTrack,
+        setSelectedTrack,
+        searchQuery,
+        setSearchQuery,
+        isSearching,
+        error,
+        tracks,
+        handleSearch
+    } = useTrackSearch();
 
-const SearchSong = () => {
-    const [selectedTrack, setSelectedTrack] = useState<string>('');
-    const [searchQuery, setSearchQuery] = useState<string>('');
-    const [isSearching, setIsSearching] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-    const [tracks, setTracks] = useState<Track[]>([]);
-
-    const handleSearch = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!searchQuery.trim()) return;
-
-        setIsSearching(true);
-        setError('');
-
-        try {
-            const result = await searchTrack(searchQuery);
-            if (result.success && result.tracks && result.tracks.length > 0) {
-                setTracks(result.tracks);
-                setSelectedTrack(result.tracks[0].trackId);
-            } else {
-                setError('No tracks found');
-            }
-        } catch (error) {
-            console.error('Error searching track:', error);
-            setError('Failed to search track');
-        } finally {
-            setIsSearching(false);
-        }
-    };
+    const {
+        chooseTrack,
+        handleAddTrack
+    } = useTrackSelection(uuid_slug);
 
     const handleSelectTrack = (track: Track) => {
-        setSelectedTrack(track.trackId);
+        console.log('Selected track:', track);
+        setSelectedTrack(track);
     };
 
     return (
@@ -74,8 +60,9 @@ const SearchSong = () => {
                                 <button
                                     key={track.trackId}
                                     onClick={() => handleSelectTrack(track)}
-                                    className={`w-full p-2 text-left rounded hover:bg-white/10 transition-colors ${track.trackId === selectedTrack ? 'bg-white/20' : ''
-                                        }`}
+                                    className={`w-full p-2 text-left rounded hover:bg-white/10 transition-colors ${
+                                        track.trackId === selectedTrack?.trackId ? 'bg-white/20' : ''
+                                    }`}
                                 >
                                     <p className="font-medium">{track.trackName}</p>
                                     <p className="text-sm text-white/70">{track.artistName}</p>
@@ -83,7 +70,22 @@ const SearchSong = () => {
                             ))}
                         </div>
                     )}
-                    {selectedTrack && <SpotifyEmbed trackId={selectedTrack} />}
+                    {selectedTrack && (
+                        <form onSubmit={(e) => handleAddTrack(e, selectedTrack.trackId)}>
+                            <SpotifyEmbed trackId={selectedTrack.trackId} />
+                            <button 
+                                className={`mt-4 w-full p-2 bg-green-600 transition-all duration-300 ${
+                                    chooseTrack ? 'scale-105' : ''
+                                }`}
+                            >
+                                {chooseTrack ? (
+                                    <span className="inline-block animate-bounce">✅</span>
+                                ) : (
+                                    `Choose ${selectedTrack.trackName}-${selectedTrack.artistName}`
+                                )}
+                            </button>
+                        </form>
+                    )}
                 </>
             )}
         </div>

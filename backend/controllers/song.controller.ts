@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getSpotifyToken } from "../utils/spotify";
 import axios from "axios";
 import { getTrackList } from "../utils/spotify";
+import { getDB } from "../database/database";
 
 export const check = async (req: Request, res: Response): Promise<void> => {
     const token = await getSpotifyToken();
@@ -27,7 +28,7 @@ export const searchTrack = async (req: Request, res: Response): Promise<void> =>
             params: {
                 q: q,
                 type: "track",
-                limit: 6,
+                limit: 4,
             },
         });
         const data = getTrackList(response.data.tracks.items);
@@ -39,4 +40,23 @@ export const searchTrack = async (req: Request, res: Response): Promise<void> =>
         });
     }
 
+}
+
+export const addTrackId = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { trackId } = req.body;
+        const db = getDB().collection('users');
+        const addTrack = await db.updateOne(
+            { uuid: req.params.uuid },
+            { $set: { trackId: trackId }} 
+        );
+
+        if (addTrack.modifiedCount === 0) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+        res.status(200).json({ message: "Track added successfully" });
+    } catch (error) {
+
+    }
 }

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { getDB } from "../database/database";
 
-export const getUserImages = async (req: Request, res: Response): Promise<void> => {
+
+export const getUserData = async (req: Request, res: Response): Promise<void> => {
     try {
-        const userUuid = req.params.slug;
+        const userUuid = req.params.uuid;
         const db = getDB().collection('users');
         const user = await db.findOne({ uuid: userUuid });
 
@@ -14,15 +15,15 @@ export const getUserImages = async (req: Request, res: Response): Promise<void> 
 
         res.status(200).json({
             success: true,
-            message: "Images fetched successfully",
+            message: "User data fetched successfully",
+            trackId : user.trackId,
             images: user.images || []
         });
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Error fetching images",
+            message: "Error fetching user data",
             error: error instanceof Error ? error.message : 'Unknown error'
         });
     }
 }
-
