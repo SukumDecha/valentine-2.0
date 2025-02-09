@@ -44,11 +44,11 @@ export const searchTrack = async (req: Request, res: Response): Promise<void> =>
 
 export const addTrackId = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { trackId } = req.body;
+        const { trackId, trackImage } = req.body;
         const db = getDB().collection('users');
         const addTrack = await db.updateOne(
             { uuid: req.params.uuid },
-            { $set: { trackId: trackId }} 
+            { $set: { trackId: trackId, trackImage: trackImage } } 
         );
 
         if (addTrack.modifiedCount === 0) {

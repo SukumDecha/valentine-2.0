@@ -16,14 +16,19 @@ interface UserDataResponse {
     success: boolean;
     message?: string;
     trackId?: string;
+    trackImage?: string;
     images?: string[];
 }
 
+
+
 export interface Track {
     trackId: string;
+    trackImage: string;
     trackName: string;
     artistName: string;
 }
+
 
 export const uploadFiles = async (uuid: string, files: File[]): Promise<UploadImagesResponse> => {
     if (!files || files.length === 0) {
@@ -100,9 +105,9 @@ export const searchTrack = async (query: string): Promise<SearchTrackResponse> =
     }
 }
 
-export const addTrackId = async (uuid: string, trackId: string): Promise<boolean> => {
+export const addTrackId = async (uuid: string, trackId: string, trackImage : string): Promise<boolean> => {
     try {
-        const response = await api.post(`/songs/${uuid}`, { trackId });
+        const response = await api.post(`/songs/${uuid}`, { trackId, trackImage });
         if (response.status === 200) {
             return true;
         }
@@ -122,6 +127,7 @@ export const getUserData = async (uuid: string): Promise<UserDataResponse> => {
                 success: true,
                 message: response.data.message || 'User data fetched successfully',
                 trackId: response.data.trackId,
+                trackImage: response.data.trackImage,
                 images: response.data.images
             };
         }

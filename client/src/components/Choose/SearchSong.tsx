@@ -60,23 +60,24 @@ const SearchSong = ({ uuid_slug }: { uuid_slug: string }) => {
                                 <button
                                     key={track.trackId}
                                     onClick={() => handleSelectTrack(track)}
-                                    className={`w-full p-2 text-left rounded hover:bg-white/10 transition-colors ${
-                                        track.trackId === selectedTrack?.trackId ? 'bg-white/20' : ''
-                                    }`}
+                                    className={`w-full p-2 text-left rounded hover:bg-white/10 transition-colors flex justify-between items-center gap-2 ${track.trackId === selectedTrack?.trackId ? 'bg-white/20' : ''
+                                        }`}
                                 >
-                                    <p className="font-medium">{track.trackName}</p>
-                                    <p className="text-sm text-white/70">{track.artistName}</p>
+                                    <div>
+                                        <p className="font-medium">{track.trackName}</p>
+                                        <p className="text-sm text-white/70">{track.artistName}</p>
+                                    </div>
+                                    <img src={track.trackImage} className='rounded-lg' />
                                 </button>
                             ))}
                         </div>
                     )}
                     {selectedTrack && (
-                        <form onSubmit={(e) => handleAddTrack(e, selectedTrack.trackId)}>
+                        <form onSubmit={(e) => handleAddTrack(e, selectedTrack.trackId, selectedTrack.trackImage)}>
                             <SpotifyEmbed trackId={selectedTrack.trackId} />
-                            <button 
-                                className={`mt-4 w-full p-2 bg-green-600 transition-all duration-300 ${
-                                    chooseTrack ? 'scale-105' : ''
-                                }`}
+                            <button
+                                className={`mt-4 w-full p-2 bg-green-600 transition-all duration-300 ${chooseTrack ? 'scale-105' : ''
+                                    }`}
                             >
                                 {chooseTrack ? (
                                     <span className="inline-block animate-bounce">✅</span>

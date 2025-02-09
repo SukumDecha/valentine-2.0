@@ -6,6 +6,7 @@ export interface Track {
   trackId: string;
   trackName: string;
   artistName: string;
+  trackImage : string;
 }
 
 export interface SpotifyAccessToken {
@@ -57,5 +58,6 @@ export const getTrackList = (trackResponse : any[]): Track[] => {
     trackId: track.id,
     trackName: track.name,
     artistName: track.artists.map((artist: any) => artist.name).join(", "),
+    trackImage: track.album.images[2].url,
   }))
 }

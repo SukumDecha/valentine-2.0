@@ -47,10 +47,10 @@ export const useTrackSearch = () => {
 export const useTrackSelection = (uuid_slug: string) => {
     const [chooseTrack, setChooseTrack] = useState<boolean>(false);
 
-    const handleAddTrack = async (e: React.FormEvent<HTMLFormElement>, trackId: string) => {
+    const handleAddTrack = async (e: React.FormEvent<HTMLFormElement>, trackId: string, trackImage : string) => {
         e.preventDefault();
         try {
-            const result = await addTrackId(uuid_slug, trackId);
+            const result = await addTrackId(uuid_slug, trackId, trackImage);
             if (result) {
                 setChooseTrack(true);
                 // Reset button state after animation

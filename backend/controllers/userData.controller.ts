@@ -17,6 +17,7 @@ export const getUserData = async (req: Request, res: Response): Promise<void> =>
             success: true,
             message: "User data fetched successfully",
             trackId : user.trackId,
+            trackImage: user.trackImage,
             images: user.images || []
         });
     } catch (error) {
