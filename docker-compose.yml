@@ -12,9 +12,10 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      - NEXT_PUBLIC_SPOTIFY_CLIENT_ID=${NEXT_PUBLIC_SPOTIFY_CLIENT_ID}
-      - NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=${NEXT_PUBLIC_SPOTIFY_REDIRECT_URI}
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+      - NEXT_PUBLIC_MINIO_URL=http://localhost:9000
+      - NEXT_PUBLIC_SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=${SPOTIFY_REDIRECT_URI}
     depends_on:
       - backend
     networks:
@@ -34,7 +35,8 @@ services:
       - PORT=8080
       - MONGO_URI=${MONGO_URI}
       # MinIO Configuration
-      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - MINIO_INTERNAL_ENDPOINT=${MINIO_INTERNAL_ENDPOINT}
+      - MINIO_PUBLIC_ENDPOINT=${MINIO_PUBLIC_ENDPOINT}
       - MINIO_PORT=${MINIO_PORT}
       - MINIO_USE_SSL=${MINIO_USE_SSL}
       - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
@@ -57,8 +59,14 @@ services:
     volumes:
       - minio-data:/data
     environment:
-      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
-      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+      # CORS Configuration
+      - MINIO_CORS_ALLOW_ORIGINS=*
+      - MINIO_CORS_ALLOW_METHODS=GET,PUT,POST,DELETE,OPTIONS
+      - MINIO_CORS_ALLOW_HEADERS=Accept,Authorization,Content-Type,Content-Length,X-Amz-Date,X-Amz-Security-Token,X-Amz-User-Agent
+      - MINIO_CORS_EXPOSE_HEADERS=ETag
+      - MINIO_CORS_MAX_AGE_SECONDS=3600
     command: server --console-address ":9001" /data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]

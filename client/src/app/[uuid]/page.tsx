@@ -7,10 +7,9 @@ interface PageProps {
 }
 
 const CameraPage = ({ params }: PageProps) => {
-  const uuid = params.uuid;
   return (
     <>
-      <Choose uuid={uuid} />
+      <Choose uuid={params.uuid} />
     </>
   );
 };

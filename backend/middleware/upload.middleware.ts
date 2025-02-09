@@ -16,11 +16,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req: Request, file, cb) {
         const uuid = req.params.uuid || 'uuid_default';
-        
-        // Get the current timestamp to ensure unique filenames
         const timestamp = Date.now();
-        
-        // Create filename with uuid and timestamp
         const filename = `${uuid}-${timestamp}${path.extname(file.originalname)}`;
         
         cb(null, filename);

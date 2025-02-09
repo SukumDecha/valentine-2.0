@@ -1,4 +1,4 @@
-import minioClient, { BUCKET_NAME, PUBLIC_ENDPOINT, PUBLIC_PORT } from "./client";
+import minioClient, { BUCKET_NAME, PUBLIC_ENDPOINT, INTERNAL_ENDPOINT, PUBLIC_PORT } from "./client";
 import { unlink } from 'fs/promises';
 
 export async function initializeBucket(): Promise<void> {
@@ -6,7 +6,22 @@ export async function initializeBucket(): Promise<void> {
         const exists = await minioClient.bucketExists(BUCKET_NAME);
         if (!exists) {
             await minioClient.makeBucket(BUCKET_NAME, "us-east-1");
-            console.log(`Bucket "${BUCKET_NAME}" created.`);
+
+            // Set bucket policy to allow public read access
+            const policy = {
+                Version: '2012-10-17',
+                Statement: [
+                    {
+                        Effect: 'Allow',
+                        Principal: '*',
+                        Action: ['s3:GetObject'],
+                        Resource: [`arn:aws:s3:::${BUCKET_NAME}/*`]
+                    }
+                ]
+            };
+
+            await minioClient.setBucketPolicy(BUCKET_NAME, JSON.stringify(policy));
+            console.log(`Bucket "${BUCKET_NAME}" created with public read policy.`);
         }
     } catch (error) {
         console.error("Error initializing bucket:", error);
@@ -14,40 +29,29 @@ export async function initializeBucket(): Promise<void> {
     }
 }
 
-export function transformMinioUrl(url: string): string {
-    // Replace internal Docker network URL with public URL
-    return url.replace(/http:\/\/minio:9000/g, `http://${PUBLIC_ENDPOINT}:${PUBLIC_PORT}`);
+export function getPublicUrl(objectName: string): string {
+    return `http://${PUBLIC_ENDPOINT}:${PUBLIC_PORT}/${BUCKET_NAME}/${objectName}`;
 }
 
 export async function uploadFileToMinio(filePath: string, objectName: string): Promise<string> {
     try {
         await minioClient.fPutObject(BUCKET_NAME, objectName, filePath, {});
-        const url = await minioClient.presignedGetObject(BUCKET_NAME, objectName, 24 * 60 * 60);
-        const publicUrl = transformMinioUrl(url);
-        
+        // Return direct public URL instead of presigned URL
+        const publicUrl = getPublicUrl(objectName);
+
         try {
             await unlink(filePath);
         } catch (unlinkError) {
             console.log(`Note: File ${filePath} already deleted or doesn't exist`);
-        } 
+        }
         return publicUrl;
     } catch (error) {
         console.error("Error uploading file:", error);
         try {
             await unlink(filePath);
         } catch (unlinkError) {
-            // Ignore deletion errors
+            // Ignore unlink error
         }
-        throw error;
-    }
-}
-
-export async function getPresignedUrl(objectName: string): Promise<string> {
-    try {
-        const url = await minioClient.presignedGetObject(BUCKET_NAME, objectName, 24 * 60 * 60);
-        return transformMinioUrl(url);
-    } catch (error) {
-        console.error("Error generating presigned URL:", error);
         throw error;
     }
 }

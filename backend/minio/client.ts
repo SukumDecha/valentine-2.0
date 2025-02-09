@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const minioClient = new Client({
-    endPoint: process.env.MINIO_ENDPOINT || 'minio',
+    endPoint: process.env.MINIO_INTERNAL_ENDPOINT || 'minio',
     port: parseInt(process.env.MINIO_PORT || '9000'),
     useSSL: false,
     accessKey: process.env.MINIO_ACCESS_KEY || 'minioadmin',
@@ -13,6 +13,7 @@ const minioClient = new Client({
 
 export const BUCKET_NAME = process.env.MINIO_BUCKET_NAME || 'user-uploads';
 export const PUBLIC_ENDPOINT = process.env.MINIO_PUBLIC_ENDPOINT || 'localhost';
-export const PUBLIC_PORT = process.env.MINIO_PUBLIC_PORT || '9000';
+export const INTERNAL_ENDPOINT = process.env.MINIO_INTERNAL_ENDPOINT || 'minio';
+export const PUBLIC_PORT = process.env.MINIO_PORT || '9000';
 
 export default minioClient;
