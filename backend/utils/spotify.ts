@@ -1,7 +1,12 @@
 import dotenv from "dotenv";
 import axios from "axios";
-import { Track } from '../../shared/types';
 dotenv.config();
+
+export interface Track {
+  trackId: string;
+  trackName: string;
+  artistName: string;
+}
 
 export interface SpotifyAccessToken {
   access_token: string;

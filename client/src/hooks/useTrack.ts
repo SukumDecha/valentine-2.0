@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { searchTrack, addTrackId } from '@/services/main.service';
-import { Track } from '@/shared/types';
+import { Track } from '@/services/main.service';
 
 export const useTrackSearch = () => {
     const [selectedTrack, setSelectedTrack] = useState<Track>();

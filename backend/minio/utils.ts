@@ -1,7 +1,6 @@
-import minioClient, { BUCKET_NAME } from "./client";
+import minioClient, { BUCKET_NAME, PUBLIC_ENDPOINT, PUBLIC_PORT } from "./client";
 import { unlink } from 'fs/promises';
 
-// Initialize bucket
 export async function initializeBucket(): Promise<void> {
     try {
         const exists = await minioClient.bucketExists(BUCKET_NAME);
@@ -15,26 +14,25 @@ export async function initializeBucket(): Promise<void> {
     }
 }
 
-// Upload file and return presigned URL
+export function transformMinioUrl(url: string): string {
+    // Replace internal Docker network URL with public URL
+    return url.replace(/http:\/\/minio:9000/g, `http://${PUBLIC_ENDPOINT}:${PUBLIC_PORT}`);
+}
+
 export async function uploadFileToMinio(filePath: string, objectName: string): Promise<string> {
     try {
-        // Upload to MinIO
         await minioClient.fPutObject(BUCKET_NAME, objectName, filePath, {});
-        
-        // Generate presigned URL
         const url = await minioClient.presignedGetObject(BUCKET_NAME, objectName, 24 * 60 * 60);
+        const publicUrl = transformMinioUrl(url);
         
-        // Clean up local file - with error handling for file deletion
         try {
             await unlink(filePath);
         } catch (unlinkError) {
-            // If file doesn't exist, it might have been deleted by another upload
             console.log(`Note: File ${filePath} already deleted or doesn't exist`);
         } 
-        return url;
+        return publicUrl;
     } catch (error) {
         console.error("Error uploading file:", error);
-        // Try to clean up if file exists
         try {
             await unlink(filePath);
         } catch (unlinkError) {
@@ -43,22 +41,13 @@ export async function uploadFileToMinio(filePath: string, objectName: string): P
         throw error;
     }
 }
-// Get presigned URL for existing file
+
 export async function getPresignedUrl(objectName: string): Promise<string> {
     try {
-        return await minioClient.presignedGetObject(BUCKET_NAME, objectName, 24 * 60 * 60);
+        const url = await minioClient.presignedGetObject(BUCKET_NAME, objectName, 24 * 60 * 60);
+        return transformMinioUrl(url);
     } catch (error) {
         console.error("Error generating presigned URL:", error);
-        throw error;
-    }
-}
-
-// Delete file from MinIO
-export async function deleteFileFromMinio(objectName: string): Promise<void> {
-    try {
-        await minioClient.removeObject(BUCKET_NAME, objectName);
-    } catch (error) {
-        console.error("Error deleting file:", error);
         throw error;
     }
 }

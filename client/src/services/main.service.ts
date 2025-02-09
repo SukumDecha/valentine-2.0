@@ -1,4 +1,3 @@
-import { Track } from "@/shared/types";
 import api from "./api";
 
 interface UploadImagesResponse {
@@ -16,12 +15,17 @@ interface SearchTrackResponse {
 interface UserDataResponse {
     success: boolean;
     message?: string;
-    trackId?:string;
+    trackId?: string;
     images?: string[];
 }
 
+export interface Track {
+    trackId: string;
+    trackName: string;
+    artistName: string;
+}
 
-export const uploadFiles = async (uuid :string, files: File[]): Promise<UploadImagesResponse> => {
+export const uploadFiles = async (uuid: string, files: File[]): Promise<UploadImagesResponse> => {
     if (!files || files.length === 0) {
         throw new Error('No files provided for upload');
     }
@@ -90,7 +94,7 @@ export const searchTrack = async (query: string): Promise<SearchTrackResponse> =
             success: false,
             message: 'Failed to get tracks'
         }
-    } catch (error:any) {
+    } catch (error: any) {
         console.error('Upload Error:', error);
         throw new Error(error.message || 'Can not get track');
     }
@@ -110,7 +114,7 @@ export const addTrackId = async (uuid: string, trackId: string): Promise<boolean
 }
 
 
-export const getUserData = async (uuid: string) : Promise<UserDataResponse> => {
+export const getUserData = async (uuid: string): Promise<UserDataResponse> => {
     try {
         const response = await api.get<UserDataResponse>(`/users/${uuid}`);
         if (response.status === 200 && response.data.success) {

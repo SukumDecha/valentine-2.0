@@ -25,7 +25,7 @@ export default function UploadImage({ uuid_slug }: { uuid_slug: string }) {
             if (response.success && response.images) {
                 setUploadedImages(response.images.map((url: string, index: number) => ({
                     url,
-                    id: `uploaded-${Date.now()}-${index}`
+                    id: `uploaded-${index}`
                 })));
             }
         } catch (error) {
