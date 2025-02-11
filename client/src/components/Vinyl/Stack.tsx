@@ -128,6 +128,7 @@ export default function Stack({
                   src={card.img}
                   alt={`card-${card.id}`}
                   className="w-full object-cover h-3/4"
+                  draggable="false"
                 />
                 <div className="h-1/4 flex justify-center items-center">"{card.title}"</div>
               </div>
