@@ -22,4 +22,6 @@ p {
 }
 
 
-@import './layouts/benzo/index.scss'
+@import './layouts/benzo/index.scss';
+
+@import "./variables/breakpoint.scss";
