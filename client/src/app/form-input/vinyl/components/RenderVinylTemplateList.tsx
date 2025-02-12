@@ -39,10 +39,29 @@ const templateList: Template[] = [
     templateId: '3',
     label: 'Moonlight',
     img: {
-      url: '/images/vinyl/form/sunlight.png',
-      width: 64,
-      height: 64,
+      url: '/images/vinyl/form/moon.png',
+      width: 41,
+      height: 48,
     },
+    css: {
+      backgroundColor: '#09122C',
+      color: '#fff'
+    }
+  },
+  {
+    templateId: '4',
+    label: 'Angel',
+    img: {
+      url: '/images/vinyl/form/angel.png',
+      width: 41,
+      height: 60,
+    },
+    css: {
+      backgroundColor: '#F1EAD6',
+      backgroundImage: '/images/vinyl/form/background_angel.png',
+      backgroundRepeat: 'repeat-x',
+      backgroundSize: 'cover'
+    }
   },
 ]
 
