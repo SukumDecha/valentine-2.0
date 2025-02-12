@@ -29,8 +29,6 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
                 
                 const objectName = `${req.params.uuid}/${path.basename(file.filename)}`;
                 const url = await uploadFileToMinio(file.path, objectName);
-                // const url  = `http://localhost:9000/user-uploads/${objectName}`;
-                
                 imagesWithTexts.push({
                     url: url,
                     text: text
@@ -58,6 +56,7 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
             res.status(404).json({ message: "User not found" });
             return;
         }
+        console.log(imagesWithTexts)
 
         res.status(200).json({
             success: true,

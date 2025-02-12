@@ -9,7 +9,6 @@ export interface UploadImagesWithTextsResponse {
     images?: ImageWithText[];
 }
 
-
 export interface SearchTrackResponse {
     success: boolean;
     message?: string;
@@ -29,7 +28,6 @@ export interface ImageWithTextResponse {
     url: string;
     text: string;
 }
-
 
 export interface Track {
     trackId: string;
