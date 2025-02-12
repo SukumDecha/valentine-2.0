@@ -1,16 +1,19 @@
 import React from 'react'
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 
 type Props = {
   children: React.ReactNode
 }
 
-const InfiniteRotate = ({children}: Props) => {
-  
+const InfiniteRotate = ({ children }: Props) => {
+
   return (
     <motion.div
-      animate={{ rotate: 360*2 }}
+      animate={{ rotate: 360 * 2 }}
       transition={{ repeat: Infinity, duration: 60, ease: 'linear' }}
+      style={{
+        position: 'relative'
+      }}
     >
       {children}
     </motion.div>

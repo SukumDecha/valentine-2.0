@@ -1,22 +1,27 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 
 interface IProps {
     className?: string
-    styles?: React.CSSProperties
+    styles: {
+        width?: number
+        height?: number
+        styles?: CSSProperties
+    }
 }
 const MidNightCloud = ({ className, styles }: IProps) => {
     return (
         <Image
             src="/images/vinyl/midnight/cloud.png"
             alt="cloud"
-            width={200}
-            height={200}
+            width={styles.width}
+            height={styles.height}
             className={className}
             style={{
-                ...styles,
-                zIndex: 20
+                zIndex: 20,
+                ...styles.styles,
             }}
+            draggable={false}
         />
     )
 }

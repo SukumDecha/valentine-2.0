@@ -1,10 +1,14 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { motion } from 'framer-motion'
 
 interface IProps {
     className?: string
-    styles?: React.CSSProperties
+    styles: {
+        width?: number
+        height?: number
+        styles?: CSSProperties
+    }
 }
 
 const MidNightMoon = ({ className, styles }: IProps) => {
@@ -19,18 +23,19 @@ const MidNightMoon = ({ className, styles }: IProps) => {
             style={{
                 display: 'inline-block',
                 borderRadius: '50%',
-                ...styles
+                ...styles.styles,
             }}
         >
             <Image
                 src="/images/vinyl/midnight/blue-moon.png"
                 alt="cloud"
-                width={100}
-                height={100}
+                width={styles.width}
+                height={styles.height}
                 style={{
                     zIndex: 20,
                     borderRadius: '50%'
                 }}
+                draggable={false}
             />
         </motion.div>
     )

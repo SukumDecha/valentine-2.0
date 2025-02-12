@@ -2,7 +2,7 @@
 
 import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
 import Stack from '@/components/Vinyl/Stack'
-import ImageOverlay from '@/components/Vinyl/themes/sunlight/CardStackOverlay'
+import ImageOverlay from '@/components/Shared/CardStackOverlay'
 import SunlightBackground from '@/components/Vinyl/themes/sunlight/SunlightBackground'
 import SunlightFlowerOne from '@/components/Vinyl/themes/sunlight/SunlightFlowerOne'
 import SunlightFlowerTwo from '@/components/Vinyl/themes/sunlight/SunlightFlowerTwo'
