@@ -8,8 +8,14 @@ import ImageOverlay from "@/components/Shared/CardStackOverlay"
 import Image from "next/image"
 import useResponsive from "@/hooks/useResponsive"
 import SlideIn from "@/components/Shared/animations/SlideIn"
+import { IUserResponse } from "@/types/vinyl/vinyl"
+import SpotifyEmbed from "@/components/Choose/SpotifyEmbed"
 
-const MidNightVinyl = () => {
+interface IProps {
+    data: IUserResponse
+}
+
+const MidNightVinyl = ({ data }: IProps) => {
     const { isMobile, isMiniTablet } = useResponsive()
 
     const stackSize = {
@@ -50,7 +56,7 @@ const MidNightVinyl = () => {
                         Our Memories Playlist
                     </div>
 
-                    <Stack cardDimensions={stackSize} />
+                    <Stack cardDimensions={stackSize} cardsData={data.images} />
                 </div>
             </SlideIn>
 
@@ -71,11 +77,13 @@ const MidNightVinyl = () => {
                         ]}
                     >
                         <InfiniteRotate>
-                            <Vinyl size={vinylSize} />
+                            <Vinyl size={vinylSize} imgUrl={data.trackImage} />
                         </InfiniteRotate>
                     </ImageOverlay>
                 </div>
             </SlideIn>
+
+            <SpotifyEmbed trackId={data.trackId as string} />
         </MidNightLayout>
 
     )

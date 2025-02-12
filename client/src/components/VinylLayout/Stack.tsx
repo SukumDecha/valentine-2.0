@@ -3,9 +3,9 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
 
 type CardData = {
-  id: number;
-  img: string;
-  title?: string;
+  id: string;
+  url: string;
+  text?: string;
 };
 
 type CardRotateProps = {
@@ -54,6 +54,7 @@ type StackProps = {
   cardsData?: CardData[];
   animationConfig?: { stiffness: number; damping: number };
   sendToBackOnClick?: boolean;
+
 };
 
 export default function Stack({
@@ -68,17 +69,17 @@ export default function Stack({
     cardsData.length
       ? cardsData
       : [
-        { id: 1, img: "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format", title: 'Title' },
-        { id: 2, img: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format", title: 'Title' },
-        { id: 3, img: "https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format", title: 'Title' },
-        { id: 4, img: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format", title: 'Title' }
+        { id: `1`, url: "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format", text: 'Title' },
+        { id: `2`, url: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format", text: 'Title' },
+        { id: `3`, url: "https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format", text: 'Title' },
+        { id: `4`, url: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format", text: 'Title' }
       ]
   );
 
   const sendToBack = (id: number) => {
     setCards((prev) => {
       const newCards = [...prev];
-      const index = newCards.findIndex((card) => card.id === id);
+      const index = newCards.findIndex((card) => Number(card.id) === id);
       if (index === -1) return prev;
       const [card] = newCards.splice(index, 1);
       newCards.unshift(card);
@@ -98,15 +99,16 @@ export default function Stack({
       {cards.map((card, index) => {
         const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
 
+        const cardId = Number(card.id);
         return (
           <CardRotate
             key={card.id}
-            onSendToBack={() => sendToBack(card.id)}
+            onSendToBack={() => sendToBack(cardId)}
             sensitivity={sensitivity}
           >
             <motion.div
               className="absolute w-full h-full rounded-[4px] overflow-hidden bg-gray-100 p-4 px-2 shadow-lg"
-              onClick={() => sendToBackOnClick && sendToBack(card.id)}
+              onClick={() => sendToBackOnClick && sendToBack(cardId)}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
                 scale: 1 + index * 0.06 - cards.length * 0.06,
@@ -125,12 +127,12 @@ export default function Stack({
             >
               <div className="h-full">
                 <img
-                  src={card.img}
+                  src={card.url}
                   alt={`card-${card.id}`}
                   className="w-full object-cover h-3/4"
                   draggable="false"
                 />
-                <div className="h-1/4 flex justify-center items-center sm:text-lg md:text-2xl">"{card.title}"</div>
+                <div className="h-1/4 flex justify-center items-center sm:text-lg md:text-2xl">"{card.text}"</div>
               </div>
             </motion.div>
           </CardRotate>

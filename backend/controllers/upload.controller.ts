@@ -20,16 +20,17 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
     }
 
     try {
-        const imagesWithTexts: Array<{ url: string; text: string }> = [];
-        
+        const imagesWithTexts: Array<{ url: string; text: string, id: number }> = [];
+
         for (let i = 0; i < req.files.length; i++) {
             try {
                 const file = req.files[i];
                 const text = req.body.texts[i];
-                
+
                 const objectName = `${req.params.uuid}/${path.basename(file.filename)}`;
                 const url = await uploadFileToMinio(file.path, objectName);
                 imagesWithTexts.push({
+                    id: i,
                     url: url,
                     text: text
                 });

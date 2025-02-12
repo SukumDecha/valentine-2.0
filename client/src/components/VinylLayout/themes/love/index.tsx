@@ -7,8 +7,13 @@ import Vinyl from '@/components/VinylLayout/Vinyl'
 import useResponsive from '@/hooks/useResponsive'
 import Image from 'next/image'
 import SlideIn from '@/components/Shared/animations/SlideIn'
+import { IUserResponse } from '@/types/vinyl/vinyl'
 
-const LoveVinyl = () => {
+interface IProps {
+    data: IUserResponse
+}
+
+const LoveVinyl = ({ data }: IProps) => {
     const { isMobile, isMiniTablet } = useResponsive()
 
     const stackSize = {
@@ -38,7 +43,7 @@ const LoveVinyl = () => {
                             </SlideIn>
 
                             <SlideIn xOffset='200%'>
-                                <Stack cardDimensions={stackSize} />
+                                <Stack cardDimensions={stackSize} cardsData={data.images} />
                             </SlideIn>
 
                             <SlideIn xOffset='300%' className="absolute z-10 right-[-32px] bottom-[-48px] w-20 h-20 sm:w-28 sm:h-28">
@@ -59,7 +64,7 @@ const LoveVinyl = () => {
                         {/* องค์ประกอบที่ใหญ่กว่าหน้าจอ */}
                         <div className="w-full flex justify-center cutinHalf relative">
                             <InfiniteRotate>
-                                <Vinyl size={vinylSize} />
+                                <Vinyl size={vinylSize} imgUrl={data.trackImage} />
                             </InfiniteRotate>
                         </div>
                     </div>
