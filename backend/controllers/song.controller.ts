@@ -56,7 +56,11 @@ export const addTrackId = async (req: Request, res: Response): Promise<void> => 
             return;
         }
         res.status(200).json({ message: "Track added successfully" });
-    } catch (error) {
-
+    } catch (error:any) {
+        res.status(500).json({
+            success: false,
+            message: "Adding track failed data",
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
     }
 }
