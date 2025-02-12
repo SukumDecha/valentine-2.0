@@ -16,3 +16,8 @@
     font-style: italic;
   }
   
+  .height {
+    @media screen and (min-height: 1024px) {
+      margin-top: 10rem;
+    }
+  }

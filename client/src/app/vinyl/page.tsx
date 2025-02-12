@@ -8,10 +8,11 @@ import FadeIn from '@/components/Shared/animations/FadeIn'
 const Page = () => {
   return (
     <>
-      <div className="bg-[url('/vinyl/bgBrown.jpg')] libre-baskerville-regular-italic bg-center bg-fixed p-9 overflow-auto">
+    <div className="max-w-[433px] mx-auto ">
+      <div className="bg-[url('/vinyl/bgBrown.jpg')] libre-baskerville-regular-italic bg-cover p-9 bg-top overflow-auto bg-no-repeat h-screen">
         <div className="w-full flex items-center justify-center">
-          <div className="flex w-full h-full flex-col items-center justify-center sm:flex-row sm:gap-20">
-            <div className="sm:hidden relative">
+          <div className="flex w-full h-full flex-col items-center justify-center height">
+            <div className="relative">
               <div className="absolute left-[-125px] top-[30px]">
                 <img src="/vinyl/armleft.png" alt="armleft" className='w-[145px]' />
               </div>
@@ -32,7 +33,7 @@ const Page = () => {
               <Stack cardDimensions={{ width: 280, height: 340 }} />
             </div>
             <div className="relative flex flex-col items-center gap-10 mt-10">
-              <div>Lyrics will be played here</div>
+              <div className='mt-6'>Lyrics will be played here</div>
               <div className="pb-12">
                 <InfiniteRotate>
                   <Vinyl size={{ width: 250, height: 250 }} />
@@ -41,6 +42,7 @@ const Page = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   )
