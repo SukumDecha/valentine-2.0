@@ -1,8 +1,8 @@
 import React from 'react'
 import RenderStepMenu, { StepMenu } from '../../components/RenderStepMenu'
-import SelectSongModal from './SelectSongModal'
-import SelectTemplateModal from './SelectTemplateModal'
-import UploadImageModal from './UploadImageModal'
+import SelectSongModal from './modals/SelectSongModal'
+import SelectTemplateModal from './modals/SelectTemplateModal'
+import UploadImageModal from './modals/UploadImageModal'
 
 const steps: StepMenu[] = [
   {key: '#1', label: 'เลือกเพลงโปรดของคุณ', modalContent: <SelectSongModal />},
