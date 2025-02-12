@@ -1,9 +1,10 @@
 import { ITrack } from "../track";
 
+
 export type VinylForm = {
     templateId: string;
     track: ITrack | null;
-    images: IVinyl[] | null;
+    images: IVinyl[];
 }
 
 export interface IVinyl {

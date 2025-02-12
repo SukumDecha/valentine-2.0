@@ -1,23 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import _ from 'lodash'
 import { searchTrack } from '@/services/song.service'
-import { Track } from '@/types/service/main'
 import Image from 'next/image';
 import { useVinylFormStore } from '@/stores/vinyl-form.store';
+import { ITrack } from '@/types/track';
 
 interface RenderSongListProps {
-  tracks: Track[] | null;
+  tracks: ITrack[] | null;
 }
 
-const RenderSongItem = ({trackId, artistName, trackImage, trackName}: Track) => {
+const RenderSongItem = ({trackId, artistName, trackImage, trackName}: ITrack) => {
   const {form, setForm} = useVinylFormStore()
-
-  useEffect(() => {
-    console.log(form)
-  }, [form])
   
   const onClickHandler = () => {
-    const selectedTrack: Track = {
+    const selectedTrack: ITrack = {
       trackId: trackId,
       trackImage: trackImage,
       trackName: trackName,
@@ -43,21 +39,28 @@ const RenderSongList = ({tracks}: RenderSongListProps) => {
     <div className='flex flex-col gap-2'>
       {tracks?.map(({trackId, artistName, trackImage, trackName}) => {
         return <RenderSongItem key={trackId} trackId={trackId} artistName={artistName} trackImage={trackImage} trackName={trackName}/>
-      }) || <div>No songs found</div>}
+      })}
     </div>
   )
+}
+
+const RenderNoSongFound = () => {
+  return <div>No song found</div>
 }
 
 const SelectSongModal = () => {
 
   const [searchQuery, setSearchQuery] = useState<string>("")
-  const [foundTracks, setFoundTracks] = useState<Track[] | null>(null)
+  const [foundTracks, setFoundTracks] = useState<ITrack[]>([])
+  const [isError, setIsError] = useState<boolean>(false)
   
   const handleSearch = useCallback(
     _.debounce((query: string) => {
       searchTrack(query).then(res => {
-        if (res.success) {
-          setFoundTracks(res.tracks || null)
+        if (res.success && res.tracks) {
+          setFoundTracks(res.tracks)
+        } else {
+          setIsError(true)
         }
       })
     }, 1000)
@@ -71,7 +74,9 @@ const SelectSongModal = () => {
   return (
     <div className='flex flex-col'>
       <input type="text" placeholder='ค้นหาเพลง...'  onChange={onChangeHandler}/>
-      <RenderSongList tracks={foundTracks} />
+      {
+        ((isError ? <RenderNoSongFound /> : false) || (<RenderSongList tracks={foundTracks} />))
+      }
     </div>
   )
 }
