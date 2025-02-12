@@ -13,8 +13,16 @@ const lowerProps = [
     '/images/vinyl/olivia/lower-props.png'
 ]
 
+const upperLgPros = [
+    '/images/vinyl/olivia/upper-props-lg.png'
+]
+
+const lowerLgProps = [
+    '/images/vinyl/olivia/lower-props-lg.png'
+]
+
 const OliviaVinyl = () => {
-    const { isMobile, isMiniTablet } = useResponsive()
+    const { isMobile, isMiniTablet, isTablet } = useResponsive()
 
     const stackSize = {
         width: isMobile ? 250 : isMiniTablet ? 300 : 500,
@@ -27,48 +35,70 @@ const OliviaVinyl = () => {
     }
 
     const upperStyle = {
-        width: isMobile ? 350 : 500,
+        width: isMobile ? 350 : 300,
     }
 
     const lowerStyle = {
-        width: isMobile ? 350 : 600
+        width: isMobile ? 350 : 300
     }
 
     return (
-        <>
-            <div className='w-full h-screen bg-[#968ECE] overflow-y-scroll overflow-x-hidden mx-auto max-w-xl font-Libre italic px-32'>
-                <div className="flex w-full h-full flex-col items-center sm:items-between gap-4 relative">
-                    <div className="flex flex-col items-center">
+        <div className="flex w-full h-screen flex-col items-center sm:justify-around gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100] p-4 font-Libre italic bg-[#968ECE]">
+
+            {isTablet &&
+                <OliviaProps
+                    images={upperLgPros}
+                    width={1200}
+                    height={100}
+                    className='z-20' />
+            }
+
+            <div className="flex flex-col items-between gap-4 sm:flex-row">
+                <div className="flex flex-col items-center">
+                    {isMobile &&
                         <OliviaProps
                             images={upperProps}
                             width={upperStyle.width}
                             height={100}
                             className='z-20' />
+                    }
 
-                        <div className='text-white text-2xl mt-8 '>
-                            Our Memories Playlist
-                        </div>
-
-                        <div className="mr-8">
-                            <Stack cardDimensions={stackSize} />
-                        </div>
+                    <div className='text-white text-2xl mt-8 '>
+                        Our Memories Playlist
                     </div>
 
-                    <div className="flex flex-col items-center">
+                    <div className="mr-8">
+                        <Stack cardDimensions={stackSize} />
+                    </div>
+                </div>
+
+                <div className="flex flex-col items-center">
+                    {
+                        isMobile &&
                         <OliviaProps
                             images={lowerProps}
                             width={lowerStyle.width}
                             height={150}
                             className='z-20' />
+                    }
 
-                        <InfiniteRotate>
-                            <Vinyl size={vinylSize} />
-                        </InfiniteRotate>
-                    </div>
-
+                    <InfiniteRotate>
+                        <Vinyl size={vinylSize} />
+                    </InfiniteRotate>
                 </div>
             </div>
-        </>
+
+            {
+                isTablet &&
+                <OliviaProps
+                    images={lowerLgProps}
+                    width={1200}
+                    height={150}
+                    className='z-20' />
+            }
+
+
+        </div>
     )
 }
 
