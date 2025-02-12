@@ -130,7 +130,7 @@ export default function Stack({
                   className="w-full object-cover h-3/4"
                   draggable="false"
                 />
-                <div className="h-1/4 flex justify-center items-center">"{card.title}"</div>
+                <div className="h-1/4 flex justify-center items-center sm:text-lg md:text-2xl">"{card.title}"</div>
               </div>
             </motion.div>
           </CardRotate>

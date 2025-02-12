@@ -1,8 +1,8 @@
+import VinylService from '@/services/vinyl.service';
+import { IVinyl } from '@/types/vinyl/vinyl';
 import { useState, useCallback } from 'react';
-import { uploadImagesWithTexts } from '@/services/upload.service';
-import { ImageWithText } from '@/types/service/main';
 
-interface PreviewImage extends ImageWithText {
+interface PreviewImage extends IVinyl {
   id: string;
   preview: string;
 }
@@ -72,7 +72,7 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
     setSuccess(null);
 
     try {
-      const response = await uploadImagesWithTexts(uuid, images);
+      const response = await VinylService.uploadVinyls(uuid, images);
       if (response.success) {
         images.forEach(img => URL.revokeObjectURL(img.preview));
         setImages([]);

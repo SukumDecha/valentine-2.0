@@ -2,10 +2,10 @@
 import React from 'react'
 import SearchSong from './SearchSong'
 import { Heart } from 'lucide-react'
-import User from './User'
+
 import { ImageUpload } from './ImageUpload'
 
-const Choose = ({uuid} : {uuid:string}) => {
+const Choose = ({ uuid }: { uuid: string }) => {
     return (
         <section className='min-h-screen bg-gradient-to-br from-red-400 via-pink-500 to-purple-500'>
             <div className="container mx-auto px-4 py-8 md:py-12">

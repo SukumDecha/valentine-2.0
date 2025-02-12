@@ -9,7 +9,7 @@ const FloatingHearts = () => {
     const interval = setInterval(() => {
       setHearts((prev) => [
         ...prev,
-        { id: Date.now(), left: Math.random() * 100 }, // ตำแหน่งสุ่ม
+        { id: Date.now(), left: Math.random() * 100 },
       ]);
     }, 1000);
 
