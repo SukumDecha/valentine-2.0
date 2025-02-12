@@ -5,22 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box;
-    font-family: 'Kanit', sans-serif
-}
 
-h1,
-h2,
-h3 {
-    font-family: 'Kanit', sans-serif;
-}
+@import './layouts/benzo/index.scss';
 
-p {
-    font-family: 'Noto Sans Thai', sans-serif;
-}
+@import "./shared/index.scss";
 
-
-@import './layouts/benzo/index.scss'
+@import "./variables/breakpoint.scss";

@@ -3,8 +3,11 @@ import React from 'react'
 import SearchSong from './SearchSong'
 // import UploadImage from './ImageUpload'
 import { Heart } from 'lucide-react'
+<<<<<<< HEAD
 import User from './User'
 
+=======
+>>>>>>> cbf76a1d71ee9243a1272582bee62de0b1193372
 const Choose = ({uuid} : {uuid:string}) => {
     return (
         <section className='min-h-screen bg-gradient-to-br from-red-400 via-pink-500 to-purple-500'>
