@@ -9,6 +9,7 @@ export interface UploadImagesWithTextsResponse {
     images?: ImageWithText[];
 }
 
+
 export interface Track {
     trackId: string;
     trackImage: string;
@@ -35,6 +36,4 @@ export interface ImageWithTextResponse {
     url: string;
     text: string;
 }
-
-
 

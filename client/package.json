@@ -21,6 +21,7 @@
     "next": "14.2.23",
     "react": "^18",
     "react-dom": "^18",
+    "react-intersection-observer": "^9.15.1",
     "react-spotify-embed": "^2.0.4",
     "sass": "^1.83.4",
     "scss": "^0.2.4",

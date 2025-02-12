@@ -1,9 +1,9 @@
 "use client"
 import React from 'react'
 import SearchSong from './SearchSong'
-// import UploadImage from './ImageUpload'
 import { Heart } from 'lucide-react'
 import User from './User'
+import { ImageUpload } from './ImageUpload'
 
 const Choose = ({uuid} : {uuid:string}) => {
     return (
@@ -38,7 +38,7 @@ const Choose = ({uuid} : {uuid:string}) => {
                             <Heart className="w-5 h-5 text-white" fill="white" />
                             <h2 className="text-xl font-semibold text-white">Share Your Moments</h2>
                         </div>
-                        <User uuid_slug={uuid} />
+                        <ImageUpload uuid_slug={uuid} />
                     </div>
                 </div>
 
