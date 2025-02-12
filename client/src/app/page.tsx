@@ -1,8 +1,9 @@
 import React from 'react'
 import { useTrackSelection } from '@/hooks/useTrack'
+import NotFound from './not-found'
 
 const Page = () => {
-  return <h1>Hello</h1>
+  return <NotFound />
 }
 
 export default Page

@@ -1,25 +1,57 @@
+'use client'
+
+import { useEffect, useState } from "react";
 import Choose from "@/components/Choose/Choose";
 import VinylService from "@/services/vinyl.service";
+import { Empty } from "antd";
+import { IUserResponse } from "@/types/vinyl/vinyl";
+import Vinyl from "@/components/VinylLayout";
+import NotFound from "../not-found";
 
-
-interface PageProps {
+interface IProps {
   params: {
-    uuid: string
-  }
+    uuid: string;
+  };
 }
 
-const CameraPage = async ({ params }: PageProps) => {
+const CameraPage = ({ params }: IProps) => {
+  const [userData, setUserData] = useState<IUserResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const userData = await VinylService.getUser(params.uuid);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await VinylService.getUser(params.uuid);
+        setUserData(data);
+      } catch (err) {
+        setError("Error fetching user data");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!userData.success) {
-    return <Choose uuid={params.uuid} />
+    fetchUserData();
+  }, [params.uuid]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (!userData?.success) {
+    return <NotFound />
+  }
+
+  if (!userData.images || userData.images.length === 0 || !userData.template) {
+    return <Choose uuid={params.uuid} />;
   }
 
   return (
-    <>
-      <p>Yes there is</p>
-    </>
+    <Vinyl template={userData.template} data={userData} />
   );
 };
 

@@ -4,8 +4,26 @@ import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
 import Stack from '@/components/VinylLayout/Stack'
 import Vinyl from '@/components/VinylLayout/Vinyl'
 import FadeIn from '@/components/Shared/animations/FadeIn'
+import { IUserResponse } from '@/types/vinyl/vinyl'
+import useResponsive from '@/hooks/useResponsive'
 
-const RomanVinyl = () => {
+interface IProps {
+    data: IUserResponse
+}
+
+const RomanVinyl = ({ data }: IProps) => {
+    const { isMobile, isMiniTablet } = useResponsive()
+
+    const stackSize = {
+        width: isMobile ? 250 : isMiniTablet ? 300 : 500,
+        height: isMobile ? 300 : isMiniTablet ? 350 : 550
+    }
+
+    const vinylSize = {
+        width: isMobile ? 220 : isMiniTablet ? 300 : 450,
+        height: isMobile ? 220 : isMiniTablet ? 300 : 450
+    }
+
     return (
         <>
             <div className="max-w-[433px] mx-auto ">
@@ -30,13 +48,13 @@ const RomanVinyl = () => {
                                 <div className="absolute right-[-76px] top-[250px] z-50">
                                     <img src="/vinyl/rose.png" alt="right" />
                                 </div>
-                                <Stack cardDimensions={{ width: 280, height: 340 }} />
+                                <Stack cardDimensions={stackSize} cardsData={data.images} />
                             </div>
                             <div className="relative flex flex-col items-center gap-10 mt-10">
                                 <div className='mt-6'>Lyrics will be played here</div>
                                 <div className="pb-12">
                                     <InfiniteRotate>
-                                        <Vinyl size={{ width: 250, height: 250 }} />
+                                        <Vinyl size={vinylSize} imgUrl={data.trackImage} />
                                     </InfiniteRotate>
                                 </div>
                             </div>
