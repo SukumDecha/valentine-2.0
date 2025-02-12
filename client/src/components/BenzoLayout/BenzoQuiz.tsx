@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { Radio, Button, Progress } from "antd"
+import type { RadioChangeEvent } from 'antd' // Add this import
 import { IconHeart } from "@tabler/icons-react"
 import BenzoButton from "./ui/BenzoButton"
 
@@ -48,7 +49,7 @@ const BenzoQuiz = () => {
     const [score, setScore] = useState(0)
     const [showResult, setShowResult] = useState(false)
 
-    const handleAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAnswer = (e: RadioChangeEvent) => {
         setSelectedAnswer(e.target.value)
     }
 
@@ -105,10 +106,12 @@ const BenzoQuiz = () => {
                                 ))}
                             </Radio.Group>
                         </div>
-                        <BenzoButton variant="secondary"
+                        <BenzoButton 
+                            variant="secondary"
                             className="w-full h-12 text-lg font-semibold rounded-full"
                             disabled={!selectedAnswer}
-                            onClick={handleSubmit}>
+                            onClick={handleSubmit}
+                        >
                             {currentQuestion === questions.length - 1 ? "Finish" : "Next"}
                         </BenzoButton>
                     </>
@@ -128,14 +131,17 @@ const BenzoQuiz = () => {
                             >
                                 Restart Quiz
                             </BenzoButton>
-                            <BenzoButton variant="secondary" className="w-3/5 h-12 text-lg font-semibold rounded-full">
+                            <BenzoButton 
+                                variant="secondary" 
+                                className="w-3/5 h-12 text-lg font-semibold rounded-full"
+                            >
                                 Back to home
                             </BenzoButton>
                         </div>
                     </div>
                 )}
             </div>
-        </div >
+        </div>
     )
 }
 

@@ -68,11 +68,11 @@ export default function Stack({
     cardsData.length
       ? cardsData
       : [
-          { id: 1, img: "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format", title: 'Title' },
-          { id: 2, img: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format", title: 'Title' },
-          { id: 3, img: "https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format", title: 'Title' },
-          { id: 4, img: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format", title: 'Title' }
-        ]
+        { id: 1, img: "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format", title: 'Title' },
+        { id: 2, img: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format", title: 'Title' },
+        { id: 3, img: "https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format", title: 'Title' },
+        { id: 4, img: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format", title: 'Title' }
+      ]
   );
 
   const sendToBack = (id: number) => {
@@ -105,7 +105,7 @@ export default function Stack({
             sensitivity={sensitivity}
           >
             <motion.div
-              className="absolute w-full h-full rounded-lg overflow-hidden bg-gray-100 p-4 shadow-sm"
+              className="absolute w-full h-full rounded-[4px] overflow-hidden bg-gray-100 p-4 px-2 shadow-lg"
               onClick={() => sendToBackOnClick && sendToBack(card.id)}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
@@ -128,6 +128,7 @@ export default function Stack({
                   src={card.img}
                   alt={`card-${card.id}`}
                   className="w-full object-cover h-3/4"
+                  draggable="false"
                 />
                 <div className="h-1/4 flex justify-center items-center">"{card.title}"</div>
               </div>
