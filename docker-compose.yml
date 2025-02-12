@@ -59,8 +59,8 @@ services:
     volumes:
       - minio-data:/data
     environment:
-      - MINIO_ROOT_USER=minioadmin
-      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
       # CORS Configuration
       - MINIO_CORS_ALLOW_ORIGINS=*
       - MINIO_CORS_ALLOW_METHODS=GET,PUT,POST,DELETE,OPTIONS

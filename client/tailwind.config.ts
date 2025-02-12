@@ -20,6 +20,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        Libre: ['Libre Baskerville', 'sans-serif']
+      }
     },
   },
   plugins: [],

@@ -105,7 +105,7 @@ export default function Stack({
             sensitivity={sensitivity}
           >
             <motion.div
-              className="absolute w-full h-full rounded-lg overflow-hidden bg-gray-100 p-4 shadow-sm"
+              className="absolute w-full h-full rounded-[4px] overflow-hidden bg-gray-100 p-4 px-2 shadow-lg"
               onClick={() => sendToBackOnClick && sendToBack(card.id)}
               animate={{
                 rotateZ: (cards.length - index - 1) * 4 + randomRotate,
@@ -128,6 +128,7 @@ export default function Stack({
                   src={card.img}
                   alt={`card-${card.id}`}
                   className="w-full object-cover h-3/4"
+                  draggable="false"
                 />
                 <div className="h-1/4 flex justify-center items-center">"{card.title}"</div>
               </div>

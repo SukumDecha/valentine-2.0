@@ -58,6 +58,6 @@ export const getTrackList = (trackResponse : any[]): Track[] => {
     trackId: track.id,
     trackName: track.name,
     artistName: track.artists.map((artist: any) => artist.name).join(", "),
-    trackImage: track.album.images[2].url,
+    trackImage: track.album.images[1].url,
   }))
 }

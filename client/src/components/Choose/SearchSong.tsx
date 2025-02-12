@@ -67,7 +67,7 @@ const SearchSong = ({ uuid_slug }: { uuid_slug: string }) => {
                                         <p className="font-medium">{track.trackName}</p>
                                         <p className="text-sm text-white/70">{track.artistName}</p>
                                     </div>
-                                    <img src={track.trackImage} className='rounded-lg' />
+                                    <img src={track.trackImage} className='rounded-lg w-16 h-16' />
                                 </button>
                             ))}
                         </div>
@@ -76,13 +76,13 @@ const SearchSong = ({ uuid_slug }: { uuid_slug: string }) => {
                         <form onSubmit={(e) => handleAddTrack(e, selectedTrack.trackId, selectedTrack.trackImage)}>
                             <SpotifyEmbed trackId={selectedTrack.trackId} />
                             <button
-                                className={`mt-4 w-full p-2 bg-green-600 transition-all duration-300 ${chooseTrack ? 'scale-105' : ''
+                                className={`mt-4 w-full p-2 bg-green-600 transition-all hover:bg-green-600/90 duration-300 text-white rounded-lg ${chooseTrack ? 'scale-105' : ''
                                     }`}
                             >
                                 {chooseTrack ? (
                                     <span className="inline-block animate-bounce">✅</span>
                                 ) : (
-                                    `Choose ${selectedTrack.trackName}-${selectedTrack.artistName}`
+                                    `${selectedTrack.trackName} - ${selectedTrack.artistName}`
                                 )}
                             </button>
                         </form>
