@@ -1,12 +1,12 @@
 'use client'
 
 import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
-import Stack from '@/components/Vinyl/Stack'
+import Stack from '@/components/VinylLayout/Stack'
 import ImageOverlay from '@/components/Shared/CardStackOverlay'
-import SunlightBackground from '@/components/Vinyl/themes/sunlight/SunlightBackground'
-import SunlightFlowerOne from '@/components/Vinyl/themes/sunlight/SunlightFlowerOne'
-import SunlightFlowerTwo from '@/components/Vinyl/themes/sunlight/SunlightFlowerTwo'
-import Vinyl from '@/components/Vinyl/Vinyl'
+import SunlightBackground from '@/components/VinylLayout/themes/sunlight/SunlightBackground'
+import SunlightFlowerOne from '@/components/VinylLayout/themes/sunlight/SunlightFlowerOne'
+import SunlightFlowerTwo from '@/components/VinylLayout/themes/sunlight/SunlightFlowerTwo'
+import Vinyl from '@/components/VinylLayout/Vinyl'
 import React from 'react'
 
 const SunlightVinyl = () => {

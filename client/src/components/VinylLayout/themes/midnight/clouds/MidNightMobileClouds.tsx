@@ -1,7 +1,7 @@
 import useResponsive from '@/hooks/useResponsive'
 import React from 'react'
 import MidNightCloud from './MidNightCloud'
-import SlideIn from '@/components/Shared/animations/SlideIn'
+import SlideIn from '@/components/Shared/animations/ScrollIn'
 
 
 interface IImageProps {

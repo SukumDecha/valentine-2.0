@@ -1,6 +1,6 @@
 'use client'
 
-import MidNightVinylTheme from '@/components/Vinyl/themes/midnight'
+import MidNightVinylTheme from '@/components/VinylLayout/themes/midnight'
 import React from 'react'
 
 const page = () => {

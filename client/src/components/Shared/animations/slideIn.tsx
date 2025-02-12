@@ -1,34 +1,25 @@
-"use client";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { IComponentProps } from '@/types/component';
 
-import { motion } from "framer-motion";
-import { ReactNode, RefObject } from "react";
-import { useInView } from "react-intersection-observer";
+interface IProps extends IComponentProps {
+    duration?: number;
+    xOffset?: string;
+    yOffset?: string;
+    className?: string;
+}
 
-type SlideInProps = {
-  children: ReactNode;
-  delay?: number;
-  className?: string;
-  scrollContainer?: RefObject<HTMLElement>; // เพิ่ม prop สำหรับกำหนด viewport
-};
-
-const SlideIn = ({ children, delay = 0, className = "", scrollContainer }: SlideInProps) => {
-  const { ref, inView } = useInView({
-    triggerOnce: false, // เล่นแค่ครั้งเดียว
-    threshold: 0.4, // เมื่อ 20% ของคอมโพเนนต์อยู่ใน viewport
-    root: scrollContainer?.current || null, // กำหนด viewport ที่ต้องการ
-  });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ y: 50, opacity: 0 }}
-      animate={inView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+const SlideIn = ({ children, xOffset, yOffset, duration = 0.5, className }: IProps) => {
+    return (
+        <motion.div
+            className={className}
+            initial={{ x: xOffset, y: yOffset }}
+            animate={{ x: 1, y: 1 }}
+            transition={{ duration, ease: "easeOut" }}
+        >
+            {children}
+        </motion.div>
+    );
 };
 
 export default SlideIn;

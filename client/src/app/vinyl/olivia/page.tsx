@@ -1,6 +1,6 @@
 'use client'
 
-import OliviaVinylTheme from "@/components/Vinyl/themes/olivia"
+import OliviaVinylTheme from "@/components/VinylLayout/themes/olivia"
 
 const page = () => {
     return (

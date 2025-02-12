@@ -1,4 +1,4 @@
-import SunlightVinyl from '@/components/Vinyl/themes/sunlight'
+import SunlightVinyl from '@/components/VinylLayout/themes/sunlight'
 import React from 'react'
 
 const page = () => {

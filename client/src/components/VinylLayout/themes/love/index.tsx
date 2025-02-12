@@ -1,12 +1,12 @@
 'use client'
 
-import FloatingHearts from '@/components/Vinyl/themes/love/FloatHearth'
+import FloatingHearts from '@/components/VinylLayout/themes/love/FloatHearth'
 import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
-import Stack from '@/components/Vinyl/Stack'
-import Vinyl from '@/components/Vinyl/Vinyl'
+import Stack from '@/components/VinylLayout/Stack'
+import Vinyl from '@/components/VinylLayout/Vinyl'
 import useResponsive from '@/hooks/useResponsive'
-import SlideIn from '@/components/Shared/animations/SlideIn'
 import Image from 'next/image'
+import SlideIn from '@/components/Shared/animations/SlideIn'
 
 const LoveVinyl = () => {
     const { isMobile, isMiniTablet } = useResponsive()
@@ -30,10 +30,10 @@ const LoveVinyl = () => {
                 <div className="flex w-full h-[100vh] flex-col sm:flex-row items-center sm:justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100] p-14">
                     <div className="flex flex-col items-center gap-8">
 
-                        <div className="text-2xl font-extralight italic">Our Memories Playlist</div>
+                        <div className="text-2xl font-extralight italic sm:text-lg md:text-2xl">Our Memories Playlist</div>
 
-                        <div className="relative flex justify-center items-center">
-                            <SlideIn xOffset="-300%" className="absolute z-10 right-[150px] bottom-[230px]">
+                        <div className="relative flex justify-center items-center ">
+                            <SlideIn xOffset="-300%" className="absolute z-10 inset-0 -top-8 -left-8 sm:-top-16 sm:-left-4 w-24 h-24 sm:w-52 sm:h-52">
                                 <img src="/images/templateLove/libstic.png" />
                             </SlideIn>
 
@@ -55,7 +55,7 @@ const LoveVinyl = () => {
 
                     {/* กล่องที่มีเนื้อหาเกินขอบเขต */}
                     <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
-                        <div className="relative italic ">Lyrics will be played here</div>
+                        <div className="relative italic sm:text-lg md:text-2xl">Lyrics will be played here</div>
                         {/* องค์ประกอบที่ใหญ่กว่าหน้าจอ */}
                         <div className="w-full flex justify-center cutinHalf relative">
                             <InfiniteRotate>
