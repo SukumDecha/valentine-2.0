@@ -13,6 +13,7 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
         res.status(400).send('Texts array is required.');
         return;
     }
+
     if (req.files.length !== req.body.texts.length) {
         res.status(400).send('Number of files and texts must match.');
         return;
@@ -28,7 +29,6 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
                 
                 const objectName = `${req.params.uuid}/${path.basename(file.filename)}`;
                 const url = await uploadFileToMinio(file.path, objectName);
-                
                 imagesWithTexts.push({
                     url: url,
                     text: text
@@ -49,13 +49,14 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
         const db = getDB().collection('users');
         const addImages = await db.updateOne(
             { uuid: req.params.uuid },
-            { $set: { images: imagesWithTexts } }
+            { $set: { images: imagesWithTexts, template: req.body.template }, },
         );
 
         if (addImages.modifiedCount === 0) {
             res.status(404).json({ message: "User not found" });
             return;
         }
+        console.log(imagesWithTexts)
 
         res.status(200).json({
             success: true,

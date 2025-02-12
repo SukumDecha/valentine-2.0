@@ -5,6 +5,7 @@ import helmet from "helmet";
 import uploadRouter from "./routes/upload.route";
 import songRouter from "./routes/song.route";
 import userRouter from "./routes/userData.route";
+import templateRouter from "./routes/template.route";
 import { connectToDB } from "./database/database";
 import { initializeBucket } from "./minio/utils";
 
@@ -21,6 +22,7 @@ app.use(cors({ origin: '*' }));
 app.use('/api/uploads', uploadRouter);
 app.use('/api/songs', songRouter);
 app.use('/api/users', userRouter);
+app.use('/api/template', templateRouter);
 
 initializeBucket()
   .then(() => console.log('MinIO bucket initialized'))
