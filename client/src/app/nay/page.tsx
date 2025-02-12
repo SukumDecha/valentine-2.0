@@ -2,7 +2,6 @@
 import React from "react";
 import SlideIn from "@/components/Shared/animations/SlideIn"
 import PixelTransition from "@/components/Shared/animations/PixelTransition"
-import { text } from "stream/consumers";
 
 type Props = {
     name: string;
@@ -50,11 +49,11 @@ const Page = ({ name, message, image,text }: Props) => {
                                                     backgroundColor: "rgb(249 168 212)",
                                                 }}
                                             >
-                                                <p className="libre-baskerville-regular-italic" style={{ fontWeight: 100, fontSize: "2rem", color: "#ffffff" }}>{text?.[index] || 'I love you'}</p>
+                                                <p className="libre-baskerville-regular-italic" style={{ fontWeight: 100, fontSize: "3rem", color: "#ffffff" }}>{text?.[index] || 'I love you'}</p>
                                             </div>
                                         }
                                         gridSize={12}
-                                        pixelColor='#ffffff'
+                                        pixelColor='#feeaf5'
                                         animationStepDuration={0.4}
                                         className="custom-pixel-card"
                                     />
