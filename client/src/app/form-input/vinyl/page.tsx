@@ -2,7 +2,6 @@
 
 import React from 'react'
 import VinylTemplateForm from './components/VinylTemplateForm'
-import WaveyBackground from '@/components/Shared/animations/WaveyBackground'
 
 const FormInputPage = () => {
   return (
