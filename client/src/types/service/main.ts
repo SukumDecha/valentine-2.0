@@ -1,12 +1,20 @@
 export interface ImageWithText {
     file: File;
     text: string;
-  }
+}
 
 export interface UploadImagesWithTextsResponse {
     success: boolean;
     message?: string;
     images?: ImageWithText[];
+}
+
+
+export interface Track {
+    trackId: string;
+    trackImage: string;
+    trackName: string;
+    artistName: string;
 }
 
 export interface SearchTrackResponse {
@@ -29,9 +37,3 @@ export interface ImageWithTextResponse {
     text: string;
 }
 
-export interface Track {
-    trackId: string;
-    trackImage: string;
-    trackName: string;
-    artistName: string;
-}
