@@ -42,6 +42,8 @@ const RomanVinyl = () => {
                             </div>
                         </div>
                     </div>
+
+                    <div className="text-center text-slate-700 opacity-50 my-8 sm:text-2xl">Valentine 2.0</div>
                 </div>
             </div>
         </>

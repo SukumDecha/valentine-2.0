@@ -33,7 +33,7 @@ const SunlightVinyl = () => {
                     </div>
                 </div>
 
-                <div className="pb-20 text-center text-sky-400 opacity-50">Valentine 2.0</div>
+                <div className="pb-20 text-center text-sky-400 opacity-50 text-2xl">Valentine 2.0</div>
             </SunlightBackground>
         </div>
     )

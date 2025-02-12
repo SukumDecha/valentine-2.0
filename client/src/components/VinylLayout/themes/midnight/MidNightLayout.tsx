@@ -44,6 +44,8 @@ const MidNightLayout = ({ children }: IProps) => {
             <div className="flex w-full h-[85vh] flex-col sm:flex-row items-center sm:justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100]">
                 {children}
             </div>
+
+            <div className="text-center text-white opacity-50 my-8 sm:text-2xl">Valentine 2.0</div>
         </div>
 
     )

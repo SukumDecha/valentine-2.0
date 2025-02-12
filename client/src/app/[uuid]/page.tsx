@@ -1,4 +1,6 @@
 import Choose from "@/components/Choose/Choose";
+import VinylService from "@/services/vinyl.service";
+
 
 interface PageProps {
   params: {
@@ -6,10 +8,17 @@ interface PageProps {
   }
 }
 
-const CameraPage = ({ params }: PageProps) => {
+const CameraPage = async ({ params }: PageProps) => {
+
+  const userData = await VinylService.getUser(params.uuid);
+
+  if (!userData.success) {
+    return <Choose uuid={params.uuid} />
+  }
+
   return (
     <>
-      <Choose uuid={params.uuid} />
+      <p>Yes there is</p>
     </>
   );
 };

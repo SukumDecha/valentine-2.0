@@ -10,15 +10,15 @@ type Props = {
 
 
 const SunlightBackground = ({ children }: Props): React.ReactNode => {
-  
-  
+
+
 
   return (
-    <div className="bg-gradient-to-b from-sky-300 to-sky-200 w-screen max-w-full overflow-x-hidden">
+    <div className="bg-gradient-to-b from-sky-300 to-sky-200 w-screen max-w-full h-screen overflow-x-hidden">
       <div className="z-0">
         <div className="absolute -left-10 -top-5">
           {/* <FloatingAnimation animationEndPos={5}> */}
-            <SunlightSun width={152} height={144} />
+          <SunlightSun width={152} height={144} />
           {/* </FloatingAnimation> */}
         </div>
         <div className="absolute right-0 overflow-x-hidden">

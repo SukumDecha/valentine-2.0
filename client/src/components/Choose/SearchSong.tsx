@@ -1,8 +1,8 @@
 "use client"
 import { Search } from 'lucide-react';
 import SpotifyEmbed from '@/components/Choose/SpotifyEmbed';
-import { Track } from '@/types/service/main';
 import { useTrackSearch, useTrackSelection } from '@/hooks/useTrack';
+import { ITrack } from '@/types/track';
 
 const SearchSong = ({ uuid_slug }: { uuid_slug: string }) => {
     const {
@@ -21,7 +21,7 @@ const SearchSong = ({ uuid_slug }: { uuid_slug: string }) => {
         handleAddTrack
     } = useTrackSelection(uuid_slug);
 
-    const handleSelectTrack = (track: Track) => {
+    const handleSelectTrack = (track: ITrack) => {
         console.log('Selected track:', track);
         setSelectedTrack(track);
     };

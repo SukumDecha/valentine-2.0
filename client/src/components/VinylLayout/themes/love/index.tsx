@@ -63,8 +63,9 @@ const LoveVinyl = () => {
                             </InfiniteRotate>
                         </div>
                     </div>
-
                 </div>
+
+                <div className="text-center opacity-50 my-8 text-2xl">Valentine 2.0</div>
             </div >
         </>
 

@@ -86,6 +86,8 @@ const OliviaVinyl = () => {
                         <Vinyl size={vinylSize} />
                     </InfiniteRotate>
                 </div>
+
+                <div className="text-center opacity-50 mt-16">Valentine 2.0</div>
             </div>
 
             {
