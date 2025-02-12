@@ -8,7 +8,7 @@ import ImageOverlay from "@/components/Shared/CardStackOverlay"
 import Image from "next/image"
 import useResponsive from "@/hooks/useResponsive"
 
-const MidNightVinylTheme = () => {
+const MidNightVinyl = () => {
     const { isMobile, isMiniTablet } = useResponsive()
 
     const stackSize = {
@@ -62,4 +62,4 @@ const MidNightVinylTheme = () => {
     )
 }
 
-export default MidNightVinylTheme
+export default MidNightVinyl

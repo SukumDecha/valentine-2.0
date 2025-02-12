@@ -62,7 +62,7 @@ const MidNightLayout = ({ children }: IProps) => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen bg-[#09122C] overflow-hidden relative">
+        <div className="flex flex-col justify-center items-center h-screen bg-[#09122C] overflow-hidden relative p-4 font-Libre italic">
             <MidNightMoon styles={moonStyle} />
             <MidNightCloud styles={cloudStyleA} />
             <MidNightCloud styles={cloudStyleB} />
@@ -70,7 +70,7 @@ const MidNightLayout = ({ children }: IProps) => {
 
             <Background imageUrl="/images/vinyl/midnight/star.png" />
 
-            <div className="flex w-full h-[80vh] flex-col sm:flex-row items-center sm:justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100]">
+            <div className="flex w-full h-[85vh] flex-col sm:flex-row items-center sm:justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100]">
                 {children}
             </div>
         </div>

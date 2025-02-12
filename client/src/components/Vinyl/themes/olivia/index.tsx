@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import Stack from '../../Stack'
 import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
 import Vinyl from '../../Vinyl'
@@ -13,7 +13,7 @@ const lowerProps = [
     '/images/vinyl/olivia/lower-props.png'
 ]
 
-const OliviaVinylTheme = () => {
+const OliviaVinyl = () => {
     const { isMobile } = useResponsive()
 
     const upperStyle = {
@@ -26,12 +26,12 @@ const OliviaVinylTheme = () => {
 
     return (
         <>
-            <div className='w-full h-screen bg-[#968ECE] overflow-y-scroll overflow-x-hidden mx-auto max-w-xl'>
+            <div className='w-full h-screen bg-[#968ECE] overflow-y-scroll overflow-x-hidden mx-auto max-w-xl font-Libre italic'>
                 <div className="flex w-full h-full flex-col items-center sm:items-between gap-4 relative">
                     <div className="flex flex-col items-center">
                         <OliviaProps
                             images={upperProps}
-                            width={lowerStyle.width}
+                            width={upperStyle.width}
                             height={100}
                             className='z-20' />
 
@@ -63,4 +63,4 @@ const OliviaVinylTheme = () => {
     )
 }
 
-export default OliviaVinylTheme
+export default OliviaVinyl
