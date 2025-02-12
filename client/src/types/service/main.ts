@@ -9,6 +9,12 @@ export interface UploadImagesWithTextsResponse {
     images?: ImageWithText[];
 }
 
+export interface Track {
+    trackId: string;
+    trackImage: string;
+    trackName: string;
+    artistName: string;
+}
 
 export interface SearchTrackResponse {
     success: boolean;
@@ -31,9 +37,4 @@ export interface ImageWithTextResponse {
 }
 
 
-export interface Track {
-    trackId: string;
-    trackImage: string;
-    trackName: string;
-    artistName: string;
-}
+
