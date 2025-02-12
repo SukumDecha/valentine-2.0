@@ -7,6 +7,7 @@ import MidNightLayout from "./MidNightLayout"
 import ImageOverlay from "@/components/Shared/CardStackOverlay"
 import Image from "next/image"
 import useResponsive from "@/hooks/useResponsive"
+import SlideIn from "@/components/Shared/animations/SlideIn"
 
 const MidNightVinyl = () => {
     const { isMobile, isMiniTablet } = useResponsive()
@@ -21,42 +22,60 @@ const MidNightVinyl = () => {
         height: isMobile ? 220 : isMiniTablet ? 300 : 450
     }
 
+    const overlayStyle = {
+        bottom: isMobile ? '-5rem' : isMiniTablet ? '-7rem' : '-9rem',
+        left: isMobile ? '-3.5rem' : '-5rem'
+    }
+
+    const blueFlowerStyle = {
+        width: isMobile ? 250 : isMiniTablet ? 350 : 450,
+        height: isMobile ? 250 : isMiniTablet ? 350 : 500,
+    }
+
+    const stackStyle = {
+        xOffset: isMobile ? '0' : '-300%',
+        yOffset: isMobile ? '-300%' : '0%'
+    }
+
+    const vinylStyle = {
+        xOffset: isMobile ? '0' : '300%',
+        yOffset: isMobile ? '300%' : '0%'
+    }
+
     return (
         <MidNightLayout>
-            <div className="flex flex-col items-center">
-                <div className='sm:hidden text-white text-2xl mb-4'>
-                    Our Memories Playlist
+            <SlideIn xOffset={stackStyle.xOffset} yOffset={stackStyle.yOffset} duration={1}>
+                <div className="flex flex-col items-center">
+                    <div className='sm:hidden text-white text-2xl mb-4'>
+                        Our Memories Playlist
+                    </div>
+
+                    <Stack cardDimensions={stackSize} />
                 </div>
+            </SlideIn>
 
-                <Stack cardDimensions={stackSize} />
-            </div>
-
-
-
-            <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
-                <ImageOverlay
-                    overlayElements={[
-                        <div className='z-40 absolute' style={{
-                            bottom: '-3.5rem',
-                            left: isMobile ? '-1.5rem' : '-3.5rem'
-                        }}>
-                            <Image
-                                src="/images/vinyl/midnight/blue-flower.png"
-                                alt="blue-flower"
-                                width={isMobile ? 250 : 300}
-                                height={isMobile ? 250 : 300}
-                                className="object-contain"
-                                draggable={false}
-                            />
-                        </div>
-                    ]}
-                >
-                    <InfiniteRotate>
-                        <Vinyl size={vinylSize} />
-                    </InfiniteRotate>
-                </ImageOverlay>
-
-            </div>
+            <SlideIn xOffset={vinylStyle.xOffset} yOffset={vinylStyle.yOffset} duration={1}>
+                <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
+                    <ImageOverlay
+                        overlayElements={[
+                            <div className='z-40 absolute' style={overlayStyle}>
+                                <Image
+                                    src="/images/vinyl/midnight/blue-flower.png"
+                                    alt="blue-flower"
+                                    width={blueFlowerStyle.width}
+                                    height={blueFlowerStyle.height}
+                                    className="object-contain"
+                                    draggable={false}
+                                />
+                            </div>
+                        ]}
+                    >
+                        <InfiniteRotate>
+                            <Vinyl size={vinylSize} />
+                        </InfiniteRotate>
+                    </ImageOverlay>
+                </div>
+            </SlideIn>
         </MidNightLayout>
 
     )

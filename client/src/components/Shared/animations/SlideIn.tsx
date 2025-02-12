@@ -5,15 +5,16 @@ import { IComponentProps } from '@/types/component';
 interface IProps extends IComponentProps {
     duration?: number;
     xOffset?: string;
+    yOffset?: string;
     className?: string;
 }
 
-const SlideIn = ({ children, xOffset = '-100%', duration = 0.5, className }: IProps) => {
+const SlideIn = ({ children, xOffset, yOffset, duration = 0.5, className }: IProps) => {
     return (
         <motion.div
             className={className}
-            initial={{ x: xOffset }}
-            animate={{ x: 1 }}
+            initial={{ x: xOffset, y: yOffset }}
+            animate={{ x: 1, y: 1 }}
             transition={{ duration, ease: "easeOut" }}
         >
             {children}

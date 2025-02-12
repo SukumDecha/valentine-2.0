@@ -14,7 +14,17 @@ const lowerProps = [
 ]
 
 const OliviaVinyl = () => {
-    const { isMobile } = useResponsive()
+    const { isMobile, isMiniTablet } = useResponsive()
+
+    const stackSize = {
+        width: isMobile ? 250 : isMiniTablet ? 300 : 500,
+        height: isMobile ? 300 : isMiniTablet ? 350 : 550
+    }
+
+    const vinylSize = {
+        width: isMobile ? 220 : isMiniTablet ? 300 : 450,
+        height: isMobile ? 220 : isMiniTablet ? 300 : 450
+    }
 
     const upperStyle = {
         width: isMobile ? 350 : 500,
@@ -26,7 +36,7 @@ const OliviaVinyl = () => {
 
     return (
         <>
-            <div className='w-full h-screen bg-[#968ECE] overflow-y-scroll overflow-x-hidden mx-auto max-w-xl font-Libre italic'>
+            <div className='w-full h-screen bg-[#968ECE] overflow-y-scroll overflow-x-hidden mx-auto max-w-xl font-Libre italic px-32'>
                 <div className="flex w-full h-full flex-col items-center sm:items-between gap-4 relative">
                     <div className="flex flex-col items-center">
                         <OliviaProps
@@ -40,12 +50,11 @@ const OliviaVinyl = () => {
                         </div>
 
                         <div className="mr-8">
-                            <Stack cardDimensions={{ width: 300, height: 400 }} />
+                            <Stack cardDimensions={stackSize} />
                         </div>
                     </div>
 
-
-                    <div className="flex flex-col items-center gap-4">
+                    <div className="flex flex-col items-center">
                         <OliviaProps
                             images={lowerProps}
                             width={lowerStyle.width}
@@ -53,7 +62,7 @@ const OliviaVinyl = () => {
                             className='z-20' />
 
                         <InfiniteRotate>
-                            <Vinyl size={{ width: 300, height: 300 }} />
+                            <Vinyl size={vinylSize} />
                         </InfiniteRotate>
                     </div>
 

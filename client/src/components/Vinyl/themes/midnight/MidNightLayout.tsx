@@ -1,9 +1,11 @@
 import { ReactNode } from "react"
-import MidNightCloud from "./MidNightCloud"
+import MidNightCloud from "./clouds/MidNightCloud"
 import useResponsive from "@/hooks/useResponsive"
 import { CSSProperties } from "react"
 import MidNightMoon from "./MidNightMoon"
 import Background from "@/components/Shared/Background"
+import MidNightMobileClouds from "./clouds/MidNightMobileClouds"
+import MidNightTabletlouds from "./clouds/MidNightTabletClouds"
 
 interface IProps {
     children: ReactNode
@@ -16,57 +18,26 @@ interface IImageProps {
 }
 
 const MidNightLayout = ({ children }: IProps) => {
-    const { isMobile, isTablet } = useResponsive()
+    const { isMobile, isMiniTablet } = useResponsive()
 
     const moonStyle: IImageProps = {
-        width: isMobile ? 150 : isTablet ? 200 : 400,
-        height: isMobile ? 150 : isTablet ? 200 : 400,
+        width: isMobile ? 150 : isMiniTablet ? 200 : 250,
+        height: isMobile ? 150 : isMiniTablet ? 200 : 250,
         styles: {
             position: 'absolute',
-            top: isMobile ? -40 : isTablet ? 30 : 0,
-            left: isMobile ? -50 : isTablet ? 50 : 0
-        }
-    }
-
-
-    const cloudStyleA: IImageProps = {
-        width: isMobile ? 200 : isTablet ? 400 : 400,
-        height: isMobile ? 200 : isTablet ? 400 : 400,
-        styles: {
-            position: 'absolute',
-            top: isMobile ? -50 : isTablet ? -30 : 0,
-            right: isMobile ? -70 : isTablet ? -70 : 0
-        }
-    }
-
-    const cloudStyleB: IImageProps = {
-        width: isMobile ? 200 : isTablet ? 400 : 400,
-        height: isMobile ? 200 : isTablet ? 400 : 400,
-        styles: {
-            position: 'absolute',
-            top: isMobile ? 400 : isTablet ? 350 : 0,
-            left: isMobile ? -70 : isTablet ? -100 : 0,
-            zIndex: 0
-        }
-
-    }
-
-    const cloudStyleC: IImageProps = {
-        width: isMobile ? 200 : isTablet ? 400 : 400,
-        height: isMobile ? 200 : isTablet ? 400 : 400,
-        styles: {
-            position: 'absolute',
-            top: isMobile ? 550 : isTablet ? 800 : 0,
-            right: isMobile ? -70 : isTablet ? -70 : 0
+            top: isMobile ? -40 : 40,
+            left: isMobile ? -50 : 'calc(100vw / 2.3)'
         }
     }
 
     return (
         <div className="flex flex-col justify-center items-center h-screen bg-[#09122C] overflow-hidden relative p-4 font-Libre italic">
             <MidNightMoon styles={moonStyle} />
-            <MidNightCloud styles={cloudStyleA} />
-            <MidNightCloud styles={cloudStyleB} />
-            <MidNightCloud styles={cloudStyleC} />
+
+            {isMobile ?
+                <MidNightMobileClouds /> :
+                <MidNightTabletlouds />
+            }
 
             <Background imageUrl="/images/vinyl/midnight/star.png" />
 

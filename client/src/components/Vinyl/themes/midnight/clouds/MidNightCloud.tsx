@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React, { CSSProperties } from 'react'
+import { motion } from 'framer-motion'
 
 interface IProps {
     className?: string
@@ -8,11 +9,15 @@ interface IProps {
         height?: number
         styles?: CSSProperties
     }
+    largeCloud?: boolean
 }
-const MidNightCloud = ({ className, styles }: IProps) => {
+
+const MidNightCloud = ({ className, styles, largeCloud = false }: IProps) => {
+    const src = largeCloud ? '/images/vinyl/midnight/cloud-large.png' : '/images/vinyl/midnight/cloud.png'
+
     return (
-        <Image
-            src="/images/vinyl/midnight/cloud.png"
+        <motion.img
+            src={src}
             alt="cloud"
             width={styles.width}
             height={styles.height}
@@ -22,6 +27,12 @@ const MidNightCloud = ({ className, styles }: IProps) => {
                 ...styles.styles,
             }}
             draggable={false}
+            animate={{ x: [0, 10, 0] }}
+            transition={{
+                duration: 4,
+                repeat: Infinity,
+
+            }}
         />
     )
 }
