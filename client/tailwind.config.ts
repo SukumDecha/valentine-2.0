@@ -21,7 +21,8 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        Libre: ['Libre Baskerville', 'sans-serif']
+        Libre: ['Libre Baskerville', 'sans-serif'],
+        Prompt: ['Prompt', 'sans-serif']
       }
     },
   },
