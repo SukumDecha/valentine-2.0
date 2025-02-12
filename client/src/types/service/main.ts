@@ -1,7 +1,7 @@
 export interface ImageWithText {
     file: File;
     text: string;
-  }
+}
 
 export interface UploadImagesWithTextsResponse {
     success: boolean;
