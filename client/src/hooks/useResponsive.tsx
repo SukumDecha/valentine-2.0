@@ -5,8 +5,9 @@ const useResponsive = () => {
 
     return {
         isMobile: screens.xs,
-        isTablet: screens.sm,
-        isDesktop: screens.md || screens.lg || screens.xl,
+        isMiniTablet: screens.md && !screens.lg,
+        isTablet: screens.sm || screens.md,
+        isDesktop: screens.lg || screens.xl,
         screens,
     };
 };

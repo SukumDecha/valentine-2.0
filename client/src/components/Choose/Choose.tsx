@@ -1,9 +1,13 @@
 "use client"
 import React from 'react'
 import SearchSong from './SearchSong'
-import UploadImage from './ImageUpload'
+// import UploadImage from './ImageUpload'
 import { Heart } from 'lucide-react'
+<<<<<<< HEAD
+import User from './User'
 
+=======
+>>>>>>> cbf76a1d71ee9243a1272582bee62de0b1193372
 const Choose = ({uuid} : {uuid:string}) => {
     return (
         <section className='min-h-screen bg-gradient-to-br from-red-400 via-pink-500 to-purple-500'>
@@ -37,7 +41,7 @@ const Choose = ({uuid} : {uuid:string}) => {
                             <Heart className="w-5 h-5 text-white" fill="white" />
                             <h2 className="text-xl font-semibold text-white">Share Your Moments</h2>
                         </div>
-                        <UploadImage uuid_slug={uuid} />
+                        <User uuid_slug={uuid} />
                     </div>
                 </div>
 

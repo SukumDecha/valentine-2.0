@@ -1,15 +1,13 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { Request, Response, NextFunction } from "express";
+import { Request } from "express";
 
-// Create dir if not exists
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Configure storage
 const storage = multer.diskStorage({
     destination: function (req: Request, file, cb) {
         cb(null, uploadsDir);
@@ -18,12 +16,10 @@ const storage = multer.diskStorage({
         const uuid = req.params.uuid || 'uuid_default';
         const timestamp = Date.now();
         const filename = `${uuid}-${timestamp}${path.extname(file.originalname)}`;
-        
         cb(null, filename);
     }
 });
 
-// File filter to validate uploads
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
         return cb(new Error('Only image files are allowed!'));
@@ -31,8 +27,7 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilt
     cb(null, true);
 };
 
-// Create multer middleware instance
-const upload = multer({
+export const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
@@ -40,23 +35,4 @@ const upload = multer({
     }
 });
 
-// Export middleware handler
-export const handleFileUpload = (req: Request, res: Response, next: NextFunction) => {
-    // Allow both 'file' and 'images' field names
-    const uploadMiddleware = upload.array("images", 10);
-    
-    uploadMiddleware(req, res, (err: any) => {
-        if (err instanceof multer.MulterError) {
-            return res.status(400).json({
-                message: 'Upload error',
-                error: err.message
-            });
-        } else if (err) {
-            return res.status(400).json({
-                message: 'Error uploading file',
-                error: err.message
-            });
-        }
-        next();
-    });
-};
+export const handleFileUpload = upload.array("images", 10);

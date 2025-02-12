@@ -1,66 +1,64 @@
+'use client'
+
 import InfiniteRotate from "@/components/Shared/animations/InfiniteRotate"
 import Stack from "../../Stack"
 import Vinyl from "../../Vinyl"
-import MidNightCloud from "./MidNightCloud"
+import MidNightLayout from "./MidNightLayout"
+import ImageOverlay from "@/components/Shared/CardStackOverlay"
+import Image from "next/image"
 import useResponsive from "@/hooks/useResponsive"
-import { CSSProperties } from "react"
-import MidNightMoon from "./MidNightMoon"
 
 const MidNightVinylTheme = () => {
-    const { isMobile, isTablet } = useResponsive()
+    const { isMobile, isMiniTablet } = useResponsive()
 
-    const moonStyle: CSSProperties = {
-        position: 'absolute',
-        top: isMobile ? -40 : isTablet ? 0 : 0,
-        left: isMobile ? -25 : isTablet ? 0 : 0
+    const stackSize = {
+        width: isMobile ? 250 : isMiniTablet ? 300 : 500,
+        height: isMobile ? 300 : isMiniTablet ? 350 : 550
     }
 
-
-    const cloudStyleA: CSSProperties = {
-        position: 'absolute',
-        top: isMobile ? -50 : isTablet ? 0 : 0,
-        right: isMobile ? -70 : isTablet ? 0 : 0
+    const vinylSize = {
+        width: isMobile ? 220 : isMiniTablet ? 300 : 450,
+        height: isMobile ? 220 : isMiniTablet ? 300 : 450
     }
-
-    const cloudStyleB: CSSProperties = {
-        position: 'absolute',
-        top: isMobile ? 400 : isTablet ? 0 : 0,
-        left: isMobile ? -70 : isTablet ? 0 : 0
-    }
-
-    const cloudStyleC: CSSProperties = {
-        position: 'absolute',
-        top: isMobile ? 600 : isTablet ? 0 : 0,
-        right: isMobile ? -70 : isTablet ? 0 : 0
-    }
-
 
     return (
-        <>
-            <div className='flex flex-col justify-center items-center sm:h-screen bg-blue-900 h-screen overflow-hidden overflow-y-scroll'>
-                <div className="w-full flex items-center justify-center">
-                    <div className="flex w-full h-full flex-col items-center justify-center sm:flex-row sm:gap-20 relative mt-32">
-                        <MidNightMoon styles={moonStyle} />
-                        <MidNightCloud styles={cloudStyleA} />
-                        <MidNightCloud styles={cloudStyleB} />
-                        <MidNightCloud styles={cloudStyleC} />
-
-                        <div className='sm:hidden text-white text-2xl mb-4'>
-                            Our Memories Playlist
-                        </div>
-
-                        <Stack cardDimensions={{ width: 300, height: 400 }} />
-
-                        <div className="relative flex flex-col items-center gap-10 mt-10">
-                            <div className="text-white text-xl">Lyrics will be played here</div>
-                            <InfiniteRotate>
-                                <Vinyl size={{ width: 300, height: 300 }} />
-                            </InfiniteRotate>
-                        </div>
-                    </div>
+        <MidNightLayout>
+            <div className="flex flex-col items-center">
+                <div className='sm:hidden text-white text-2xl mb-4'>
+                    Our Memories Playlist
                 </div>
+
+                <Stack cardDimensions={stackSize} />
             </div>
-        </>
+
+
+
+            <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
+                <ImageOverlay
+                    overlayElements={[
+                        <div className='z-40 absolute' style={{
+                            bottom: '-3.5rem',
+                            left: isMobile ? '-1.5rem' : '-3.5rem'
+                        }}>
+                            <Image
+                                src="/images/vinyl/midnight/blue-flower.png"
+                                alt="blue-flower"
+                                width={isMobile ? 250 : 300}
+                                height={isMobile ? 250 : 300}
+                                className="object-contain"
+                                draggable={false}
+                            />
+                        </div>
+                    ]}
+                >
+                    <InfiniteRotate>
+                        <Vinyl size={vinylSize} />
+                    </InfiniteRotate>
+                </ImageOverlay>
+
+            </div>
+        </MidNightLayout>
+
     )
 }
 
