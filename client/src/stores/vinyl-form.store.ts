@@ -8,6 +8,6 @@ interface VinylFormState {
 }
 
 export const useVinylFormStore = create<VinylFormState>((set) => ({
-  form: {templateId: '', song: '', content: []},
+  form: {templateId: '', track: null , images: null},
   setForm: (key: string, value: any) => set((state) => ({form: {...state.form, [key]: value}}))
 }))
