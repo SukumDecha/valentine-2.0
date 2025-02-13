@@ -21,9 +21,27 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|HEIC|heic)$/i)) {
-        return cb(new Error('Only image files are allowed!'));
+    // Check both file extension and mimetype
+    const allowedExtensions = /\.(jpg|jpeg|png|gif|webp|HEIC|heic)$/i;
+    const allowedMimeTypes = [
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+        'image/heic',
+        'image/heif',
+        'application/octet-stream' // Some devices send HEIC files with this mimetype
+    ];
+
+    if (!file.originalname.match(allowedExtensions) || !allowedMimeTypes.includes(file.mimetype)) {
+        return cb(new Error('Only image files are allowed! (JPG, JPEG, PNG, GIF, WEBP, HEIC)'));
     }
+
+    // Additional check for iOS devices that might send photos with incorrect extension
+    if (file.mimetype === 'application/octet-stream' && !file.originalname.match(/\.(HEIC|heic)$/i)) {
+        return cb(new Error('Invalid file type'));
+    }
+
     cb(null, true);
 };
 
