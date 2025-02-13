@@ -38,7 +38,7 @@ export async function uploadFileToMinio(filePath: string, objectName: string): P
         await minioClient.fPutObject(BUCKET_NAME, objectName, filePath, {});
         // Return direct public URL instead of presigned URL
         const publicUrl = getPublicUrl(objectName);
-
+        
         try {
             await unlink(filePath);
         } catch (unlinkError) {
