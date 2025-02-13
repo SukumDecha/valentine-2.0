@@ -2,7 +2,9 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { Request } from "express";
-import { console } from "inspector";
+
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB per file
+const MAX_FILES = 10;
 
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
@@ -22,14 +24,15 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-    console.log("Received file:", {
-        mimetype: file.mimetype,
-        size: file.size,
-        name: file.originalname
-    });
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|HEIC)$/i)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|heic|HEIC)$/i)) {
         return cb(new Error('Only image files are allowed!'));
     }
+
+    const files = req.files as Express.Multer.File[];
+    if (files && files.length >= MAX_FILES) {
+        return cb(new Error(`Maximum ${MAX_FILES} files allowed`));
+    }
+
     cb(null, true);
 };
 
@@ -37,8 +40,9 @@ export const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 50 * 1024 * 1024 // 50MB limit
+        fileSize: MAX_FILE_SIZE, // 20MB per file
+        files: MAX_FILES // Maximum number of files
     }
 });
 
-export const handleFileUpload = upload.array("images", 10);
+export const handleFileUpload = upload.array("images", MAX_FILES);
