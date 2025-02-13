@@ -22,8 +22,8 @@ const PreviewWrapper = ({ children }: IComponentProps) => {
   return (
     <div className="relative">
       <div className="absolute bottom-20 z-[1000] flex justify-center w-full gap-[50%] font-Prompt text-xl">
-        <button type='button' onClick={backToInputForm} className="bg-red-400 py-1 px-2 rounded-md text-white">Back</button>
-        <button type='button' onClick={submitButtonHandler} className="bg-green-400 py-1 px-2 rounded-md">Submit</button>
+        <button type='button' onClick={backToInputForm} className="bg-red-400 py-1 px-4 rounded-md text-white text-base">Back</button>
+        <button type='button' onClick={submitButtonHandler} className="bg-green-400 py-1 px-4 rounded-md text-base">Submit</button>
       </div>
       <div>
         {children}

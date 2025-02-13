@@ -41,7 +41,7 @@ const MidNightLayout = ({ children }: IProps) => {
 
             <Background imageUrl="/images/vinyl/midnight/star.png" />
 
-            <div className="flex w-full h-screen flex-col sm:flex-row items-center sm:justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100]">
+            <div className="flex w-full h-screen flex-col sm:flex-row items-center justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100]">
                 {children}
             </div>
 

@@ -4,26 +4,45 @@ import React from 'react'
 import VinylTemplateForm from './components/VinylTemplateForm'
 import { useVinylFormStore } from '@/stores/vinyl-form.store'
 import VinylService from '@/services/vinyl.service'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 interface IProps {
   uuid: string
 }
 const FormInputPage = ({ uuid }: IProps) => {
   const form = useVinylFormStore((state) => state.form)
+  const clearForm = useVinylFormStore((state) => state.clearForm)
+  const router = useRouter()
 
   const doSubmit = async () => {
     if (!form.track || !form.templateId || !form.images || !form.id) {
       console.log("Error: Please fill all fields")
+      toast.error('กรุณากรอกข้อมูลให้ครบถ้วน')
       return
     }
 
-    VinylService.updateUser(form)
+
+    toast.promise(
+      VinylService.updateUser(form),
+      {
+        loading: 'กำลังสร้างเว็บไซต์...',
+        success: 'สร้างเว็บไซต์สำเร็จ',
+        error: 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง'
+      }
+    )
+
+    clearForm()
+
+    setTimeout(() => {
+      router.replace(`/${uuid}`)
+    }, 3000)
   }
 
 
   return (
     <>
-      <div className="animate-gradient relative flex min-h-screen flex-col justify-center overflow-hidden bg-gradient-to-r from-[#E990A3] via-pink-500 to-red-500">
+      <div className="animate-gradient relative flex min-h-screen flex-col justify-center overflow-hidden bg-gradient-to-r from-[#E990A3] via-pink-500 to-red-500 max-w-2xl mx-auto">
         <div className="h-full p-2 flex flex-col gap-8">
           <h1 className='text-2xl font-Libre italic text-white text-center '>Valentine 2.0</h1>
           <VinylTemplateForm uuid={uuid} />

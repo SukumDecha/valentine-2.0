@@ -9,7 +9,7 @@ import Image from "next/image"
 import useResponsive from "@/hooks/useResponsive"
 import SlideIn from "@/components/Shared/animations/SlideIn"
 import { IUserResponse } from "@/types/vinyl/vinyl"
-import SpotifyEmbed from "@/components/Choose/SpotifyEmbed"
+import SpotifyEmbed from "@/components/Shared/SpotifyEmbed"
 
 interface IProps {
     data: IUserResponse
@@ -61,7 +61,7 @@ const MidNightVinyl = ({ data }: IProps) => {
             </SlideIn>
 
             <SlideIn xOffset={vinylStyle.xOffset} yOffset={vinylStyle.yOffset} duration={1}>
-                <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
+                <div className="relative flex flex-col items-center gap-10 z-100">
                     <ImageOverlay
                         overlayElements={[
                             <div className='z-40 absolute' style={overlayStyle}>

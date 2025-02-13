@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/index.scss"
+import ClientProvider from "@/components/Shared/providers/ClientProvider";
 
 export const metadata: Metadata = {
   title: "Valentine 2.0",
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <ClientProvider>
+          {children}
+        </ClientProvider>
       </body>
     </html>
   );

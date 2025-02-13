@@ -9,7 +9,8 @@ interface VinylFormState {
   setId: (id: string) => void;
   setTemplateId: (id: string) => void;
   setTrack: (track: ITrack) => void;
-  addImages: (image: IVinyl) => void;
+  addImages: (image: IVinyl[]) => void;
+  clearForm: () => void;
 }
 
 export const useVinylFormStore = create<VinylFormState>((set) => ({
@@ -18,5 +19,6 @@ export const useVinylFormStore = create<VinylFormState>((set) => ({
   setId: (id: string) => set((state) => ({ form: { ...state.form, id: id } })),
   setTemplateId: (templateId: string) => set((state) => ({ form: { ...state.form, templateId: templateId } })),
   setTrack: (track: ITrack) => set((state) => ({ form: { ...state.form, track: track } })),
-  addImages: (image: IVinyl) => set((state) => ({ form: { ...state.form, images: [...state.form.images, image] } }))
+  addImages: (image: IVinyl[]) => set((state) => ({ form: { ...state.form, images: [...state.form.images, ...image] } })),
+  clearForm: () => set({ form: { id: '', templateId: '', track: null, images: [] } }),
 }))

@@ -20,7 +20,7 @@ const VinylTemplateForm = ({ uuid }: IProps) => {
   const steps: StepMenu[] = [
     { key: '#1', label: 'เลือกเพลงโปรดของคุณ', selectedValue: form.track?.trackName, modalContent: <SelectSongModal /> },
     { key: '#2', label: 'เลือกเทมเพลต', selectedValue: form.templateId, modalContent: <SelectTemplateModal /> },
-    { key: '#3', label: 'อัพโหลดรูปภาพ', modalContent: <UploadImageModal uuid_slug={uuid} /> },
+    { key: '#3', label: 'อัพโหลดรูปภาพ', selectedValue: form.images, modalContent: <UploadImageModal uuid_slug={uuid} /> },
   ]
 
   return (
