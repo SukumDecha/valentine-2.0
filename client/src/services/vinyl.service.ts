@@ -106,6 +106,7 @@ const VinylService = {
 
         } catch (error: any) {
             console.error('Upload Error:', error);
+
             if (error.response) {
                 const errorMessage = error.response.data?.message ||
                     `Upload failed with status ${error.response.status}`;

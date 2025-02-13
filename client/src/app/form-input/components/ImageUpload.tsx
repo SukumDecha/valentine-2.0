@@ -1,10 +1,11 @@
 "use client"
 import type React from "react"
-import { Upload, message, Input, Button, Card, Space, Typography, Image } from "antd"
+import { Input, Button, Card, Space, Typography, Image } from "antd"
 import { InboxOutlined, DeleteOutlined, HeartOutlined } from "@ant-design/icons"
 import { useImageUpload } from "@/hooks/useImage"
 import { useRef } from "react"
 import { useVinylFormStore } from "@/stores/vinyl-form.store"
+import toast from "react-hot-toast"
 
 const { Text } = Typography
 
@@ -21,8 +22,12 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      addImages(Array.from(e.target.files))
-      e.target.value = '' 
+      toast.promise(addImages(Array.from(e.target.files)), {
+        loading: "Uploading images...",
+        success: "Images uploaded successfully",
+        error: "Failed to upload images. Please try again.",
+      })
+      e.target.value = ''
     }
   }
 
@@ -31,8 +36,7 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
     const allDescriptionsFilled = images.every(image => image.text.trim() !== "")
 
     if (!allDescriptionsFilled) {
-      message.error("Please fill in all image descriptions before uploading.")
-
+      toast.error("Please fill in all image descriptions before uploading.")
       return
     }
 
@@ -40,7 +44,7 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
       await uploadImages()
       saveItems(images)
     } catch (err) {
-      message.error("Failed to upload images. Please try again.")
+      toast.error((err as any).message)
     }
   }
 

@@ -24,7 +24,6 @@ app.use('/api/songs', songRouter);
 app.use('/api/users', userRouter);
 app.use('/api/template', templateRouter);
 
-
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });

@@ -12,3 +12,4 @@ export const validateFiles = (files: File[]): string | null => {
     }
     return null;
 };
+
