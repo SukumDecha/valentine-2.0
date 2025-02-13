@@ -38,8 +38,11 @@ const Vinyl = ({ template, data }: IProps) => {
         VinylWrapper = dynamic(() => import("@/components/VinylLayout/themes/love"), {
             ssr: false
         })
+    } else if (template === VinylTemplate.Scroll) {
+        VinylWrapper = dynamic(() => import("@/components/VinylLayout/themes/scroll"), {
+            ssr: false
+        })
     }
-
 
     return (
         <VinylWrapper data={data} />

@@ -4,4 +4,5 @@ export enum VinylTemplate {
     Olivia = "Olivia",
     Sunlight = "Sunlight",
     Love = "Love",
+    Scroll = "Scroll"
 }

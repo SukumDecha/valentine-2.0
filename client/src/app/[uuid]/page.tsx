@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import Choose from "@/components/Choose/Choose";
 import VinylService from "@/services/vinyl.service";
-import { Empty } from "antd";
 import { IUserResponse } from "@/types/vinyl/vinyl";
 import Vinyl from "@/components/VinylLayout";
 import NotFound from "../not-found";
+import Loading from "../loading";
 
 interface IProps {
   params: {
@@ -35,14 +35,10 @@ const CameraPage = ({ params }: IProps) => {
   }, [params.uuid]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />
   }
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!userData?.success) {
+  if (!userData?.success || error) {
     return <NotFound />
   }
 

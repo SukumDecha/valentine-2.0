@@ -43,7 +43,7 @@ const SunlightVinyl = ({ data }: IProps) => {
                     </ImageOverlay>
 
                     <div>
-                        <div className="my-4 text-center">Lyrics will be put here</div>
+                        <div className="my-4 text-center text-2xl">Lyrics will be put here</div>
                         <InfiniteRotate>
                             <Vinyl size={vinylSize} imgUrl={data.trackImage} />
                         </InfiniteRotate>
