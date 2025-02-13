@@ -26,7 +26,7 @@ const RenderStepMenu = ({ steps }: Props) => {
       {steps.map((step) => (
         <div
           key={step.key}
-          className="flex cursor-pointer items-center rounded-md border border-gray-300 p-[10px]"
+          className="flex cursor-pointer items-center rounded-md border border-gray-300 p-[10px] bg-white bg-opacity-75"
           onClick={() => handleMenuClick(step.key)}
         >
           <span className="mr-2">{step.key}</span>
