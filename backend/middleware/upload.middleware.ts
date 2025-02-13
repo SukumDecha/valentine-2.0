@@ -1,133 +1,45 @@
-// 01d8f8beb5ee11bf358dcca5abb6bcd47d42140b
-import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import sharp from "sharp";
-import { CustomRequest, ProcessedFile } from "../types/express";
-import heicConvert from "heic-convert"; // This library can handle HEIC/HEIF formats
+import { Request } from "express";
+import { console } from "inspector";
 
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: function (req: Request, file, cb) {
+        cb(null, uploadsDir);
+    },
+    filename: function (req: Request, file, cb) {
+        const uuid = req.params.uuid || 'uuid_default';
+        const timestamp = Date.now();
+        const filename = `${uuid}-${timestamp}${path.extname(file.originalname)}`;
+        cb(null, filename);
+    }
+});
 
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-    console.log('Received file:', {
-        originalname: file.originalname,
+    console.log("Received file:", {
         mimetype: file.mimetype,
-        size: file.size
+        size: file.size,
+        size_2: file.buffer.length,
+        name: file.originalname
     });
-
-    // Updated MIME types to handle iPhone images
-    const allowedMimeTypes = new Set([
-        "image/jpeg",
-        "image/png",
-        "image/gif",
-        "image/webp",
-        "image/heic",
-        "image/heif",
-        "application/octet-stream",
-        "image/jpg",
-        ""
-    ]);
-
-    const ext = path.extname(file.originalname).toLowerCase();
-    const allowedExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic', '.heif']);
-
-    const isAllowed = allowedExtensions.has(ext) || allowedMimeTypes.has(file.mimetype);
-
-    if (!isAllowed) {
-        console.log('File rejected:', { ext, mimetype: file.mimetype });
-        return cb(new Error(`Invalid file type. Allowed types: ${Array.from(allowedExtensions).join(', ')}`));
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|HEIC)$/i)) {
+        return cb(new Error('Only image files are allowed!'));
     }
-
     cb(null, true);
 };
 
-const upload = multer({
+export const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: {
-        fileSize: 20 * 1024 * 1024, // 20MB limit
-    },
+        fileSize: 20 * 1024 * 1024 // 20MB limit
+    }
 });
 
-const processImage = async (buffer: Buffer, outputPath: string): Promise<void> => {
-    try {
-        const ext = path.extname(outputPath).toLowerCase();
-
-        if (ext === '.heic' || ext === '.heif') {
-            console.log("Converting HEIC/HEIF image...");
-            const convertedBuffer = await heicConvert({
-                buffer,
-                format: "JPEG" // Choose format to convert to (JPEG/PNG)
-            });
-            await sharp(convertedBuffer)
-                .rotate() // Automatically rotate based on EXIF data
-                .withMetadata() // Preserve metadata
-                .jpeg({ quality: 85 }) // Convert to JPEG
-                .toFile(outputPath);
-            console.log(`Converted HEIC to JPEG: ${outputPath}`);
-        } else {
-            // Regular image processing for other formats
-            await sharp(buffer)
-                .rotate()
-                .withMetadata()
-                .jpeg({ quality: 85 })
-                .toFile(outputPath);
-        }
-    } catch (error) {
-        console.error('Error processing image:', error);
-        throw error;
-    }
-};
-
-
-export const handleFileUpload = (req: Request, res: Response, next: NextFunction) => {
-    upload.array("images", 10)(req, res, async (err) => {
-        if (err) {
-            console.error("Multer error:", err);
-            return res.status(400).json({ error: err.message });
-        }
-
-        try {
-            if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
-                return res.status(400).json({ error: "No files uploaded" });
-            }
-
-            const files = req.files as Express.Multer.File[];
-            const processedFiles: ProcessedFile[] = [];
-
-            for (const file of files) {
-                try {
-                    console.log(`Processing file: ${file.originalname}`);
-                    
-                    const uuid = req.params.uuid || "uuid_default";
-                    const timestamp = Date.now();
-                    const newFilename = `${uuid}-${timestamp}.png`;
-                    const outputPath = path.join(uploadsDir, newFilename);
-
-                    await processImage(file.buffer, outputPath);
-                    
-                    console.log(`Successfully processed: ${newFilename}`);
-                    processedFiles.push({ filename: newFilename, path: outputPath });
-                } catch (processError) {
-                    console.error(`Failed to process ${file.originalname}:`, processError);
-                }
-            }
-
-            if (processedFiles.length === 0) {
-                throw new Error("No files were successfully processed");
-            }
-
-            (req as CustomRequest).processedFiles = processedFiles;
-            next();
-        } catch (error) {
-            console.error("File processing error:", error);
-            next(error);
-        }
-    });
-};
+export const handleFileUpload = upload.array("images", 10);
