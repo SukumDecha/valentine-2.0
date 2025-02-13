@@ -30,10 +30,12 @@ services:
       - MONGO_URI=mongodb+srv://louderdev:123@cluster0.bqke2cc.mongodb.net?authSource=admin
       # MinIO Configuration
       - MINIO_INTERNAL_ENDPOINT=minio
-      - MINIO_PUBLIC_ENDPOINT=localhost
-      - MINIO_PORT=9000
-      - MINIO_PUBLIC_PORT=9000
+      - MINIO_ENDPOINT=https://minio.bsthun.com/
+      - MINIO_PORT=443
       - MINIO_USE_SSL=true
+      - MINIO_BUCKET_NAME=sit-valentine1
+      - MINIO_PUBLIC_ENDPOINT=localhost
+      - MINIO_PUBLIC_PORT=9000
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
       - MINIO_BUCKET_NAME=user-uploads

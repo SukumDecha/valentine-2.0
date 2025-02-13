@@ -1,4 +1,3 @@
-# Frontend Dockerfile
 FROM node:18-alpine
 
 WORKDIR /app
@@ -18,5 +17,5 @@ RUN npm run build
 # Expose port 3000
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "run", "dev"]
+# Start the application using the production build
+CMD ["npm", "run", "start"]
