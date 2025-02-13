@@ -4,6 +4,7 @@ import InfiniteRotate from '@/components/Shared/animations/InfiniteRotate'
 import Vinyl from '../../Vinyl'
 import OliviaProps from './OliviaProps'
 import useResponsive from '@/hooks/useResponsive'
+import { IUserResponse } from '@/types/vinyl/vinyl'
 
 const upperProps = [
     '/images/vinyl/olivia/upper-props.png',
@@ -21,7 +22,11 @@ const lowerLgProps = [
     '/images/vinyl/olivia/lower-props-lg.png'
 ]
 
-const OliviaVinyl = () => {
+interface IProps {
+    data: IUserResponse
+}
+
+const OliviaVinyl = ({ data }: IProps) => {
     const { isMobile, isMiniTablet, isTablet } = useResponsive()
 
     const stackSize = {
@@ -68,7 +73,7 @@ const OliviaVinyl = () => {
                     </div>
 
                     <div className="mr-8">
-                        <Stack cardDimensions={stackSize} />
+                        <Stack cardDimensions={stackSize} cardsData={data.images} />
                     </div>
                 </div>
 
@@ -83,7 +88,7 @@ const OliviaVinyl = () => {
                     }
 
                     <InfiniteRotate>
-                        <Vinyl size={vinylSize} />
+                        <Vinyl size={vinylSize} imgUrl={data.trackImage} />
                     </InfiniteRotate>
                 </div>
 

@@ -8,8 +8,10 @@ export type VinylForm = {
 }
 
 export interface IVinyl {
+    id: string;
     file: File;
     text: string;
+    url: string;
 }
 
 export interface IVinylResponse {
