@@ -28,7 +28,7 @@ services:
       - MINIO_PORT=443
       - MINIO_USE_SSL=true
       - MINIO_BUCKET_NAME=sit-valentine1
-      - MINIO_PUBLIC_ENDPOINT=https://minio.bsthun.com
+      - MINIO_PUBLIC_ENDPOINT=minio.bsthun.com
       - MINIO_ACCESS_KEY=Q0cEpIA853SRR886IG7r
       - MINIO_SECRET_KEY=9WablMiukRpIEJLVD8ARLl3GI1rsAOsysGSc1NHv
       # Spotify Configuration
