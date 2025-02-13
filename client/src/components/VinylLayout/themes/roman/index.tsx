@@ -6,6 +6,8 @@ import Vinyl from '@/components/VinylLayout/Vinyl'
 import FadeIn from '@/components/Shared/animations/FadeIn'
 import { IUserResponse } from '@/types/vinyl/vinyl'
 import useResponsive from '@/hooks/useResponsive'
+import SlideIn from '@/components/Shared/animations/SlideIn'
+import SpotifyEmbed from '@/components/Shared/SpotifyEmbed'
 
 interface IProps {
     data: IUserResponse
@@ -26,7 +28,7 @@ const RomanVinyl = ({ data }: IProps) => {
 
     return (
         <>
-            <div className="max-w-[433px] mx-auto ">
+            <div className="mx-auto ">
                 <div className="bg-[url('/vinyl/bgBrown.jpg')] libre-baskerville-regular-italic bg-cover p-9 bg-top overflow-auto bg-no-repeat h-screen">
                     <div className="w-full flex items-center justify-center">
                         <div className="flex w-full h-full flex-col items-center justify-center height">
@@ -60,6 +62,15 @@ const RomanVinyl = ({ data }: IProps) => {
                             </div>
                         </div>
                     </div>
+
+                    <SlideIn
+                        yOffset={'300%'}
+                        duration={1}
+                        className="sm:block w-[70vw] sm:w-[600px] mx-auto"
+                    >
+                        <SpotifyEmbed trackId={data.trackId as string} />
+                    </SlideIn>
+
 
                     <div className="text-center text-slate-700 opacity-50 my-8 sm:text-2xl">Valentine 2.0</div>
                 </div>
