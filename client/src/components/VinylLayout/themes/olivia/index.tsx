@@ -5,7 +5,7 @@ import Vinyl from '../../Vinyl'
 import OliviaProps from './OliviaProps'
 import useResponsive from '@/hooks/useResponsive'
 import { IUserResponse } from '@/types/vinyl/vinyl'
-import SlideIn from '@/components/Shared/animations/dddslideIn'
+import SlideIn from '@/components/Shared/animations/SlideIn'
 import SpotifyEmbed from '@/components/Shared/SpotifyEmbed'
 
 const upperProps = [

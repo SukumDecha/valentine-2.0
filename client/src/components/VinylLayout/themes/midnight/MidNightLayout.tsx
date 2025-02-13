@@ -6,7 +6,7 @@ import MidNightMoon from "./MidNightMoon"
 import Background from "@/components/Shared/Background"
 import MidNightMobileClouds from "./clouds/MidNightMobileClouds"
 import MidNightTabletlouds from "./clouds/MidNightTabletClouds"
-import SlideIn from "@/components/Shared/animations/dddslideIn"
+import SlideIn from "@/components/Shared/animations/SlideIn"
 import SpotifyEmbed from "@/components/Shared/SpotifyEmbed"
 import { IUserResponse } from "@/types/vinyl/vinyl"
 
