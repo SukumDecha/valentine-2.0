@@ -1,4 +1,3 @@
-import { addTemplate } from './../../../backend/controllers/template.controller';
 import { IUserResponse, IVinyl, IVinylResponse, VinylForm } from "@/types/vinyl/vinyl";
 import api from "./api";
 
