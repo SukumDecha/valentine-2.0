@@ -5,6 +5,8 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    ports:
+      - "80:3000"
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=https://love.valentine2dot0.me:8080
@@ -21,6 +23,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
     environment:
       - NODE_ENV=production
       - PORT=8080
@@ -47,6 +51,8 @@ services:
     image: mongo:latest
     container_name: mongodb
     restart: always
+    ports:
+      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=louderdev
       - MONGO_INITDB_ROOT_PASSWORD=123
