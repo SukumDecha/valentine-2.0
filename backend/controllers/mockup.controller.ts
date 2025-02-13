@@ -8,7 +8,10 @@ export const mockupData = async (req: Request, res: Response) : Promise<void> =>
         for (let i = 0; i < 100; i++) {
             await db.insertOne({ uuid: generateUUID() });
         }
-        res.status(201).json({ message: "Create mock-up users successfully" });
+        const users = await db.find().toArray();
+        res.status(201).json({ message: "Create mock-up users successfully",
+            users : users.map((user: any) => user.uuid)
+         });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }

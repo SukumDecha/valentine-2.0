@@ -30,7 +30,7 @@ export async function initializeBucket(): Promise<void> {
 }
 
 export function getPublicUrl(objectName: string): string {
-    return `http://${PUBLIC_ENDPOINT}:${PUBLIC_PORT}/${BUCKET_NAME}/${objectName}`;
+    return `https://${PUBLIC_ENDPOINT}:${PUBLIC_PORT}/console/browser/${BUCKET_NAME}/${objectName}`;
 }
 
 export async function uploadFileToMinio(filePath: string, objectName: string): Promise<string> {
