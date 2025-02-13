@@ -1,6 +1,7 @@
+import { useState, useCallback, useEffect } from 'react';
 import VinylService from '@/services/vinyl.service';
 import { IVinyl } from '@/types/vinyl/vinyl';
-import { useState, useCallback, useEffect } from 'react';
+import heic2any from 'heic2any';
 
 interface PreviewImage extends IVinyl {
   id: string;
@@ -12,18 +13,60 @@ interface UseImageUpload {
   isUploading: boolean;
   error: string | null;
   success: string | null;
-  addImages: (files: File[]) => void;
+  addImages: (files: File[]) => Promise<void>;
   removeImage: (id: string) => void;
   updateImageText: (id: string, text: string) => void;
   uploadImages: () => Promise<void>;
   clearSuccess: () => void;
 }
 
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif'];
+
 export const useImageUpload = (uuid: string): UseImageUpload => {
   const [images, setImages] = useState<PreviewImage[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const convertHeicToJpeg = async (file: File): Promise<File> => {
+    try {
+      const blob = await heic2any({
+        blob: file,
+        toType: 'image/jpeg',
+        quality: 0.8
+      });
+      
+      return new File(
+        [blob as Blob], 
+        file.name.replace(/\.(heic|heif)$/i, '.jpg'),
+        { type: 'image/jpeg' }
+      );
+    } catch (error) {
+      console.error('HEIC conversion error:', error);
+      throw new Error('Failed to convert HEIC image');
+    }
+  };
+
+  const processFile = async (file: File): Promise<File> => {
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      throw new Error(`File ${file.name} is too large. Maximum size is 20MB`);
+    }
+
+    // Validate file type
+    if (!ALLOWED_TYPES.includes(file.type.toLowerCase())) {
+      throw new Error(`File ${file.name} has unsupported format`);
+    }
+
+    // Convert HEIC/HEIF to JPEG if necessary
+    if (file.type.toLowerCase().includes('heic') || file.type.toLowerCase().includes('heif')) {
+      return await convertHeicToJpeg(file);
+    }
+
+    return file;
+  };
+
 
   const fetchImages = async (uuid: string) => {
     try {
@@ -45,19 +88,28 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
       setError(err instanceof Error ? err.message : 'Failed to fetch images');
     }
   }
-
-  const addImages = useCallback((files: File[]) => {
-    const newImages: PreviewImage[] = files.map(file => ({
-      id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      file,
-      text: '',
-      preview: URL.createObjectURL(file),
-      url: ''
-    }));
-
-    setImages(prev => [...prev, ...newImages]);
+  const addImages = useCallback(async (files: File[]) => {
     setError(null);
     setSuccess(null);
+
+    try {
+      const processedFiles = await Promise.all(
+        files.map(async (file) => {
+          const processed = await processFile(file);
+          return {
+            id: `${processed.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            file: processed,
+            text: '',
+            preview: URL.createObjectURL(processed),
+            url: ''
+          };
+        })
+      );
+
+      setImages(prev => [...prev, ...processedFiles]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to process images');
+    }
   }, []);
 
   const removeImage = useCallback((id: string) => {

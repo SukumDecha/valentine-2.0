@@ -7,7 +7,6 @@ import songRouter from "./routes/song.route";
 import userRouter from "./routes/userData.route";
 import templateRouter from "./routes/template.route";
 import { connectToDB } from "./database/database";
-import { initializeBucket } from "./minio/utils";
 
 dotenv.config();
 
@@ -17,6 +16,7 @@ const PORT = process.env.PORT || 8080;
 connectToDB();
 
 app.use(express.json());
+app.use(express.urlencoded({ limit: '25mb', extended: true }));
 app.use(helmet());
 app.use(cors({ origin: '*' }));
 app.use('/api/uploads', uploadRouter);
