@@ -1,40 +1,39 @@
-import React, { SetStateAction, useState } from "react";
-import { Modal, Button } from "antd";
+import React, { SetStateAction, useState } from 'react'
+import { Modal, Button } from 'antd'
 
 export interface StepMenu {
-  key: string,
-  label: string,
+  key: string
+  label: string
+  selectedValue?: string
   modalContent: React.ReactNode
 }
 
 interface Props {
-  steps?: StepMenu[]
+  steps: StepMenu[]
 }
 
-const mockupSteps: StepMenu[] = [
-  {key: '#1', label: 'text', modalContent: <h1>Hello</h1>},
-  {key: '#2', label: 'text', modalContent: <h1>Hi</h1>}
-]
-
-const RenderStepMenu = ({ steps = mockupSteps }: Props) => {
-  const [selectedStep, setSelectedStep] = useState<StepMenu | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const RenderStepMenu = ({ steps }: Props) => {
+  const [selectedStep, setSelectedStep] = useState<StepMenu | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleMenuClick = (key: string) => {
-    setSelectedStep((steps.find((step) => step.key === key) || null));
-    setIsModalOpen(true);
-  };
+    setSelectedStep(steps.find((step) => step.key === key) || null)
+    setIsModalOpen(true)
+  }
 
   return (
-    <div className="flex flex-col gap-3 w-full font-Prompt">
+    <div className="flex w-full flex-col gap-3 font-Prompt">
       {steps.map((step) => (
         <div
           key={step.key}
-          className="flex items-center p-[10px] border border-gray-300 rounded-md cursor-pointer"
+          className="flex cursor-pointer items-center rounded-md border border-gray-300 p-[10px] bg-white bg-opacity-75"
           onClick={() => handleMenuClick(step.key)}
         >
           <span className="mr-2">{step.key}</span>
-          {step.label}
+          <div className='w-full flex justify-between'>
+            <span>{step.label}</span>
+            <span>{step.selectedValue}</span>
+          </div>
         </div>
       ))}
 
@@ -52,7 +51,7 @@ const RenderStepMenu = ({ steps = mockupSteps }: Props) => {
         {selectedStep?.modalContent}
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default RenderStepMenu;
+export default RenderStepMenu
