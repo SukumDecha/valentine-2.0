@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|HEIC)$/i)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|HEIC|heic)$/i)) {
         return cb(new Error('Only image files are allowed!'));
     }
     cb(null, true);
