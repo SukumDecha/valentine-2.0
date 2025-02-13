@@ -25,7 +25,6 @@ services:
       - PORT=8080
       - MONGO_URI=mongodb+srv://louderdev:123@cluster0.bqke2cc.mongodb.net?authSource=admin
       # MinIO Configuration
-      - MINIO_INTERNAL_ENDPOINT=minio
       - MINIO_PORT=443
       - MINIO_USE_SSL=true
       - MINIO_BUCKET_NAME=sit-valentine1

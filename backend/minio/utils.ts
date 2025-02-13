@@ -1,4 +1,4 @@
-import minioClient, { BUCKET_NAME, PUBLIC_ENDPOINT, INTERNAL_ENDPOINT, PUBLIC_PORT } from "./client";
+import minioClient, { BUCKET_NAME, PUBLIC_ENDPOINT, PUBLIC_PORT } from "./client";
 import { unlink } from 'fs/promises';
 
 export async function initializeBucket(): Promise<void> {
@@ -30,7 +30,7 @@ export async function initializeBucket(): Promise<void> {
 }
 
 export function getPublicUrl(objectName: string): string {
-    return `https://${PUBLIC_ENDPOINT}:${PUBLIC_PORT}/console/browser/${BUCKET_NAME}/${objectName}`;
+    return `https://${PUBLIC_ENDPOINT}/${BUCKET_NAME}/${objectName}`;
 }
 
 export async function uploadFileToMinio(filePath: string, objectName: string): Promise<string> {
