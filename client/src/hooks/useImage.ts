@@ -1,6 +1,7 @@
 import VinylService from '@/services/vinyl.service';
 import { IVinyl } from '@/types/vinyl/vinyl';
 import { useState, useCallback, useEffect } from 'react';
+import heic2any from 'heic2any';
 
 interface PreviewImage extends IVinyl {
   id: string;
@@ -36,24 +37,54 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
           url: img.url
         }));
 
-        console.log("Mapped Images: ", mappedImages)
-        setImages(mappedImages as any)
+        setImages(mappedImages as any);
       } else {
         setImages([]);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch images');
     }
-  }
+  };
 
-  const addImages = useCallback((files: File[]) => {
-    const newImages: PreviewImage[] = files.map(file => ({
-      id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      file,
-      text: '',
-      preview: URL.createObjectURL(file),
-      url: ''
-    }));
+  const addImages = useCallback(async (files: File[]) => {
+    const newImages: PreviewImage[] = [];
+
+    for (const file of files) {
+      if (file.type === 'image/heic' || file.type === 'image/heif') {
+        try {
+          // Convert HEIC to a supported image format (e.g., JPG)
+          const convertedFile : any = await heic2any({
+            blob: file,
+            toType: 'image/jpeg', // You can change this to 'image/png' if needed
+          });
+
+          if (convertedFile && convertedFile[0]) {
+            const newImage: PreviewImage = {
+              id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+              file: convertedFile[0] as File,
+              text: '',
+              preview: URL.createObjectURL(convertedFile[0] as File),
+              url: '',
+            };
+            newImages.push(newImage);
+          } else {
+            setError('Failed to convert HEIC image');
+          }
+        } catch (err) {
+          setError('HEIC to image conversion failed');
+        }
+      } else {
+        // If it's not HEIC, proceed with the regular flow
+        const newImage: PreviewImage = {
+          id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          file,
+          text: '',
+          preview: URL.createObjectURL(file),
+          url: '',
+        };
+        newImages.push(newImage);
+      }
+    }
 
     setImages(prev => [...prev, ...newImages]);
     setError(null);
@@ -99,7 +130,6 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
         images.forEach(img => URL.revokeObjectURL(img.preview));
         setImages([]);
         setSuccess('Images uploaded successfully!');
-        // Auto-clear success message after 5 seconds
         setTimeout(() => setSuccess(null), 5000);
       } else {
         setError(response.message || 'Upload failed');
@@ -113,7 +143,7 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
 
   useEffect(() => {
     fetchImages(uuid);
-  }, [uuid])
+  }, [uuid]);
 
   return {
     images,
