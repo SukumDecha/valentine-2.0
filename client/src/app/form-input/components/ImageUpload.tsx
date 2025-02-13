@@ -1,11 +1,11 @@
 "use client"
-
 import type React from "react"
 import { Upload, message, Input, Button, Card, Space, Typography, Image } from "antd"
 import { InboxOutlined, DeleteOutlined, HeartOutlined } from "@ant-design/icons"
 import { useImageUpload } from "@/hooks/useImage"
 import { useRef } from "react"
 import { useVinylFormStore } from "@/stores/vinyl-form.store"
+import heic2any from 'heic2any';
 
 const { Text } = Typography
 
@@ -20,13 +20,29 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
 
   const saveItems = useVinylFormStore(state => state.addImages)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      addImages(Array.from(e.target.files))
-      e.target.value = '' // Reset the input
+      const files = Array.from(e.target.files);
+      
+      for (let file of files) {
+        if (file.type === 'image/heic' || file.type === 'image/heif') {
+          try {
+            // Convert the HEIC/HEIF file
+            const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
+            const newFile = new File([convertedBlob], file.name, { type: 'image/jpeg' });
+            addImages([newFile]); // Add converted file to images list
+          } catch (err) {
+            console.error('Error converting HEIC file', err);
+            message.error("Failed to convert HEIC image.");
+          }
+        } else {
+          addImages([file]); // Add normal image file
+        }
+      }
+  
+      e.target.value = ""; // Reset the input
     }
-  }
-
+  };
 
   const handleUpload = async () => {
     const allDescriptionsFilled = images.every(image => image.text.trim() !== "")
