@@ -22,7 +22,7 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       addImages(Array.from(e.target.files))
-      e.target.value = '' // Reset the input
+      e.target.value = '' 
     }
   }
 
