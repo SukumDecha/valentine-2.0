@@ -7,7 +7,7 @@ import MidNightLayout from "./MidNightLayout"
 import ImageOverlay from "@/components/Shared/CardStackOverlay"
 import Image from "next/image"
 import useResponsive from "@/hooks/useResponsive"
-import SlideIn from "@/components/Shared/animations/SlideIn"
+import SlideIn from "@/components/Shared/animations/dddslideIn"
 import { IUserResponse } from "@/types/vinyl/vinyl"
 import SpotifyEmbed from "@/components/Shared/SpotifyEmbed"
 

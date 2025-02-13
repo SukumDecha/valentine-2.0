@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Choose from "@/components/Choose/Choose";
 import VinylService from "@/services/vinyl.service";
 import { IUserResponse } from "@/types/vinyl/vinyl";
 import Vinyl from "@/components/VinylLayout";
