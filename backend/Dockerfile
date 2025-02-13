@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Build TypeScript
-RUN npm run build
+# RUN npm run build
 
 # Expose port 8080
 EXPOSE 8080

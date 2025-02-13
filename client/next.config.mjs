@@ -6,6 +6,10 @@ const nextConfig = {
             protocol: 'https',
             hostname: 'www.yourtango.com',
           },
+          {
+            protocol: 'https',
+            hostname: 'i.scdn.co'
+          }
         ],
       },
     

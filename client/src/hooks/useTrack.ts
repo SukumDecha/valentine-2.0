@@ -1,13 +1,15 @@
+import SongService from '@/services/song.service';
+import VinylService from '@/services/vinyl.service';
+import { ITrack, ITrackResponse } from '@/types/track';
 import { useState } from 'react';
-import { searchTrack, addTrackId } from '@/services/main.service';
-import { Track } from '@/services/main.service';
+
 
 export const useTrackSearch = () => {
-    const [selectedTrack, setSelectedTrack] = useState<Track>();
+    const [selectedTrack, setSelectedTrack] = useState<ITrack>();
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
-    const [tracks, setTracks] = useState<Track[]>([]);
+    const [tracks, setTracks] = useState<ITrack[]>([]);
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,7 +19,7 @@ export const useTrackSearch = () => {
         setError('');
 
         try {
-            const result = await searchTrack(searchQuery);
+            const result = await SongService.searchTrack(searchQuery);
             if (result.success && result.tracks && result.tracks.length > 0) {
                 setTracks(result.tracks);
                 setSelectedTrack(result.tracks[0]);
@@ -47,10 +49,10 @@ export const useTrackSearch = () => {
 export const useTrackSelection = (uuid_slug: string) => {
     const [chooseTrack, setChooseTrack] = useState<boolean>(false);
 
-    const handleAddTrack = async (e: React.FormEvent<HTMLFormElement>, trackId: string, trackImage : string) => {
+    const handleAddTrack = async (e: React.FormEvent<HTMLFormElement>, trackId: string, trackImage: string) => {
         e.preventDefault();
         try {
-            const result = await addTrackId(uuid_slug, trackId, trackImage);
+            const result = await VinylService.addTrackId(uuid_slug, trackId, trackImage);
             if (result) {
                 setChooseTrack(true);
                 // Reset button state after animation

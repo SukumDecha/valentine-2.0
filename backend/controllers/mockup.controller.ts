@@ -5,7 +5,7 @@ import { generateUUID } from "../utils/uuid";
 export const mockupData = async (req: Request, res: Response) : Promise<void> => {
     try {
         const db = getDB().collection('users');
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 100; i++) {
             await db.insertOne({ uuid: generateUUID() });
         }
         res.status(201).json({ message: "Create mock-up users successfully" });
