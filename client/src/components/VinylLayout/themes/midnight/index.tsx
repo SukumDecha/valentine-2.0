@@ -49,7 +49,7 @@ const MidNightVinyl = ({ data }: IProps) => {
     }
 
     return (
-        <MidNightLayout>
+        <MidNightLayout data={data}>
             <SlideIn xOffset={stackStyle.xOffset} yOffset={stackStyle.yOffset} duration={1}>
                 <div className="flex flex-col items-center">
                     <div className='sm:hidden text-white text-2xl mb-4'>

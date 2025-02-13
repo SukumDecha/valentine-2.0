@@ -5,6 +5,8 @@ import Vinyl from '../../Vinyl'
 import OliviaProps from './OliviaProps'
 import useResponsive from '@/hooks/useResponsive'
 import { IUserResponse } from '@/types/vinyl/vinyl'
+import SlideIn from '@/components/Shared/animations/SlideIn'
+import SpotifyEmbed from '@/components/Shared/SpotifyEmbed'
 
 const upperProps = [
     '/images/vinyl/olivia/upper-props.png',
@@ -91,6 +93,14 @@ const OliviaVinyl = ({ data }: IProps) => {
                         <Vinyl size={vinylSize} imgUrl={data.trackImage} />
                     </InfiniteRotate>
                 </div>
+
+                <SlideIn
+                    yOffset={'300%'}
+                    duration={1}
+                    className="sm:block w-[70vw] sm:w-[600px] mx-auto mt-8"
+                >
+                    <SpotifyEmbed trackId={data.trackId as string} />
+                </SlideIn>
 
                 <div className="text-center opacity-50 mt-16">Valentine 2.0</div>
             </div>
