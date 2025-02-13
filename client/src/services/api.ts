@@ -5,6 +5,8 @@ const axiosInstance = axios.create({
     timeout: 10000,
 });
 
+console.log("Hello ", "GHELLO")
+
 const api = {
     get: <T>(url: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> =>
         axiosInstance.get<T>(url, config),
