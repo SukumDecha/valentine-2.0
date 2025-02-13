@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import _ from 'lodash'
-import { searchTrack } from '@/services/song.service'
+import SongService from '@/services/song.service';
 import Image from 'next/image';
 import { useVinylFormStore } from '@/stores/vinyl-form.store';
 import { ITrack } from '@/types/track';
@@ -56,7 +56,7 @@ const SelectSongModal = () => {
   
   const handleSearch = useCallback(
     _.debounce((query: string) => {
-      searchTrack(query).then(res => {
+      SongService.searchTrack(query).then(res => {
         if (res.success && res.tracks) {
           setFoundTracks(res.tracks)
         } else {

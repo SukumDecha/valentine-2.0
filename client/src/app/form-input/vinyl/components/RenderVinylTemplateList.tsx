@@ -1,3 +1,4 @@
+import { VinylTemplate } from '@/types/vinyl/vinyl.template'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { CSSProperties } from 'react'
@@ -15,8 +16,8 @@ interface Template {
 
 const templateList: Template[] = [
   {
-    templateId: '1',
-    label: 'Sour',
+    templateId: VinylTemplate.Olivia,
+    label: VinylTemplate.Olivia,
     img: {
       url: '/images/vinyl/form/sour.png',
       width: 64,
@@ -27,8 +28,8 @@ const templateList: Template[] = [
     },
   },
   {
-    templateId: '2',
-    label: 'Sunlight',
+    templateId: VinylTemplate.Sunlight,
+    label: VinylTemplate.Sunlight,
     img: {
       url: '/images/vinyl/form/sunlight.png',
       width: 64,
@@ -36,10 +37,10 @@ const templateList: Template[] = [
     },
   },
   {
-    templateId: '3',
-    label: 'Moonlight',
+    templateId: VinylTemplate.MidNight,
+    label: VinylTemplate.MidNight,
     img: {
-      url: '/images/vinyl/form/moon.png',
+      url: '/images/vinyl/midnight/blue-moon.png',
       width: 41,
       height: 48,
     },
@@ -49,8 +50,8 @@ const templateList: Template[] = [
     }
   },
   {
-    templateId: '4',
-    label: 'Angel',
+    templateId: VinylTemplate.Roman,
+    label: VinylTemplate.Roman,
     img: {
       url: '/images/vinyl/form/angel.png',
       width: 41,
@@ -63,13 +64,25 @@ const templateList: Template[] = [
       backgroundSize: 'cover'
     }
   },
+  {
+    templateId: VinylTemplate.Love,
+    label: VinylTemplate.Love,
+    img: {
+      url: '/images/templateLove/libstic.png',
+      width: 41*1.5,
+      height: 60*1.5,
+    },
+    css: {
+      backgroundColor: '#FFA6C1',
+    }
+  },
 ]
 
 const VinylTemplateItem = ({ templateId, label, img, css }: Template) => {
   const router = useRouter()
 
   const onClickHandler = () => {
-    router.replace(`/vinyl/preview/${templateId}`)
+    router.replace(`/preview/${templateId}`)
   }
 
   return (
