@@ -22,7 +22,6 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      // Check file types and sizes before adding
       const validFiles = Array.from(e.target.files).filter(file => {
         const isValidType = /^image\/(jpeg|png|gif|webp|heic|heif)$/i.test(file.type) || 
                            (file.type === 'application/octet-stream' && file.name.toLowerCase().endsWith('.heic'));

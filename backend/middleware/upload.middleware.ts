@@ -21,7 +21,7 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilt
         size: file.size
     });
 
-    // Updated MIME types to better handle iPhone images
+    // Updated MIME types to handle iPhone images
     const allowedMimeTypes = new Set([
         "image/jpeg",
         "image/png",
@@ -31,15 +31,14 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilt
         "image/heif",
         "application/octet-stream",
         "image/jpg",
-        "" // Some iPhone uploads might have empty MIME type
+        ""
     ]);
 
     const ext = path.extname(file.originalname).toLowerCase();
     const allowedExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic', '.heif']);
 
-    // More permissive check for iPhone uploads
     const isAllowed = allowedExtensions.has(ext) || allowedMimeTypes.has(file.mimetype);
-    
+
     if (!isAllowed) {
         console.log('File rejected:', { ext, mimetype: file.mimetype });
         return cb(new Error(`Invalid file type. Allowed types: ${Array.from(allowedExtensions).join(', ')}`));
@@ -61,34 +60,31 @@ const processImage = async (buffer: Buffer, outputPath: string): Promise<void> =
         const ext = path.extname(outputPath).toLowerCase();
 
         if (ext === '.heic' || ext === '.heif') {
-            // Handle HEIC/HEIF conversion
+            console.log("Converting HEIC/HEIF image...");
             const convertedBuffer = await heicConvert({
                 buffer,
-                format: "JPEG"
+                format: "JPEG" // Choose format to convert to (JPEG/PNG)
             });
             await sharp(convertedBuffer)
                 .rotate() // Automatically rotate based on EXIF data
                 .withMetadata() // Preserve metadata
                 .jpeg({ quality: 85 }) // Convert to JPEG
                 .toFile(outputPath);
+            console.log(`Converted HEIC to JPEG: ${outputPath}`);
         } else {
-            // Regular processing for other formats
-            await sharp(buffer, { failOnError: false })
-                .rotate() // Automatically rotate based on EXIF data
-                .withMetadata() // Preserve metadata
-                .jpeg({ quality: 85 }) // Convert to JPEG first
-                .toBuffer()
-                .then(processedBuffer => 
-                    sharp(processedBuffer)
-                        .png({ quality: 90 })
-                        .toFile(outputPath)
-                );
+            // Regular image processing for other formats
+            await sharp(buffer)
+                .rotate()
+                .withMetadata()
+                .jpeg({ quality: 85 })
+                .toFile(outputPath);
         }
     } catch (error) {
-        console.log('Error processing image:', error);
+        console.error('Error processing image:', error);
         throw error;
     }
 };
+
 
 export const handleFileUpload = (req: Request, res: Response, next: NextFunction) => {
     upload.array("images", 10)(req, res, async (err) => {
