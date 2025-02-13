@@ -20,30 +20,54 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
 
   const saveItems = useVinylFormStore(state => state.addImages)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      addImages(Array.from(e.target.files))
-      e.target.value = '' // Reset the input
+      // Check file types and sizes before adding
+      const validFiles = Array.from(e.target.files).filter(file => {
+        const isValidType = /^image\/(jpeg|png|gif|webp|heic|heif)$/i.test(file.type) || 
+                           (file.type === 'application/octet-stream' && file.name.toLowerCase().endsWith('.heic'));
+        const isValidSize = file.size <= 20 * 1024 * 1024; // 20MB
+  
+        if (!isValidType) {
+          message.error(`File ${file.name} is not a supported image type`);
+        }
+        if (!isValidSize) {
+          message.error(`File ${file.name} exceeds 20MB size limit`);
+        }
+  
+        return isValidType && isValidSize;
+      });
+  
+      if (validFiles.length > 0) {
+        addImages(validFiles);
+        message.success(`${validFiles.length} file(s) selected`);
+      }
+      e.target.value = ''; // Reset the input
     }
-  }
+  };
 
 
   const handleUpload = async () => {
-    const allDescriptionsFilled = images.every(image => image.text.trim() !== "")
-
+    const allDescriptionsFilled = images.every(image => image.text.trim() !== "");
+  
     if (!allDescriptionsFilled) {
-      message.error("Please fill in all image descriptions before uploading.")
-
-      return
+      message.error("Please fill in all image descriptions before uploading.");
+      return;
     }
-
+  
     try {
-      await uploadImages()
-      saveItems(images)
+      message.loading({ content: 'Uploading...', key: 'upload' });
+      await uploadImages();
+      saveItems(images);
+      message.success({ content: 'Upload successful!', key: 'upload' });
     } catch (err) {
-      message.error("Failed to upload images. Please try again.")
+      console.error('Upload error:', err);
+      message.error({ 
+        content: 'Failed to upload images. Please try again.', 
+        key: 'upload' 
+      });
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
