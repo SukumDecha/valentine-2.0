@@ -1,9 +1,11 @@
+// 01d8f8beb5ee11bf358dcca5abb6bcd47d42140b
+import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
 import sharp from "sharp";
-import { Request, Response, NextFunction } from "express";
 import { CustomRequest, ProcessedFile } from "../types/express";
+import heicConvert from "heic-convert"; // This library can handle HEIC/HEIF formats
 
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
@@ -56,37 +58,35 @@ const upload = multer({
 
 const processImage = async (buffer: Buffer, outputPath: string): Promise<void> => {
     try {
-        // First attempt: Basic processing
-        await sharp(buffer, { failOnError: false })
-            .rotate() // Automatically rotate based on EXIF data
-            .withMetadata() // Preserve metadata
-            .jpeg({ quality: 85 }) // Convert to JPEG first
-            .toBuffer()
-            .then(processedBuffer => 
-                sharp(processedBuffer)
-                    .png({ quality: 90 })
-                    .toFile(outputPath)
-            );
-    } catch (error) {
-        console.log('First attempt failed, trying alternative processing');
-        // Second attempt: Alternative processing
-        try {
-            await sharp(buffer, { 
-                failOnError: false,
-                density: 300
-            })
-            .flatten({ background: { r: 255, g: 255, b: 255 } }) // Handle transparency
-            .jpeg({ quality: 85 })
-            .toBuffer()
-            .then(processedBuffer => 
-                sharp(processedBuffer)
-                    .png({ quality: 90 })
-                    .toFile(outputPath)
-            );
-        } catch (secondError) {
-            console.error('Both processing attempts failed:', secondError);
-            throw secondError;
+        const ext = path.extname(outputPath).toLowerCase();
+
+        if (ext === '.heic' || ext === '.heif') {
+            // Handle HEIC/HEIF conversion
+            const convertedBuffer = await heicConvert({
+                buffer,
+                format: "JPEG"
+            });
+            await sharp(convertedBuffer)
+                .rotate() // Automatically rotate based on EXIF data
+                .withMetadata() // Preserve metadata
+                .jpeg({ quality: 85 }) // Convert to JPEG
+                .toFile(outputPath);
+        } else {
+            // Regular processing for other formats
+            await sharp(buffer, { failOnError: false })
+                .rotate() // Automatically rotate based on EXIF data
+                .withMetadata() // Preserve metadata
+                .jpeg({ quality: 85 }) // Convert to JPEG first
+                .toBuffer()
+                .then(processedBuffer => 
+                    sharp(processedBuffer)
+                        .png({ quality: 90 })
+                        .toFile(outputPath)
+                );
         }
+    } catch (error) {
+        console.log('Error processing image:', error);
+        throw error;
     }
 };
 
