@@ -5,6 +5,7 @@ import { Upload, message, Input, Button, Card, Space, Typography, Image } from "
 import { InboxOutlined, DeleteOutlined, HeartOutlined } from "@ant-design/icons"
 import { useImageUpload } from "@/hooks/useImage"
 import { useRef } from "react"
+import { useVinylFormStore } from "@/stores/vinyl-form.store"
 
 const { Text } = Typography
 
@@ -17,7 +18,7 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
   const { images, isUploading, error, success, addImages, removeImage, updateImageText, uploadImages } =
     useImageUpload(uuid_slug)
 
-
+  const saveItems = useVinylFormStore(state => state.addImages)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -28,8 +29,17 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
 
 
   const handleUpload = async () => {
+    const allDescriptionsFilled = images.every(image => image.text.trim() !== "")
+
+    if (!allDescriptionsFilled) {
+      message.error("Please fill in all image descriptions before uploading.")
+
+      return
+    }
+
     try {
       await uploadImages()
+      saveItems(images)
     } catch (err) {
       message.error("Failed to upload images. Please try again.")
     }
@@ -59,8 +69,8 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
         </div>
 
         {error && (
-          <Text type="danger" className="text-red-500">
-            {error}
+          <Text type="danger" className="text-red-500 font-semibold">
+            ! กรุณากรอกข้อมูลให้ครบถ้วน !
           </Text>
         )}
         {success && (
@@ -98,10 +108,12 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
               <Input
                 placeholder="Enter image description"
                 value={image.text}
+                required
                 onChange={(e) => updateImageText(image.id, e.target.value)}
                 prefix={<HeartOutlined className="text-pink-500" />}
                 className="border-pink-300 focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
               />
+
             </Card>
           ))}
         </div>
@@ -113,7 +125,7 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
             loading={isUploading}
             icon={<HeartOutlined />}
           >
-            Upload {images.length} Image{images.length > 1 ? "s" : ""}
+            Save {images.length} Image{images.length > 1 ? "s" : ""}
           </Button>
         )}
       </Space>

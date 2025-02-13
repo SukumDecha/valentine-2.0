@@ -8,6 +8,7 @@ import useResponsive from '@/hooks/useResponsive'
 import Image from 'next/image'
 import SlideIn from '@/components/Shared/animations/SlideIn'
 import { IUserResponse } from '@/types/vinyl/vinyl'
+import SpotifyEmbed from '@/components/Shared/SpotifyEmbed'
 
 interface IProps {
     data: IUserResponse
@@ -32,42 +33,53 @@ const LoveVinyl = ({ data }: IProps) => {
             >
                 <FloatingHearts />
 
-                <div className="flex w-full h-[100vh] flex-col sm:flex-row items-center sm:justify-center gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100] p-14">
-                    <div className="flex flex-col items-center gap-8">
+                <div className="w-full h-screen overflow-y-scroll overflow-x-hidden z-[100] p-14 my-auto sm:flex sm:flex-col sm:justify-center sm:items-center">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-24">
+                        <div className="flex flex-col items-center gap-8">
 
-                        <div className="text-2xl font-extralight italic sm:text-lg md:text-2xl">Our Memories Playlist</div>
+                            <div className="text-2xl font-extralight italic sm:text-lg md:text-2xl">Our Memories Playlist</div>
 
-                        <div className="relative flex justify-center items-center ">
-                            <SlideIn xOffset="-300%" className="absolute z-10 inset-0 -top-8 -left-8 sm:-top-16 sm:-left-4 w-24 h-24 sm:w-52 sm:h-52">
-                                <img src="/images/templateLove/libstic.png" />
-                            </SlideIn>
+                            <div className="relative flex justify-center items-center ">
+                                <SlideIn xOffset="-300%" className="absolute z-10 inset-0 -top-8 -left-8 sm:-top-16 sm:-left-4 w-24 h-24 sm:w-52 sm:h-52">
+                                    <img src="/images/templateLove/libstic.png" />
+                                </SlideIn>
 
-                            <SlideIn xOffset='200%'>
-                                <Stack cardDimensions={stackSize} cardsData={data.images} />
-                            </SlideIn>
+                                <SlideIn xOffset='200%'>
+                                    <Stack cardDimensions={stackSize} cardsData={data.images} />
+                                </SlideIn>
 
-                            <SlideIn xOffset='300%' className="absolute z-10 right-[-32px] bottom-[-48px] w-20 h-20 sm:w-28 sm:h-28">
-                                <Image
-                                    src="/images/templateLove/hearth.png"
-                                    className="animate-bounce"
-                                    width={150}
-                                    height={150}
-                                    alt='heart' />
-                            </SlideIn>
+                                <SlideIn xOffset='300%' className="absolute z-10 right-[-32px] bottom-[-48px] w-20 h-20 sm:w-28 sm:h-28">
+                                    <Image
+                                        src="/images/templateLove/hearth.png"
+                                        className="animate-bounce"
+                                        width={150}
+                                        height={150}
+                                        alt='heart' />
+                                </SlideIn>
+                            </div>
+                        </div>
+
+
+                        {/* กล่องที่มีเนื้อหาเกินขอบเขต */}
+                        <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
+                            <div className="relative italic sm:text-lg md:text-2xl">Song for you</div>
+                            {/* องค์ประกอบที่ใหญ่กว่าหน้าจอ */}
+                            <div className="w-full flex justify-center cutinHalf relative">
+                                <InfiniteRotate>
+                                    <Vinyl size={vinylSize} imgUrl={data.trackImage} />
+                                </InfiniteRotate>
+                            </div>
                         </div>
                     </div>
 
+                    <SlideIn
+                        yOffset={'300%'}
+                        duration={1}
+                        className="sm:block w-[70vw] sm:w-[600px] mx-auto mt-8"
+                    >
+                        <SpotifyEmbed trackId={data.trackId as string} />
+                    </SlideIn>
 
-                    {/* กล่องที่มีเนื้อหาเกินขอบเขต */}
-                    <div className="relative flex flex-col items-center gap-10 mt-10 z-100">
-                        <div className="relative italic sm:text-lg md:text-2xl">Lyrics will be played here</div>
-                        {/* องค์ประกอบที่ใหญ่กว่าหน้าจอ */}
-                        <div className="w-full flex justify-center cutinHalf relative">
-                            <InfiniteRotate>
-                                <Vinyl size={vinylSize} imgUrl={data.trackImage} />
-                            </InfiniteRotate>
-                        </div>
-                    </div>
                 </div>
 
                 <div className="text-center opacity-50 my-8 text-2xl">Valentine 2.0</div>
