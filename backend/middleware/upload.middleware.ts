@@ -25,7 +25,6 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilt
     console.log("Received file:", {
         mimetype: file.mimetype,
         size: file.size,
-        size_2: file.buffer.length,
         name: file.originalname
     });
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp|HEIC)$/i)) {
