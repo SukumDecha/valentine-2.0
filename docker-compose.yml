@@ -9,8 +9,8 @@ services:
       - "80:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://love.valentine2dot0.me:8080
-      - NEXT_PUBLIC_MINIO_URL=http://love.valentine2dot0.me:9000
+      - NEXT_PUBLIC_API_URL=https://love.valentine2dot0.me:11100
+      - NEXT_PUBLIC_MINIO_URL=https://love.valentine2dot0.me:443
       - NEXT_PUBLIC_SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
       - NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=${SPOTIFY_REDIRECT_URI}
     depends_on:
@@ -23,10 +23,10 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "11100:11100"
     environment:
       - NODE_ENV=production
-      - PORT=8080
+      - PORT=11100
       - MONGO_URI=mongodb+srv://louderdev:123@cluster0.bqke2cc.mongodb.net?authSource=admin
       # MinIO Configuration
       - MINIO_INTERNAL_ENDPOINT=minio
@@ -39,7 +39,7 @@ services:
       # Spotify Configuration
       - SPOTIFY_CLIENT_ID=27d40b1175aa4158af7446c0fc085f71
       - SPOTIFY_CLIENT_SECRET=27a205ea8f9e4cdcb59add7ab190d6f0
-      - SPOTIFY_REDIRECT_URI=http://love.valentine2dot0.me:8080/callback
+      - SPOTIFY_REDIRECT_URI=http://love.valentine2dot0.me:11100/callback
     depends_on:
       - mongo
     networks:
