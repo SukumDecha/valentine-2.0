@@ -30,15 +30,12 @@ services:
       - MONGO_URI=mongodb+srv://louderdev:123@cluster0.bqke2cc.mongodb.net?authSource=admin
       # MinIO Configuration
       - MINIO_INTERNAL_ENDPOINT=minio
-      - MINIO_ENDPOINT=https://minio.bsthun.com/
       - MINIO_PORT=443
       - MINIO_USE_SSL=true
       - MINIO_BUCKET_NAME=sit-valentine1
-      - MINIO_PUBLIC_ENDPOINT=localhost
-      - MINIO_PUBLIC_PORT=9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_BUCKET_NAME=user-uploads
+      - MINIO_PUBLIC_ENDPOINT=https://minio.bsthun.com
+      - MINIO_ACCESS_KEY=Q0cEpIA853SRR886IG7r
+      - MINIO_SECRET_KEY=9WablMiukRpIEJLVD8ARLl3GI1rsAOsysGSc1NHv
       # Spotify Configuration
       - SPOTIFY_CLIENT_ID=27d40b1175aa4158af7446c0fc085f71
       - SPOTIFY_CLIENT_SECRET=27a205ea8f9e4cdcb59add7ab190d6f0
