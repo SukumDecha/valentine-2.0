@@ -15,8 +15,8 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 connectToDB();
 
-app.use(express.json());
-app.use(express.urlencoded({ limit: '25mb', extended: true }));
+app.use(express.json({ limit: '200mb' }));
+app.use(express.urlencoded({ limit: '200mb', extended: true }));
 app.use(helmet());
 app.use(cors({ origin: '*' }));
 app.use('/api/uploads', uploadRouter);
