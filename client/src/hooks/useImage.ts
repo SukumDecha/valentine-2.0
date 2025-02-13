@@ -1,6 +1,6 @@
 import VinylService from '@/services/vinyl.service';
 import { IVinyl } from '@/types/vinyl/vinyl';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 interface PreviewImage extends IVinyl {
   id: string;
@@ -24,6 +24,27 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const fetchImages = async (uuid: string) => {
+    try {
+      const response = await VinylService.getUser(uuid);
+      if (response.success) {
+        const mappedImages = (response.images as IVinyl[]).map(img => ({
+          id: img.id,
+          text: img.text,
+          preview: img.url,
+          url: img.url
+        }));
+
+        console.log("Mapped Images: ", mappedImages)
+        setImages(mappedImages as any)
+      } else {
+        setImages([]);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch images');
+    }
+  }
 
   const addImages = useCallback((files: File[]) => {
     const newImages: PreviewImage[] = files.map(file => ({
@@ -89,6 +110,10 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
       setIsUploading(false);
     }
   };
+
+  useEffect(() => {
+    fetchImages(uuid);
+  }, [uuid])
 
   return {
     images,

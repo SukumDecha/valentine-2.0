@@ -5,20 +5,20 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const PreviewWrapper = ({ children }: IComponentProps) => {
-  const { templateId }: {templateId: string} = useParams()
-  const {form, setTemplateId} = useVinylFormStore()
+  const { templateId }: { templateId: string } = useParams()
+  const { form, setTemplateId } = useVinylFormStore()
   const router = useRouter()
-  
+
 
   const backToInputForm = () => {
-    router.replace('/form-input/vinyl')
+    router.replace(`/${form.id}`)
   }
 
   const submitButtonHandler = () => {
     setTemplateId(templateId)
-    router.replace('/form-input/vinyl')
+    router.replace(`/${form.id}`)
   }
-  
+
   return (
     <div className="relative">
       <div className="absolute bottom-20 z-[1000] flex justify-center w-full gap-[50%] font-Prompt text-xl">

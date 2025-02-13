@@ -1,4 +1,5 @@
-import { IUserResponse, IVinyl, IVinylResponse } from "@/types/vinyl/vinyl";
+import { addTemplate } from './../../../backend/controllers/template.controller';
+import { IUserResponse, IVinyl, IVinylResponse, VinylForm } from "@/types/vinyl/vinyl";
 import api from "./api";
 
 const VinylService = {
@@ -30,6 +31,16 @@ const VinylService = {
             }
             if (error.request) throw new Error('Check connection.')
             throw new Error(error.message || 'An unexpected error occurred during fetch user data');
+        }
+    },
+    updateUser: async (data: VinylForm): Promise<boolean> => {
+        try {
+            await VinylService.addTemplate(data.id, data.templateId);
+            await VinylService.addTrackId(data.id, data.track?.trackId as string, data.track?.trackImage as string);
+            return true;
+        } catch (error: any) {
+            console.error('Update User Error:', error);
+            throw new Error(error.message || 'Can not update user data');
         }
     },
     addTemplate: async (uuid: string, template: string): Promise<boolean> => {

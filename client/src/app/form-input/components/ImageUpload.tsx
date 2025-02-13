@@ -6,7 +6,6 @@ import { InboxOutlined, DeleteOutlined, HeartOutlined } from "@ant-design/icons"
 import { useImageUpload } from "@/hooks/useImage"
 import { useRef } from "react"
 
-const { Dragger } = Upload
 const { Text } = Typography
 
 interface IProps {
@@ -17,6 +16,8 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { images, isUploading, error, success, addImages, removeImage, updateImageText, uploadImages } =
     useImageUpload(uuid_slug)
+
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -90,7 +91,7 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
                   onClick={() => removeImage(image.id)}
                   className="flex items-center gap-1 hover:text-pink-600 focus:ring-2 focus:ring-pink-500"
                 >
-                  Remove this image
+                  Click to remove
                 </Button>,
               ]}
             >

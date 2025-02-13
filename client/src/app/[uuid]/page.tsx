@@ -7,6 +7,7 @@ import { IUserResponse } from "@/types/vinyl/vinyl";
 import Vinyl from "@/components/VinylLayout";
 import NotFound from "../not-found";
 import Loading from "../loading";
+import FormInputPage from "../form-input/vinyl";
 
 interface IProps {
   params: {
@@ -43,7 +44,7 @@ const CameraPage = ({ params }: IProps) => {
   }
 
   if (!userData.images || userData.images.length === 0 || !userData.template) {
-    return <Choose uuid={params.uuid} />;
+    return <FormInputPage uuid={params.uuid} />;
   }
 
   return (
