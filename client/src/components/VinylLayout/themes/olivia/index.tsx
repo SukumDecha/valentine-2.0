@@ -50,7 +50,7 @@ const OliviaVinyl = ({ data }: IProps) => {
     }
 
     return (
-        <div className="flex w-full h-screen flex-col items-center sm:justify-around gap-4 sm:gap-24 overflow-y-scroll overflow-x-hidden z-[100] p-4 font-Libre italic bg-[#968ECE]">
+        <div className="flex w-full h-screen flex-col items-center sm:justify-around gap-4 overflow-y-scroll overflow-x-hidden z-[100] p-4 font-Libre italic bg-[#968ECE]">
 
             {isTablet &&
                 <OliviaProps
@@ -60,7 +60,7 @@ const OliviaVinyl = ({ data }: IProps) => {
                     className='z-20' />
             }
 
-            <div className="flex flex-col items-between gap-4 sm:flex-row">
+            <div className="flex flex-col items-between gap-4 sm:flex-row sm:items-center">
                 <div className="flex flex-col items-center">
                     {isMobile &&
                         <OliviaProps
@@ -94,16 +94,17 @@ const OliviaVinyl = ({ data }: IProps) => {
                     </InfiniteRotate>
                 </div>
 
-                <SlideIn
-                    yOffset={'300%'}
-                    duration={1}
-                    className="sm:block w-[70vw] sm:w-[600px] mx-auto mt-8"
-                >
-                    <SpotifyEmbed trackId={data.trackId as string} />
-                </SlideIn>
-
-                <div className="text-center opacity-50 mt-16">Valentine 2.0</div>
             </div>
+
+            <SlideIn
+                yOffset={'300%'}
+                duration={1}
+                className="sm:block w-[70vw] sm:w-[600px] mx-auto"
+            >
+                <SpotifyEmbed trackId={data.trackId as string} />
+            </SlideIn>
+
+            <div className="text-center opacity-50 ">Valentine 2.0</div>
 
             {
                 isTablet &&
