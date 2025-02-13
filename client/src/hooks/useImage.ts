@@ -13,12 +13,39 @@ interface UseImageUpload {
   isUploading: boolean;
   error: string | null;
   success: string | null;
-  addImages: (files: File[]) => void;
+  addImages: (files: File[]) => Promise<void>;
   removeImage: (id: string) => void;
   updateImageText: (id: string, text: string) => void;
   uploadImages: () => Promise<void>;
   clearSuccess: () => void;
 }
+
+const isHeicOrHeif = (file: File): boolean => {
+  return file.type === 'image/heic' ||
+    file.type === 'image/heif' ||
+    file.name.toLowerCase().endsWith('.heic') ||
+    file.name.toLowerCase().endsWith('.heif');
+};
+
+const convertHeicToJpeg = async (file: File): Promise<File> => {
+  try {
+    const convertedBlob = await heic2any({
+      blob: file,
+      toType: 'image/jpeg',
+      quality: 0.8
+    });
+
+    // Handle both single blob and array of blobs
+    const jpegBlob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
+
+    // Create a new file with the converted blob
+    const fileName = file.name.replace(/\.(heic|heif)$/i, '.jpg');
+    return new File([jpegBlob], fileName, { type: 'image/jpeg' });
+  } catch (error) {
+    console.error('Error converting HEIC/HEIF to JPEG:', error);
+    throw new Error('Failed to convert image format');
+  }
+};
 
 export const useImageUpload = (uuid: string): UseImageUpload => {
   const [images, setImages] = useState<PreviewImage[]>([]);
@@ -36,8 +63,7 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
           preview: img.url,
           url: img.url
         }));
-
-        setImages(mappedImages as any);
+        setImages(mappedImages as PreviewImage[]);
       } else {
         setImages([]);
       }
@@ -47,48 +73,32 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
   };
 
   const addImages = useCallback(async (files: File[]) => {
-    const newImages: PreviewImage[] = [];
-
-    for (const file of files) {
-      if (file.type === 'image/heic' || file.type === 'image/heif') {
-        try {
-          // Convert HEIC to a supported image format (e.g., JPG)
-          const convertedFile : any = await heic2any({
-            blob: file,
-            toType: 'image/jpeg', // You can change this to 'image/png' if needed
-          });
-
-          if (convertedFile && convertedFile[0]) {
-            const newImage: PreviewImage = {
-              id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-              file: convertedFile[0] as File,
-              text: '',
-              preview: URL.createObjectURL(convertedFile[0] as File),
-              url: '',
-            };
-            newImages.push(newImage);
-          } else {
-            setError('Failed to convert HEIC image');
-          }
-        } catch (err) {
-          setError('HEIC to image conversion failed');
-        }
-      } else {
-        // If it's not HEIC, proceed with the regular flow
-        const newImage: PreviewImage = {
-          id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          file,
-          text: '',
-          preview: URL.createObjectURL(file),
-          url: '',
-        };
-        newImages.push(newImage);
-      }
-    }
-
-    setImages(prev => [...prev, ...newImages]);
     setError(null);
     setSuccess(null);
+
+    try {
+      const processedFiles = await Promise.all(
+        files.map(async (file) => {
+          if (isHeicOrHeif(file)) {
+            return await convertHeicToJpeg(file);
+          }
+          return file;
+        })
+      );
+
+      const newImages: PreviewImage[] = processedFiles.map(file => ({
+        id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        file,
+        text: '',
+        preview: URL.createObjectURL(file),
+        url: ''
+      }));
+
+      setImages(prev => [...prev, ...newImages]);
+    } catch (err) {
+      setError('Failed to process one or more images');
+      console.error('Error processing images:', err);
+    }
   }, []);
 
   const removeImage = useCallback((id: string) => {
