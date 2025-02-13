@@ -9,9 +9,8 @@ const PreviewWrapper = ({ children }: IComponentProps) => {
   const { form, setTemplateId } = useVinylFormStore()
   const router = useRouter()
 
-
   const backToInputForm = () => {
-    router.replace(`/${form.id}`)
+    router.back()
   }
 
   const submitButtonHandler = () => {

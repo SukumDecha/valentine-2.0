@@ -1,4 +1,5 @@
 
+import { Image } from "antd";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
 
@@ -93,6 +94,7 @@ export default function Stack({
       style={{
         width: cardDimensions.width,
         height: cardDimensions.height,
+        marginRight: 20,
         perspective: 600,
       }}
     >
@@ -125,13 +127,26 @@ export default function Stack({
                 height: cardDimensions.height,
               }}
             >
-              <div className="h-full">
-                <img
+              <div className="h-full relative">
+                {/* <img
                   src={card.url}
                   alt={`card-${card.id}`}
-                  className="w-full object-cover h-3/4"
+                  className="!w-full !object-cover !h-3/4"
                   draggable="false"
-                />
+                /> */}
+                <div className="h-3/4 relative">
+                  <Image
+                    src={card.url}
+                    alt={`card-${card.id}`}
+                    style={{
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                    width={"100%"}
+                    height={"100%"}
+                    draggable="false"
+                  />
+                </div>
                 <div className="h-1/4 flex justify-center items-center sm:text-lg md:text-2xl">"{card.text}"</div>
               </div>
             </motion.div>

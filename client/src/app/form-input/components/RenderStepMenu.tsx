@@ -5,7 +5,6 @@ import { useVinylFormStore } from '@/stores/vinyl-form.store'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 
 const renderCheckmark = (selectedValue?: any) => {
-  console.log("Selected Value: ", selectedValue)
   if (Array.isArray(selectedValue)) {
     if (selectedValue.length > 0) {
       return <CheckCircleOutlined className="text-green-500" />

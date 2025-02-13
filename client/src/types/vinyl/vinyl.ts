@@ -1,11 +1,16 @@
 import { ITrack } from "../track";
 
-
 export type VinylForm = {
     id: string;
     templateId: string;
     track: ITrack | null;
     images: IVinyl[];
+    description?: IVinylDescription
+}
+
+export interface IVinylDescription {
+    title: string;
+    description: string;
 }
 
 export interface IVinyl {
@@ -28,4 +33,5 @@ export interface IUserResponse {
     trackImage?: string;
     images?: IVinyl[];
     template?: string;
+    description?: IVinylDescription;
 }

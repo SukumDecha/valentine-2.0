@@ -1,4 +1,4 @@
-import { IUserResponse, IVinyl, IVinylResponse, VinylForm } from "@/types/vinyl/vinyl";
+import { IUserResponse, IVinyl, IVinylDescription, IVinylResponse, VinylForm } from "@/types/vinyl/vinyl";
 import api from "./api";
 
 const VinylService = {
@@ -36,6 +36,11 @@ const VinylService = {
         try {
             await VinylService.addTemplate(data.id, data.templateId);
             await VinylService.addTrackId(data.id, data.track?.trackId as string, data.track?.trackImage as string);
+
+            if (data?.description) {
+                await VinylService.addDescription(data.id, data.description);
+            }
+
             return true;
         } catch (error: any) {
             console.error('Update User Error:', error);
@@ -52,6 +57,23 @@ const VinylService = {
         } catch (error: any) {
             console.error('Upload Error:', error);
             throw new Error(error.message || 'Can not add template');
+        }
+    },
+    addDescription: async (uuid: string, description: IVinylDescription): Promise<boolean> => {
+        try {
+            const response = await api.post(`/description/${uuid}`, {
+                title: description.title,
+                description: description.description
+            });
+
+            if (response.status === 200) {
+                return true;
+            }
+
+            return false;
+        } catch (error: any) {
+            console.error('Upload Error:', error);
+            throw new Error(error.message || 'Can not add description');
         }
     },
     addTrackId: async (uuid: string, trackId: string, trackImage: string): Promise<boolean> => {

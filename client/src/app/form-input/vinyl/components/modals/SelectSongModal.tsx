@@ -93,7 +93,7 @@ const SelectSongModal = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col gap-4">
       <Search
         placeholder="ค้นหาเพลง..."
         style={{ fontFamily: 'Prompt' }}

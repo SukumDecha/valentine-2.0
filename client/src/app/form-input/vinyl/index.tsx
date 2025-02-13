@@ -10,18 +10,29 @@ import { useRouter } from 'next/navigation'
 interface IProps {
   uuid: string
 }
+
 const FormInputPage = ({ uuid }: IProps) => {
   const form = useVinylFormStore((state) => state.form)
   const clearForm = useVinylFormStore((state) => state.clearForm)
   const router = useRouter()
 
-  const doSubmit = async () => {
-    if (!form.track || !form.templateId || !form.images || !form.id) {
+  const isValid = !(!form.track || !form.templateId || !form.images || !form.id || (Array.isArray(form.images) && form.images.length === 0))
+
+  const doPreview = () => {
+    if (!isValid) {
       console.log("Error: Please fill all fields")
       toast.error('กรุณากรอกข้อมูลให้ครบถ้วน')
       return
     }
+    router.replace(`/preview/${form.templateId}`)
+  }
 
+  const doSubmit = async () => {
+    if (!isValid) {
+      console.log("Error: Please fill all fields")
+      toast.error('กรุณากรอกข้อมูลให้ครบถ้วน')
+      return
+    }
 
     toast.promise(
       VinylService.updateUser(form),
@@ -35,6 +46,8 @@ const FormInputPage = ({ uuid }: IProps) => {
     clearForm()
 
     setTimeout(() => {
+      // set url to the new generated uuid
+      window.location.href = `/${uuid}`
       router.replace(`/${uuid}`)
     }, 3000)
   }
@@ -46,7 +59,12 @@ const FormInputPage = ({ uuid }: IProps) => {
         <div className="h-full p-2 flex flex-col gap-8">
           <h1 className='text-2xl font-Libre italic text-white text-center '>Valentine 2.0</h1>
           <VinylTemplateForm uuid={uuid} />
-          <div className='w-fit self-end rounded-md border border-gray-300 py-1 px-[10px] font-Prompt bg-white bg-opacity-75' onClick={doSubmit}>สร้างเว็บไซต์</div>
+          <div className="flex justify-end items-center gap-4">
+            {
+              isValid && <div className='w-fit self-end rounded-md border border-gray-300 py-1 px-[10px] font-Prompt bg-white bg-opacity-75' onClick={doPreview}>ดูตัวอย่างเว็ปไซต์</div>
+            }
+            <div className='w-fit self-end rounded-md border border-gray-300 py-1 px-[10px] font-Prompt bg-white bg-opacity-75' onClick={doSubmit}>สร้างเว็บไซต์</div>
+          </div>
         </div>
         <style jsx>{`
           @keyframes gradientAnimation {

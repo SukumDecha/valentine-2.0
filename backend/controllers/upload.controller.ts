@@ -9,8 +9,8 @@ export const uploadFilesWithTexts = async (req: Request, res: Response): Promise
         return;
     }
 
-    if (!req.body.texts || !Array.isArray(req.body.texts)) {
-        res.status(400).send('Texts array is required.');
+    if (!req.body.texts) {
+        res.status(400).send('Texts is required.');
         return;
     }
 

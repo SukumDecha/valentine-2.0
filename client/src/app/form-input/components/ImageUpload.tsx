@@ -46,6 +46,14 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
     } catch (err) {
       toast.error((err as any).message)
     }
+
+    // Close the modal
+    setTimeout(() => {
+      const closeButton = document.querySelector("button span")?.parentElement as HTMLButtonElement
+      if (closeButton?.innerText === "Close") {
+        closeButton.click()
+      }
+    }, 500)
   }
 
   return (

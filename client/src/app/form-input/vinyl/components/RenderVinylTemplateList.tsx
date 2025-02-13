@@ -69,11 +69,23 @@ const templateList: Template[] = [
     label: VinylTemplate.Love,
     img: {
       url: '/images/templateLove/libstic.png',
-      width: 41*1.5,
-      height: 60*1.5,
+      width: 41 * 1.5,
+      height: 60 * 1.5,
     },
     css: {
       backgroundColor: '#FFA6C1',
+    }
+  },
+  {
+    templateId: VinylTemplate.Scroll,
+    label: "Surprise [For date / Surprise]",
+    img: {
+      url: '/images/nay/gift.png',
+      width: 41 * 1.5,
+      height: 60 * 1.5,
+    },
+    css: {
+      backgroundColor: '#FF8A8A',
     }
   },
 ]
@@ -82,7 +94,7 @@ const VinylTemplateItem = ({ templateId, label, img, css }: Template) => {
   const router = useRouter()
 
   const onClickHandler = () => {
-    router.replace(`/preview/${templateId}`)
+    router.push(`/preview/${templateId}`)
   }
 
   return (

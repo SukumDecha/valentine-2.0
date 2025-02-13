@@ -3,7 +3,7 @@
 import React from "react";
 import SlideIn from "@/components/Shared/animations/ScrollIn"
 import PixelTransition from "@/components/Shared/animations/PixelTransition"
-import { IUserResponse } from "@/types/vinyl/vinyl";
+import { IUserResponse, IVinyl } from "@/types/vinyl/vinyl";
 
 interface IProps {
     data: IUserResponse
@@ -13,18 +13,44 @@ const bg = "/images/nay/bg.png";
 
 const ScrollVinyl = ({ data }: IProps) => {
 
-    const images = data.images;
+
+    const images = data.images && data.images?.length > 0 ? data.images : [{
+        id: `1`,
+        text: "I love you",
+        url: "/images/nay/gift.png",
+    },
+    {
+        id: `2`,
+        text: "You are so special",
+        url: "/images.jpg",
+    },
+    {
+        id: `3`,
+        text: "Please be mine",
+        url: "/images/nay/gift.png",
+    },
+    {
+        id: `4`,
+        text: "You are my everything",
+        url: "/images.jpg",
+    },
+    {
+        id: `5`,
+        text: "I love you",
+        url: "/images/nay/gift.png",
+    }
+    ];
 
     return (
-        <div className="bg-pink-100 min-h-screen flex items-center justify-center">
+        <div className="bg-pink-100 h-screen flex items-center justify-center">
             <div className="absolute inset-0 h-full bg-cover bg-center opacity-90" style={{ backgroundImage: `url(${bg})` }} >
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white opacity-100">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white opacity-100 h-[100vh] overflow-y-scroll">
                     <div className="relative z-10 max-w-lg mx-auto p-8">
                         <SlideIn>
                             <div className="bg-white p-6 rounded-2xl shadow-xl text-center opacity-95 mb-6 border-4 border-pink-300">
-                                <h1 className="text-3xl font-bold text-pink-600 animate-bounce">Dear, SukumDecha ❤️</h1>
+                                <h1 className="text-3xl font-bold text-pink-600 animate-bounce">{data.description?.title} Dear, Reader ❤️</h1>
                                 <p className="text-gray-700 mt-2 font-serif">
-                                    {"You are the most precious gift in my life. I love you deeply. 💕"}
+                                    {data.description?.description || "You are the most precious gift in my life. I love you deeply. 💕"}
                                 </p>
                             </div>
                         </SlideIn>
@@ -49,7 +75,7 @@ const ScrollVinyl = ({ data }: IProps) => {
                                                     backgroundColor: "rgb(249 168 212)",
                                                 }}
                                             >
-                                                <p className="libre-baskerville-regular-italic" style={{ fontWeight: 100, fontSize: "3rem", color: "#ffffff" }}>{preview?.text || 'I love you'}</p>
+                                                <p className="libre-baskerville-regular-italic text-center" style={{ fontWeight: 100, fontSize: "3rem", color: "#ffffff" }}>{preview?.text || 'I love you'}</p>
                                             </div>
                                         }
                                         gridSize={12}

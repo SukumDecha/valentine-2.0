@@ -6,6 +6,8 @@ import uploadRouter from "./routes/upload.route";
 import songRouter from "./routes/song.route";
 import userRouter from "./routes/userData.route";
 import templateRouter from "./routes/template.route";
+import descriptionRouter from "./routes/description.route";
+
 import { connectToDB } from "./database/database";
 
 dotenv.config();
@@ -19,10 +21,12 @@ app.use(express.json({ limit: '200mb' }));
 app.use(express.urlencoded({ limit: '200mb', extended: true }));
 app.use(helmet());
 app.use(cors({ origin: '*' }));
+
 app.use('/api/uploads', uploadRouter);
 app.use('/api/songs', songRouter);
 app.use('/api/users', userRouter);
 app.use('/api/template', templateRouter);
+app.use('/api/description', descriptionRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
