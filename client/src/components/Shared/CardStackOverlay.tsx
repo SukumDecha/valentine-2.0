@@ -11,7 +11,7 @@ const ImageOverlay = ({ children, overlayElements }: Props) => {
       {
         ...overlayElements
       }
-      <div className='z-30'>{children}</div>
+      <div className='relative z-30'>{children}</div>
     </div>
   )
 }

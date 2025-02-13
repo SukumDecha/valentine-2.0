@@ -35,7 +35,6 @@ const LoveVinyl = ({ data }: IProps) => {
 
     const overlayStyle = {
         top: -50,
-        // left: -50,
         left: `calc(50% - ${vinylOverlaySize.width / 2}px)`,
         zIndex: -10
     }

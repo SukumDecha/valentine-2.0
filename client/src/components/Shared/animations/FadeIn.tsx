@@ -6,12 +6,25 @@ interface IProps extends IComponentProps {
     delay?: number;
     duration?: number;
     yOffset?: number;
-    direction?: 'top' | 'bottom' | 'left' | 'right';
+    direction?: 'top' | 'bottom' | 'left' | 'right' | 'none';
 }
 
 const FadeIn = ({ children, delay = 0, duration = 1, direction = 'top' }: IProps) => {
     const yOffset = direction === 'top' ? -20 : direction === 'bottom' ? 20 : 0;
     const xOffset = direction === 'left' ? -20 : direction === 'right' ? 20 : 0;
+
+    if (direction === 'none') {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay, duration }}
+            >
+                {children}
+            </motion.div>
+        );
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0, y: yOffset, x: xOffset }}
