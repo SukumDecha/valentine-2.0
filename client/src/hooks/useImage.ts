@@ -1,6 +1,6 @@
 import VinylService from '@/services/vinyl.service';
 import { IVinyl } from '@/types/vinyl/vinyl';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 interface PreviewImage extends IVinyl {
   id: string;
@@ -12,7 +12,7 @@ interface UseImageUpload {
   isUploading: boolean;
   error: string | null;
   success: string | null;
-  addImages: (files: FileList) => void;
+  addImages: (files: File[]) => void;
   removeImage: (id: string) => void;
   updateImageText: (id: string, text: string) => void;
   uploadImages: () => Promise<void>;
@@ -25,12 +25,34 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const addImages = useCallback((files: FileList) => {
-    const newImages: PreviewImage[] = Array.from(files).map(file => ({
-      id: `${file.name}-${Date.now()}`,
+  const fetchImages = async (uuid: string) => {
+    try {
+      const response = await VinylService.getUser(uuid);
+      if (response.success) {
+        const mappedImages = (response.images as IVinyl[]).map(img => ({
+          id: img.id,
+          text: img.text,
+          preview: img.url,
+          url: img.url
+        }));
+
+        console.log("Mapped Images: ", mappedImages)
+        setImages(mappedImages as any)
+      } else {
+        setImages([]);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch images');
+    }
+  }
+
+  const addImages = useCallback((files: File[]) => {
+    const newImages: PreviewImage[] = files.map(file => ({
+      id: `${file.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       file,
       text: '',
-      preview: URL.createObjectURL(file)
+      preview: URL.createObjectURL(file),
+      url: ''
     }));
 
     setImages(prev => [...prev, ...newImages]);
@@ -88,6 +110,10 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
       setIsUploading(false);
     }
   };
+
+  useEffect(() => {
+    fetchImages(uuid);
+  }, [uuid])
 
   return {
     images,

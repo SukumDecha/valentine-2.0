@@ -82,8 +82,6 @@ const MidNightVinyl = ({ data }: IProps) => {
                     </ImageOverlay>
                 </div>
             </SlideIn>
-
-            <SpotifyEmbed trackId={data.trackId as string} />
         </MidNightLayout>
 
     )

@@ -2,8 +2,8 @@
 import React from 'react'
 import SearchSong from './SearchSong'
 import { Heart } from 'lucide-react'
+import { ImageUpload } from '@/app/form-input/components/ImageUpload'
 
-import { ImageUpload } from './ImageUpload'
 
 const Choose = ({ uuid }: { uuid: string }) => {
     return (
