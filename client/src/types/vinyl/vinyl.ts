@@ -2,6 +2,7 @@ import { ITrack } from "../track";
 
 
 export type VinylForm = {
+    id: string;
     templateId: string;
     track: ITrack | null;
     images: IVinyl[];
