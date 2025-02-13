@@ -1,5 +1,6 @@
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { Modal, Button } from 'antd'
+import { useVinylFormStore } from '@/stores/vinyl-form.store'
 
 export interface StepMenu {
   key: string
@@ -15,6 +16,12 @@ interface Props {
 const RenderStepMenu = ({ steps }: Props) => {
   const [selectedStep, setSelectedStep] = useState<StepMenu | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const {form} = useVinylFormStore()
+  
+  useEffect(() => {
+    setIsModalOpen(false)
+  }, [form.track])
 
   const handleMenuClick = (key: string) => {
     setSelectedStep(steps.find((step) => step.key === key) || null)

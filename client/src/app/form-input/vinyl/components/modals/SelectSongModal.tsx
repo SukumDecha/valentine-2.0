@@ -4,32 +4,52 @@ import SongService from '@/services/song.service';
 import Image from 'next/image';
 import { useVinylFormStore } from '@/stores/vinyl-form.store';
 import { ITrack } from '@/types/track';
+import { motion } from 'framer-motion';
+import Search from 'antd/es/input/Search';
 
 interface RenderSongListProps {
   tracks: ITrack[] | null;
 }
 
-const RenderSongItem = ({trackId, artistName, trackImage, trackName}: ITrack) => {
-  const {form, setForm} = useVinylFormStore()
-  
+const RenderSongItem = ({ trackId, artistName, trackImage, trackName }: ITrack) => {
+  const { form, setForm } = useVinylFormStore()
+  const [isSelected, setIsSelected] = useState(false)
+
   const onClickHandler = () => {
     const selectedTrack: ITrack = {
-      trackId: trackId,
-      trackImage: trackImage,
-      trackName: trackName,
-      artistName: artistName
+      trackId,
+      trackImage,
+      trackName,
+      artistName,
     }
-    setForm('track', selectedTrack)
+    setForm("track", selectedTrack)
+    setIsSelected(true)
   }
-  
+
   return (
-    <div className='flex gap-2 h-[64px]' onClick={onClickHandler}>
-      <Image src={trackImage} alt='track-image' width={64} height={64} className='rounded-[4px]' />
+    <motion.div
+      className={`flex gap-2 h-[64px] p-1 rounded-md cursor-pointer ${isSelected ? "bg-primary/10" : ""}`}
+      onClick={onClickHandler}
+      whileTap={{ scale: 0.98 }}
+      animate={{
+        boxShadow: isSelected
+          ? ["0 0 0 0px rgba(59, 130, 246, 0)", "0 0 0 4px rgba(59, 130, 246, 0.5)", "0 0 0 0px rgba(59, 130, 246, 0)"]
+          : "none",
+      }}
+      transition={{ duration: 0.5 }}
+    >
+      <Image
+        src={trackImage || "/placeholder.svg"}
+        alt="track-image"
+        width={64}
+        height={64}
+        className="rounded-[4px]"
+      />
       <div>
-        <div className='font-bold'>{trackName}</div>
+        <div className="font-bold">{trackName}</div>
         <div>{artistName}</div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -73,7 +93,9 @@ const SelectSongModal = () => {
     
   return (
     <div className='flex flex-col'>
-      <input type="text" placeholder='ค้นหาเพลง...'  onChange={onChangeHandler}/>
+      <Search placeholder="ค้นหาเพลง..." style={{
+        fontFamily: 'Prompt'
+      }} onChange={onChangeHandler} />
       {
         ((isError ? <RenderNoSongFound /> : false) || (<RenderSongList tracks={foundTracks} />))
       }
