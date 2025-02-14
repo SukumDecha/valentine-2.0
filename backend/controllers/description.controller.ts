@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { getDB } from "../database/database";
 
 export const addDescription = async (req: Request, res: Response): Promise<void> => {
-    const { lover, description } = req.body;
+    const { title, description } = req.body;
     try {
         const db = getDB().collection('users');
         const addDescription = await db.updateOne(
@@ -10,7 +10,7 @@ export const addDescription = async (req: Request, res: Response): Promise<void>
             {
                 $set: {
                     description: {
-                        lover,
+                        title,
                         description
                     }
                 }
