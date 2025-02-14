@@ -83,7 +83,8 @@ export default function Stack({
       const index = newCards.findIndex((card) => Number(card.id) === id);
       if (index === -1) return prev;
       const [card] = newCards.splice(index, 1);
-      newCards.unshift(card);
+      // newCards.unshift(card);
+      newCards.push(card);
       return newCards;
     });
   };
@@ -98,7 +99,7 @@ export default function Stack({
         perspective: 600,
       }}
     >
-      {cards.map((card, index) => {
+      {[...cards].reverse().map((card, index) => {
         const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
 
         const cardId = Number(card.id);
@@ -147,7 +148,7 @@ export default function Stack({
                     draggable="false"
                   />
                 </div>
-                <div className="h-1/4 flex justify-center items-center sm:text-lg md:text-2xl">"{card.text}"</div>
+                <div className="h-1/4 flex justify-center items-center text-base md:text-xl">"{card.text}"</div>
               </div>
             </motion.div>
           </CardRotate>

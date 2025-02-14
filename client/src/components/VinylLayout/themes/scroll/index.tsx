@@ -84,7 +84,7 @@ const ScrollVinyl = ({ data }: IProps) => {
                                                     backgroundColor: "rgb(249 168 212)",
                                                 }}
                                             >
-                                                <p className="libre-baskerville-regular-italic text-center" style={{ fontWeight: 100, fontSize: "3rem", color: "#ffffff" }}>{preview?.text || 'I love you'}</p>
+                                                <p className="libre-baskerville-regular-italic text-center text-sm font-bold" style={{ color: "#ffffff" }}>{preview?.text || 'I love you'}</p>
                                             </div>
                                         }
                                         gridSize={12}
