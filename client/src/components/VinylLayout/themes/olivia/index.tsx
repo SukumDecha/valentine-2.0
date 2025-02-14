@@ -73,7 +73,7 @@ const OliviaVinyl = ({ data }: IProps) => {
 
 
     return (
-        <div className="flex w-full h-screen flex-col items-centersm:justify-around gap-4 overflow-y-scroll overflow-x-hidden  p-4 font-Libre italic bg-[#968ECE]">
+        <div className="flex w-full h-screen flex-col items-centersm:justify-around gap-0 sm:gap-4 overflow-y-scroll overflow-x-hidden  p-4 font-Libre italic bg-[#968ECE]">
 
             {isTablet &&
                 <OliviaProps
@@ -118,18 +118,6 @@ const OliviaVinyl = ({ data }: IProps) => {
                     </div>
                 </SlideIn>
 
-
-                <div className="sm:hidden">
-                    {
-                        isMobile &&
-                        <OliviaProps
-                            images={lowerProps}
-                            width={lowerStyle.width}
-                            height={150}
-                            className='z-20 mt-8' />
-                    }
-                </div>
-
                 <SlideIn xOffset={vinylStyle.xOffset} yOffset={vinylStyle.yOffset} duration={1}>
                     <div className="sm:flex flex-col items-center hidden">
                         {
@@ -152,10 +140,23 @@ const OliviaVinyl = ({ data }: IProps) => {
             <SlideIn
                 yOffset={'300%'}
                 duration={1}
-                className="sm:block w-[70vw] sm:w-[600px] mx-auto"
+                className="sm:block w-[70vw] sm:w-[600px] mx-auto mt-4 sm:mt-0"
             >
                 <SpotifyEmbed trackId={data.trackId as string} />
             </SlideIn>
+
+            {
+                isMobile &&
+                <SlideIn
+                    yOffset='400%'>
+                    <OliviaProps
+                        images={lowerProps}
+                        width={lowerStyle.width}
+                        height={150}
+                        className='z-20 mt-8' />
+                </SlideIn>
+
+            }
 
             <div className="text-center opacity-50 ">Valentine 2.0</div>
 

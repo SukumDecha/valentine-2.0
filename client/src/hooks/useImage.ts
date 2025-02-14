@@ -89,6 +89,12 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
   };
 
   const addImages = useCallback(async (files: File[]) => {
+    if (images.length + files.length > 10) {
+      setError('Maximum 10 images allowed');
+      toast.error('คุณสามารถอัพโหลดได้สูงสุด 10 รูปภาพ');
+      return;
+    }
+
     setError(null);
     setSuccess(null);
 
@@ -144,7 +150,7 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
 
     try {
       const response = await VinylService.uploadVinyls(uuid, images);
-      
+
       if (response.success) {
         images.forEach(img => URL.revokeObjectURL(img.preview));
         setImages([]);
