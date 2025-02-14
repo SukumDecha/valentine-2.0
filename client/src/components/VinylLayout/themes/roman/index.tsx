@@ -46,10 +46,10 @@ const RomanVinyl = ({ data }: IProps) => {
                     </FadeIn>
 
                     <div className="sm:none absolute left-0 top-[240px]">
-                        <img src="/vinyl/armleft.png" alt="armleft" className='w-[400px]' />
+                        <img src="/vinyl/armleft.png" alt="armleft" className='w-[150px] sm:w-[400px]' />
                     </div>
                     <div className="sm:none absolute right-0 top-[-30px]">
-                        <img src="/vinyl/armright.png" alt="right" className='w-[400px]' />
+                        <img src="/vinyl/armright.png" alt="right" className='w-[150px] sm:w-[400px]' />
                     </div>
 
                     <div className="w-full flex items-center justify-center">
@@ -98,7 +98,9 @@ const RomanVinyl = ({ data }: IProps) => {
                         duration={1}
                         className="sm:block w-[70vw] sm:w-[600px] mx-auto mt-16 sm:mt-0 relative"
                     >
-                        <SpotifyEmbed trackId={data.trackId as string} />
+                        <div className="relative z-[100]">
+                            <SpotifyEmbed trackId={data.trackId as string} />
+                        </div>
                         <div className="absolute left-[-70px] top-0 z-50">
                             <img src="/vinyl/kid.png" alt="armleft" />
                         </div>

@@ -89,9 +89,9 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
   };
 
   const addImages = useCallback(async (files: File[]) => {
-    if (images.length + files.length > 10) {
+    if (images.length + files.length > 8) {
       setError('Maximum 10 images allowed');
-      toast.error('คุณสามารถอัพโหลดได้สูงสุด 10 รูปภาพ');
+      toast.error('คุณสามารถอัพโหลดได้สูงสุด 8 รูปภาพ');
       return;
     }
 

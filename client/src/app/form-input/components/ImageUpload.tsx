@@ -21,7 +21,10 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
   const saveItems = useVinylFormStore(state => state.addImages)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
+    if (e.target.files && e.target.files.length > 0 &&
+      images.length + e.target.files.length > 8) {
+      toast.error('คุณสามารถอัพโหลดได้สูงสุด 8 รูปภาพ');
+    } else if (e.target.files && e.target.files.length > 0) {
       toast.promise(addImages(Array.from(e.target.files)), {
         loading: "Uploading images...",
         success: "Images uploaded successfully",
