@@ -17,6 +17,8 @@ const page = () => {
           success: true,
           images: formData.images,
           description: formData.description,
+          trackId: formData.track?.trackId,
+          trackImage: formData.track?.trackImage,
           message: '',
         }} />
       </PreviewWrapper>

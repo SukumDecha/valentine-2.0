@@ -6,6 +6,7 @@ import { useVinylFormStore } from '@/stores/vinyl-form.store'
 import VinylService from '@/services/vinyl.service'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { VinylTemplate } from '@/types/vinyl/vinyl.template'
 
 interface IProps {
   uuid: string
@@ -16,7 +17,7 @@ const FormInputPage = ({ uuid }: IProps) => {
   const clearForm = useVinylFormStore((state) => state.clearForm)
   const router = useRouter()
 
-  const isValid = !(!form.track || !form.templateId || !form.images || !form.id || (Array.isArray(form.images) && form.images.length === 0))
+  const isValid = !(!form.track || !form.templateId || !form.images || !form.id || (Array.isArray(form.images) && form.images.length === 0) || (form.templateId === VinylTemplate.Scroll && (!form.description?.title || !form.description?.description)))
 
   const doPreview = () => {
     if (!isValid) {

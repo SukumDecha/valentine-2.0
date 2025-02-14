@@ -102,7 +102,7 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
             file: processed,
             text: '',
             preview: URL.createObjectURL(processed),
-            url: ''
+            url: URL.createObjectURL(processed)
           };
         })
       );
@@ -144,7 +144,7 @@ export const useImageUpload = (uuid: string): UseImageUpload => {
 
     try {
       const response = await VinylService.uploadVinyls(uuid, images);
-
+      
       if (response.success) {
         images.forEach(img => URL.revokeObjectURL(img.preview));
         setImages([]);

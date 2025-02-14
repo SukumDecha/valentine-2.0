@@ -49,11 +49,12 @@ export const ImageUpload = ({ uuid_slug }: IProps) => {
 
     // Close the modal
     setTimeout(() => {
-      const closeButton = document.querySelector("button span")?.parentElement as HTMLButtonElement
-      if (closeButton?.innerText === "Close") {
+      const modal = document.querySelector('.ant-modal');
+      const closeButton = modal?.querySelector('button:last-of-type') as HTMLButtonElement | null
+      if (closeButton) {
         closeButton.click()
       }
-    }, 500)
+    }, 1000)
   }
 
   return (
